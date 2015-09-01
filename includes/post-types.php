@@ -62,7 +62,7 @@ function wp_user_activity_register_post_types() {
 		'show_in_menu'         => true,
 		'show_in_nav_menus'    => true,
 		'show_in_admin_bar'    => true,
-		'menu_position'        => 4,
+		'menu_position'        => 3,
 		'menu_icon'            => 'dashicons-backup',
 		'capability_type'      => $cap_types,
 		'capabilities'         => array(),

@@ -59,10 +59,12 @@ abstract class WP_User_Activity_Action_Base {
 	 * @return  string
 	 */
 	protected function get_how_long_ago( $post_id = 0 ) {
-		$date  = get_the_date( get_option( 'date_format', $post_id ) );
-		$time  = get_the_time( get_option( 'time_format', $post_id ) );
+		$post  = get_post( $post_id );
+		$date  = get_the_date( get_option( 'date_format' ), $post->ID );
+		$time  = get_the_time( get_option( 'time_format' ), $post->ID );
 		$both  = "{$date} {$time}";
-		$human = human_time_diff( get_post_field( 'post_date', $post_id ), current_time( 'mysql' ) );
+		$pt    = strtotime( $post->post_date );
+		$human = wp_user_activity_human_diff_time( $pt, current_time( 'timestamp' ) );
 		return '<time pubdate datetime="' . esc_attr( $both ) . '" title="' . esc_attr( $both ) . '">' . sprintf( '%s ago', $human ) . '</time>';
 	}
 }

@@ -59,10 +59,11 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 */
 	public function create_callback( $post, $meta = array() ) {
 		$user = $this->get_user( $post );
+		$text = __( '%1$s uploaded "%2$s" %3$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s uploaded a "%2$s" named "%3$s" %4$s.',
+		return sprintf(
+			$text,
 			$user->display_name,
-			$meta->object_subtype,
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -80,10 +81,11 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 */
 	public function update_callback( $post, $meta = array() ) {
 		$user = $this->get_user( $post );
+		$text = __( '%1$s edited "%2$s" %3$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s edited a "%2$s" named "%3$s" %4$s.',
+		return sprintf(
+			$text,
 			$user->display_name,
-			$meta->object_subtype,
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -101,10 +103,11 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 */
 	public function delete_callback( $post, $meta = array() ) {
 		$user = $this->get_user( $post );
+		$text = __( '%1$s deleted "%2$s" %3$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s deleted a "%2$s" named "%3$s" %4$s.',
+		return sprintf(
+			$text,
 			$user->display_name,
-			$meta->object_subtype,
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -140,7 +143,7 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 *
 	 * @param int $attachment_id
 	 */
-	public function add_attachment( $attachment_id ) {
+	public function add_attachment( $attachment_id = 0 ) {
 		$this->add_attachment_activity( 'create', $attachment_id );
 	}
 
@@ -151,7 +154,7 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 *
 	 * @param int $attachment_id
 	 */
-	public function edit_attachment( $attachment_id ) {
+	public function edit_attachment( $attachment_id = 0 ) {
 		$this->add_attachment_activity( 'update', $attachment_id );
 	}
 

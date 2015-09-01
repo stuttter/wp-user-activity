@@ -18,12 +18,36 @@ defined( 'ABSPATH' ) || exit;
  * @return  array
  */
 function wp_user_activity_manage_posts_columns( $columns = array() ) {
-	return array(
+
+	// Override all columns
+	$new_columns = array(
 		'cb'       => '<input type="checkbox" />',
-		'username' => esc_html__( 'User',   'wp-user-activity' ),
-		'action'   => esc_html__( 'Action', 'wp-user-activity' ),
-		'object'   => esc_html__( 'Object', 'wp-user-activity' )
+		'severity' => '<span class="screen-reader-text">' . esc_html__( 'Severity', 'wp-user-activity' ) . '</span><span class="dashicons dashicons-shield" title="' . esc_html__( 'Severity', 'wp-user-activity' ) . '"></span>',
+		'action'   => esc_html__( 'Action',   'wp-user-activity' ),
+		'username' => esc_html__( 'User',     'wp-user-activity' ),
+		'object'   => esc_html__( 'Object',   'wp-user-activity' )
 	);
+
+	// Return overridden columns
+	return apply_filters( 'wp_user_activity_manage_posts_columns', $new_columns, $columns );
+}
+
+/**
+ * Force the primary column
+ *
+ * @since 0.1.0
+ *
+ * @return string
+ */
+function wp_user_activity_list_table_primary_column( $name = '', $screen_id = '' ) {
+
+	// Only on the `edit-activity` screen
+	if ( 'edit-activity' === $screen_id ) {
+		$name = 'action';
+	}
+
+	// Return possibly overridden name
+	return $name;
 }
 
 /**
@@ -42,17 +66,42 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 
 	// Custom column IDs
 	switch ( $column ) {
+
+		// Attempt to output human-readable action
+		case 'severity' :
+			echo wp_get_user_activity_severity( $post, $meta );
+			break;
+
+		// Attempt to output human-readable action
+		case 'action' :
+			echo wp_get_user_activity_action( $post, $meta );
+			break;
+
+		// User who performed this activity
 		case 'username' :
 			echo get_avatar( $post->post_author, 32 );
 			echo '<strong><a href="">' . get_userdata( $post->post_author )->display_name . '</a></strong>';
 			break;
 
-		case 'action' :
-			echo wp_get_user_activity_action( $post, $meta );
-			break;
-
+		// Attempt to output helpful connection to object
 		case 'object' :
 			echo wp_get_user_activity_object( $post, $meta );
 			break;
 	}
+}
+
+/**
+ * Enqueue scripts
+ *
+ * @since 0.1.1
+ */
+function wp_user_activity_admin_assets() {
+
+	// Bail if not an event post type
+	if ( 'activity' !== get_post_type() ) {
+		return;
+	}
+
+	// Date picker CSS (for jQuery UI calendar)
+	wp_enqueue_style( 'wp_event_calendar_datepicker', wp_user_activity_get_plugin_url() . '/assets/css/activity.css', false, wp_user_activity_get_asset_version(), false );
 }

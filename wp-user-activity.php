@@ -3,7 +3,7 @@
 /**
  * Plugin Name: WP User Activity
  * Plugin URI:  https://wordpress.org/plugins/wp-user-activity/
- * Description: User activity (put something catchy here)
+ * Description: Activity streams, for your users
  * Author:      John James Jacoby
  * Author URI:  https://jjj.me
  * Version:     0.1.0
@@ -49,3 +49,25 @@ function wp_user_activity_init() {
 	include $dir . '/actions/class-action-widgets.php';
 }
 add_action( 'plugins_loaded', 'wp_user_activity_init' );
+
+/**
+ * Return the plugin's URL
+ *
+ * @since 0.1.2
+ *
+ * @return string
+ */
+function wp_user_activity_get_plugin_url() {
+	return plugin_dir_url( __FILE__ );
+}
+
+/**
+ * Return the asset version
+ *
+ * @since 0.1.2
+ *
+ * @return int
+ */
+function wp_user_activity_get_asset_version() {
+	return 201508310001;
+}

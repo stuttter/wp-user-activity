@@ -60,10 +60,10 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function login_callback( $post ) {
-		$user = $this->get_user( $post );
+	public function login_callback( $post, $meta = array() ) {
+		$user = $this->get_user( $meta->object_id );
 
-		return sprintf( '%1$s logged in %4$s.',
+		return sprintf( '%1$s logged in %2$s.',
 			$user->display_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -80,8 +80,11 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function login_fail_callback( $post, $meta = array() ) {
-		return sprintf( 'Failed login attempt for "%1$s" %4$s.',
-			$meta['object_name'],
+		$text = __( 'Failed login attempt for "%1$s" %2$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -97,8 +100,10 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 */
 	public function logout_callback( $post ) {
 		$user = $this->get_user( $post );
+		$text = __( '%1$s logged out %2$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s logged out %4$s.',
+		return sprintf(
+			$text,
 			$user->display_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -115,8 +120,10 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 */
 	public function create_callback( $post ) {
 		$user = $this->get_user( $post );
+		$text = __( '%1$s registered %2$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s registered %4$s.',
+		return sprintf(
+			$text,
 			$user->display_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -133,8 +140,10 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 */
 	public function update_callback( $post ) {
 		$user = $this->get_user( $post );
+		$text = __( '%1$s updated their account %2$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s updated their account %4$s.',
+		return sprintf(
+			$text,
 			$user->display_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -151,8 +160,10 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 */
 	public function delete_callback( $post ) {
 		$user = $this->get_user( $post );
+		$text = __( '%1$s deleted their account %2$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s deleted their account %4$s.',
+		return sprintf(
+			$text,
 			$user->display_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -169,9 +180,8 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @param  string  $user
 	 */
 	public function wp_login( $user_login, $user ) {
-
-		// Insert activity
 		wp_insert_user_activity( array(
+			'user_id'     => $user->ID,
 			'object_type' => $this->object_type,
 			'object_name' => $user->user_nicename,
 			'object_id'   => $user->ID,

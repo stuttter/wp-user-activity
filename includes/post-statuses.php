@@ -1,19 +1,6 @@
 <?php
 
-/**
- * User Activity Post Statuses
- *
- * @package User/Activity/PostStatuses
- */
 
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
-
-/**
- * Register custom post statuses for activity items
- *
- * @since 0.1.0
- */
 function wp_user_activity_register_post_statuses() {
 
 	// Emergency
