@@ -63,7 +63,7 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 		$text = esc_html__( '%1$s updated WordPress %2$s.', 'wp-user-activity' );
 
 		return sprintf( $text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
 	}
