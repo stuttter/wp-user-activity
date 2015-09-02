@@ -26,16 +26,74 @@ class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action_Base {
 	public $object_type = 'widget';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'update', 'delete' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
-		add_action( 'widget_update_callback', array( $this, 'widget_update_callback' ), 9999, 4 );
-		add_action( 'sidebar_admin_setup',    array( $this, 'widget_delete' ) );
 
+		// Actions
+		add_action( 'widget_update_callback', array( $this, 'widget_update_callback' ), 9999, 4 );
+		add_action( 'sidebar_admin_setup',    array( $this, 'widget_delete'          )          );
+
+		// Setup callbacks
 		parent::__construct();
 	}
+
+	/** Actions ***************************************************************/
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s edited the "%2$s" widget %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function delete_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deleted the "%2$s" widget %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			ucfirst( $meta->object_name ),
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/** Logging ***************************************************************/
 
 	/**
 	 * Widgets updated
@@ -47,7 +105,7 @@ class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action_Base {
 	 * @param  object     $old_instance
 	 * @param  WP_Widget  $widget
 	 */
-	public function widget_update_callback( $instance, $new_instance, $old_instance, WP_Widget $widget ) {
+	public function widget_update_action_callback( $instance, $new_instance, $old_instance, WP_Widget $widget ) {
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
 			'object_subtype' => $this->get_sidebar(),

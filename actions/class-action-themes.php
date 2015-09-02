@@ -26,21 +26,164 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	public $object_type = 'theme';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'customize', 'activate', 'update', 'install', 'file_update', 'delete' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
-		add_filter( 'wp_redirect',                         array( $this, 'theme_modify'  ), 10, 2 );
-		add_action( 'switch_theme',                        array( $this, 'switch_theme'  ), 10, 2 );
-		add_action( 'delete_site_transient_update_themes', array( $this, 'theme_deleted' ) );
+
+		// Actions
+		add_action( 'delete_site_transient_update_themes', array( $this, 'theme_deleted'           ) );
 		add_action( 'upgrader_process_complete',           array( $this, 'theme_install_or_update' ), 10, 2 );
+		add_action( 'switch_theme',                        array( $this, 'switch_theme'            ), 10, 2 );
+		add_filter( 'wp_redirect',                         array( $this, 'theme_modify'            ), 10, 2 );
 
 		// Theme customizer
 		add_action( 'customize_save', array( $this, 'theme_customizer_modified' ) );
 
+		// Setup callbacks
 		parent::__construct();
 	}
+
+	/** Actions ***************************************************************/
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function customize_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s customized the "%2$s" theme %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_subtype,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function activate_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s activated the "%2$s" theme %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s updated the "%2$s" theme %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function install_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s installed the "%2$s" theme %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function file_update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s edited "%2$s" in the "%3$s" theme file %4$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$meta->object_subtype,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function delete_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deleted the "%2$s" theme %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/** Logging ***************************************************************/
 
 	/**
 	 * Theme modified
@@ -60,10 +203,10 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 
 				$args = array(
 					'object_type'    => $this->object_type,
-					'object_subtype' => 'theme_unknown',
-					'object_name'    => 'file_unknown',
+					'object_subtype' => 'unknown',
+					'object_name'    => 'unknown',
 					'object_id'      => 0,
-					'action'         => 'file_updated'
+					'action'         => 'file_update'
 				);
 
 				if ( ! empty( $_POST['file'] ) ) {
@@ -97,7 +240,7 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 			'object_subtype' => $new_theme->get_stylesheet(),
 			'object_name'    => $new_name,
 			'object_id'      => 0,
-			'action'         => 'activated'
+			'action'         => 'activate'
 		) );
 	}
 
@@ -112,9 +255,9 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 		$args = array(
 			'object_type'    => $this->object_type,
 			'object_subtype' => $obj->theme()->display( 'Name' ),
-			'object_name'    => 'Theme Customizer',
+			'object_name'    => esc_html__( 'Theme Customizer', 'wp-user-activity' ),
 			'object_id'      => 0,
-			'action'         => 'update'
+			'action'         => 'customize'
 		);
 
 		// Accessed the customizer
@@ -190,7 +333,7 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 				'object_type'    => $this->object_type,
 				'object_subtype' => $version,
 				'object_name'    => $name,
-				'action'         => 'installed'
+				'action'         => 'install'
 			) );
 
 		// Update

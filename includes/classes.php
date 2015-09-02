@@ -26,13 +26,38 @@ abstract class WP_User_Activity_Action_Base {
 	public $object_type = '';
 
 	/**
+	 * Array of action callback methods
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $action_callbacks = array();
+
+	/**
 	 * Probably hook things in here
 	 *
 	 * @since 0.1.0
 	 */
-	public function __construct( $callbacks = array() ) {
-		foreach ( $callbacks as $action => $callback ) {
-			wp_user_activity_register_action_callback( $this->object_type, $action, $callback );
+	public function __construct() {
+		$this->register_action_callbacks();
+	}
+
+	/**
+	 * Register callbacks based on `action_callbacks` array
+	 *
+	 * @since 0.1.1
+	 */
+	protected function register_action_callbacks() {
+		foreach ( $this->action_callbacks as $callback ) {
+
+			// Create a method callback key
+			$method = "{$callback}_action_callback";
+
+			// Register method if it exists
+			if ( method_exists( $this, $method ) ) {
+				wp_user_activity_register_action_callback( $this->object_type, $callback, array( $this, $method ) );
+			}
 		}
 	}
 
@@ -41,12 +66,37 @@ abstract class WP_User_Activity_Action_Base {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param   int   $post_id
+	 * @param   int   $post
 	 *
 	 * @return  object
 	 */
-	protected function get_user( $post_id = 0 ) {
-		return get_user_by( 'id', get_post_field( 'post_author', $post_id ) );
+	protected function get_activity_author( $post = 0 ) {
+
+		// Get the post
+		$post = get_post( $post );
+		$user = get_user_by( 'id', $post->post_author );
+
+		// Default return value
+		$link = false;
+
+		// If in admin, user admin area links
+		if ( is_admin() && current_user_can( 'edit_user', $user->ID ) ) {
+			$link = get_edit_user_link( $user->ID );
+
+		// Link to author URL if not in admin
+		} else {
+			$link = get_author_posts_url( $user->ID );
+		}
+
+		// Link user if a link was found
+		if ( false !== $link ) {
+			$retval = '<a href="' . esc_url( $link ) . '" class="wp-user-activity user-link">' . $user->display_name . '</a>';
+		} else {
+			$retval = $user->display_name;
+		}
+
+		// Return
+		return $retval;
 	}
 
 	/**

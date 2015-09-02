@@ -26,19 +26,161 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	public $object_type = 'plugin';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'activate', 'deactivate', 'update', 'install', 'file_update', 'delete' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
-		add_action( 'activated_plugin',   array( $this, 'activated_plugin'   ) );
-		add_action( 'deactivated_plugin', array( $this, 'deactivated_plugin' ) );
-		add_filter( 'wp_redirect',        array( $this, 'plugin_modify'      ), 10, 2 );
 
+		// Actions
+		add_action( 'activated_plugin',          array( $this, 'activated_plugin'         ) );
+		add_action( 'deactivated_plugin',        array( $this, 'deactivated_plugin'       ) );
 		add_action( 'upgrader_process_complete', array( $this, 'plugin_install_or_update' ), 10, 2 );
+		add_filter( 'wp_redirect',               array( $this, 'plugin_modify'            ), 10, 2 );
 
+		// Setup callbacks
 		parent::__construct();
 	}
+
+	/** Actions ***************************************************************/
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function activate_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s activated the "%2$s" plugin %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function deactivate_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deactivated the "%2$s" plugin %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s updated the "%2$s" plugin %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function install_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s installed the "%2$s" plugin %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function file_update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s edited "%2$s" in the "%3$s" plugin file %4$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$meta->object_subtype,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function delete_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deleted the "%2$s" plugin %3$s.', 'wp-user-activity' );
+
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
+			$meta->object_name,
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/** Logging ***************************************************************/
 
 	/**
 	 * Helper function for adding plugin activity
@@ -75,7 +217,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @param string $plugin_name
 	 */
 	public function deactivated_plugin( $plugin_name = '' ) {
-		$this->add_plugin_activity( 'deactivated', $plugin_name );
+		$this->add_plugin_activity( 'deactivate', $plugin_name );
 	}
 
 	/**
@@ -86,7 +228,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @param string $plugin_name
 	 */
 	public function activated_plugin( $plugin_name = '' ) {
-		$this->add_plugin_activity( 'activated', $plugin_name );
+		$this->add_plugin_activity( 'activate', $plugin_name );
 	}
 
 	/**
@@ -104,12 +246,13 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 		if ( false !== strpos( $location, 'plugin-editor.php' ) ) {
 
 			if ( ! empty( $_POST ) && ( 'update' === $_REQUEST['action'] ) ) {
+
 				$args = array(
-					'action'         => 'file_updated',
+					'object_type'    => $this->object_type,
+					'object_subtype' => 'unknown',
+					'object_name'    => 'unknown',
 					'object_id'      => 0,
-					'object_type'    => 'plugin',
-					'object_subtype' => 'plugin_unknown',
-					'object_name'    => 'file_unknown',
+					'action'         => 'file_update'
 				);
 
 				if ( ! empty( $_REQUEST['file'] ) ) {
@@ -122,6 +265,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 					$args['object_subtype'] = $plugin_data['Name'];
 				}
+
 				wp_insert_user_activity( $args );
 			}
 		}
@@ -154,10 +298,10 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 			// Insert activity
 			wp_insert_user_activity( array(
-				'action'         => 'installed',
-				'object_type'    => 'plugin',
+				'object_type'    => $this->object_type,
 				'object_subtype' => $data['Version'],
 				'object_name'    => $data['Name'],
+				'action'         => 'install'
 			) );
 		}
 
@@ -180,10 +324,10 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 			// Insert activity
 			wp_insert_user_activity( array(
-				'action'        => 'update',
-				'object_type'    => 'plugin',
+				'object_type'    => $this->object_type,
 				'object_subtype' => $data['Version'],
 				'object_name'    => $data['Name'],
+				'action'        => 'update'
 			) );
 		}
 	}

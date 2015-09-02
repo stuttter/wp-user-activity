@@ -26,21 +26,28 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	public $object_type = 'term';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'create', 'update', 'delete' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Actions
 		add_action( 'created_term', array( $this, 'created_edited_deleted_term' ), 10, 3 );
 		add_action( 'edited_term',  array( $this, 'created_edited_deleted_term' ), 10, 3 );
 		add_action( 'delete_term',  array( $this, 'created_edited_deleted_term' ), 10, 4 );
 
 		// Setup callbacks
-		parent::__construct( array(
-			'create' => array( $this, 'create_callback' ),
-			'update' => array( $this, 'update_callback' ),
-			'delete' => array( $this, 'delete_callback' )
-		) );
+		parent::__construct();
 	}
 
 	/** Actions ***************************************************************/
@@ -55,16 +62,14 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function create_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$tax  = get_taxonomy( $meta->object_subtype );
-		$text = __( '%1$s created the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function create_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s created the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $tax->labels->singular_name ),
+			$this->get_taxonomy_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -79,16 +84,14 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function update_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$tax  = get_taxonomy( $meta->object_subtype );
-		$text = __( '%1$s edited "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s edited "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $tax->labels->singular_name ),
+			$this->get_taxonomy_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -103,18 +106,39 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function delete_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$tax  = get_taxonomy( $meta->object_subtype );
-		$text = __( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function delete_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $tax->labels->singular_name ),
+			$this->get_taxonomy_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
+	}
+
+	/**
+	 * Get the singular label of the taxonomy
+	 *
+	 * @since 0.1.2
+	 *
+	 * @param  string $taxonomy
+	 *
+	 * @return string
+	 */
+	protected function get_taxonomy_singular_name( $taxonomy = '' ) {
+
+		// Set default & look for more descriptive labels
+		$retval = $taxonomy;
+		$tax    = get_taxonomy( $taxonomy );
+
+		// Use lowercase singular label
+		if ( ! empty( $tax ) ) {
+			$retval = strtolower( $tax->labels->singular_name );
+		}
+
+		return $retval;
 	}
 
 	/** Logging ***************************************************************/

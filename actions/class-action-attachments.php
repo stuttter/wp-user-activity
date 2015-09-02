@@ -26,6 +26,15 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	public $object_type = 'attachment';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'create', 'update', 'delete' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
@@ -38,11 +47,7 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 		add_action( 'delete_attachment', array( $this, 'delete_attachment' ) );
 
 		// Setup callbacks
-		parent::__construct( array(
-			'create' => array( $this, 'create_callback' ),
-			'update' => array( $this, 'update_callback' ),
-			'delete' => array( $this, 'delete_callback' )
-		) );
+		parent::__construct();
 	}
 
 	/** Actions ***************************************************************/
@@ -57,13 +62,12 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function create_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s uploaded "%2$s" %3$s.', 'wp-user-activity' );
+	public function create_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s uploaded "%2$s" %3$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -79,13 +83,12 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function update_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s edited "%2$s" %3$s.', 'wp-user-activity' );
+	public function update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s edited "%2$s" %3$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -101,13 +104,12 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function delete_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s deleted "%2$s" %3$s.', 'wp-user-activity' );
+	public function delete_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deleted "%2$s" %3$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);

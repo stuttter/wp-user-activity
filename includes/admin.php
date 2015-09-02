@@ -23,8 +23,8 @@ function wp_user_activity_manage_posts_columns( $columns = array() ) {
 	$new_columns = array(
 		'cb'       => '<input type="checkbox" />',
 		'severity' => '<span class="screen-reader-text">' . esc_html__( 'Severity', 'wp-user-activity' ) . '</span><span class="dashicons dashicons-shield" title="' . esc_html__( 'Severity', 'wp-user-activity' ) . '"></span>',
-		'action'   => esc_html__( 'Action',   'wp-user-activity' ),
 		'username' => esc_html__( 'User',     'wp-user-activity' ),
+		'action'   => esc_html__( 'Action',   'wp-user-activity' ),
 		'object'   => esc_html__( 'Object',   'wp-user-activity' )
 	);
 
@@ -79,8 +79,7 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 
 		// User who performed this activity
 		case 'username' :
-			echo get_avatar( $post->post_author, 32 );
-			echo '<strong><a href="">' . get_userdata( $post->post_author )->display_name . '</a></strong>';
+			echo '<a href="">' . get_avatar( $post->post_author, 32 ) . '</a>';
 			break;
 
 		// Attempt to output helpful connection to object

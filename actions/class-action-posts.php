@@ -26,26 +26,27 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	public $object_type = 'post';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'create', 'update', 'delete', 'trash', 'untrash', 'spam', 'unspam', 'future' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Actions
 		add_action( 'transition_post_status', array( $this, 'transition_post_status' ), 10, 3 );
 		add_action( 'delete_post',            array( $this, 'delete_post' ) );
-		//add_action( 'edit_post',              array( $this, 'edit_post'   ) );
 
 		// Setup callbacks
-		parent::__construct( array(
-			'create'  => array( $this, 'create_callback'  ),
-			'update'  => array( $this, 'update_callback'  ),
-			'delete'  => array( $this, 'delete_callback'  ),
-			'trash'   => array( $this, 'trash_callback'   ),
-			'untrash' => array( $this, 'untrash_callback' ),
-			'spam'    => array( $this, 'spam_callback'    ),
-			'unspam'  => array( $this, 'unspam_callback'  ),
-			'future'  => array( $this, 'future_callback'  ),
-		) );
+		parent::__construct();
 	}
 
 	/** Actions ***************************************************************/
@@ -60,16 +61,14 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function create_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s created "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function create_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s created "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -84,16 +83,14 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function update_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s edited the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s edited the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -108,16 +105,14 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function delete_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function delete_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -132,16 +127,14 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function trash_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s trashed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function trash_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s trashed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -156,16 +149,14 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function untrash_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s untrashed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function untrash_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s untrashed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -180,16 +171,14 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function spam_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s spammed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function spam_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s spammed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -204,16 +193,14 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function unspam_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s unspammed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function unspam_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s unspammed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -228,18 +215,39 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function future_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$pto  = get_post_type_object( $meta->object_subtype );
-		$text = __( '%1$s scheduled the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function future_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s scheduled the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
-			strtolower( $pto->labels->singular_name ),
+			$this->get_post_type_singular_name( $meta->object_subtype ),
 			$this->get_how_long_ago( $post )
 		);
+	}
+
+	/**
+	 * Get the singular label for the post type
+	 *
+	 * @since 0.1.2
+	 *
+	 * @param  string $post_type
+	 *
+	 * @return string
+	 */
+	protected function get_post_type_singular_name( $post_type = '' ) {
+
+		// Set default & look for more descriptive labels
+		$retval = $post_type;
+		$pto    = get_post_type_object( $post_type );
+
+		// Use lowercase singular label
+		if ( ! empty( $pto ) ) {
+			$retval = strtolower( $pto->labels->singular_name );
+		}
+
+		return $retval;
 	}
 
 	/** Logging ***************************************************************/

@@ -26,30 +26,32 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	public $object_type = 'comment';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'create', 'update', 'delete', 'trash', 'untrash', 'spam', 'unspam' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
-		add_action( 'wp_insert_comment',         array( $this, 'handle_comment' ), 10, 2 );
-		add_action( 'edit_comment',              array( $this, 'handle_comment' ) );
-		add_action( 'trash_comment',             array( $this, 'handle_comment' ) );
-		add_action( 'untrash_comment',           array( $this, 'handle_comment' ) );
-		add_action( 'spam_comment',              array( $this, 'handle_comment' ) );
-		add_action( 'unspam_comment',            array( $this, 'handle_comment' ) );
-		add_action( 'delete_comment',            array( $this, 'handle_comment' ) );
-		//add_action( 'transition_comment_status', array( $this, 'transition_comment_status' ), 10, 3 );
+
+		// Actions
+		add_action( 'wp_insert_comment', array( $this, 'handle_comment' ), 10, 2 );
+		add_action( 'edit_comment',      array( $this, 'handle_comment' ) );
+		add_action( 'trash_comment',     array( $this, 'handle_comment' ) );
+		add_action( 'untrash_comment',   array( $this, 'handle_comment' ) );
+		add_action( 'spam_comment',      array( $this, 'handle_comment' ) );
+		add_action( 'unspam_comment',    array( $this, 'handle_comment' ) );
+		add_action( 'delete_comment',    array( $this, 'handle_comment' ) );
 
 		// Setup callbacks
-		parent::__construct( array(
-			'create'  => array( $this, 'create_callback'  ),
-			'update'  => array( $this, 'update_callback'  ),
-			'delete'  => array( $this, 'delete_callback'  ),
-			'trash'   => array( $this, 'trash_callback'   ),
-			'untrash' => array( $this, 'untrash_callback' ),
-			'spam'    => array( $this, 'spam_callback'    ),
-			'unspam'  => array( $this, 'unspam_callback'  ),
-		) );
+		parent::__construct();
 	}
 
 	/** Actions ***************************************************************/
@@ -64,13 +66,12 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function create_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s left a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function create_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s left a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -87,13 +88,12 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function update_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s updated a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function update_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s updated a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -110,13 +110,12 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function delete_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s deleted a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function delete_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s deleted a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -133,13 +132,12 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function trash_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s trashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function trash_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s trashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -156,13 +154,12 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function untrash_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s untrashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function untrash_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s untrashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -179,13 +176,12 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function spam_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s spammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function spam_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s spammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -202,13 +198,12 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function unspam_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s unspammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
+	public function unspam_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s unspammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' );
 
 		return sprintf(
 			$text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )

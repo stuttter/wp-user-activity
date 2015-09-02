@@ -26,17 +26,26 @@ class WP_User_Activity_Action_Export extends WP_User_Activity_Action_Base {
 	public $object_type = 'export';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'export' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Actions
 		add_action( 'export_wp', array( $this, 'export_wp' ) );
 
 		// Setup callbacks
-		parent::__construct( array(
-			'export' => array( $this, 'export_callback' ),
-		) );
+		parent::__construct();
 	}
 
 	/** Actions ***************************************************************/
@@ -51,11 +60,12 @@ class WP_User_Activity_Action_Export extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function export_callback( $post, $meta = array() ) {
-		$user = $this->get_user( $post );
+	public function export_action_callback( $post, $meta = array() ) {
+		$text = esc_html__( '%1$s exported "%2$s" %3$s.', 'wp-user-activity' );
 
-		return sprintf( '%1$s exported "%2$s" %4$s.',
-			$user->display_name,
+		return sprintf(
+			$text,
+			$this->get_activity_author( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -72,10 +82,15 @@ class WP_User_Activity_Action_Export extends WP_User_Activity_Action_Base {
 	 */
 	public function export_wp( $args = array() ) {
 
+		// Get content name
+		$name = isset( $args['content'] )
+			? $args['content']
+			: 'all';
+
 		// Insert activity
 		wp_insert_user_activity( array(
 			'object_type' => $this->object_type,
-			'object_name' => isset( $args['content'] ) ? $args['content'] : 'all',
+			'object_name' => $name,
 			'object_id'   => 0,
 			'action'      => 'export',
 		) );

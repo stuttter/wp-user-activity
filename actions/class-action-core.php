@@ -26,18 +26,26 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 	public $object_type = 'core';
 
 	/**
+	 * Array of actions in this class
+	 *
+	 * @since 0.1.1
+	 *
+	 * @var array
+	 */
+	public $action_callbacks = array( 'update', 'auto_update' );
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Actions
 		add_action( '_core_updated_successfully', array( $this, 'core_updated_successfully' ) );
 
 		// Setup callbacks
-		parent::__construct( array(
-			'update'      => array( $this, 'update_callback'      ),
-			'auto-update' => array( $this, 'auto_update_callback' ),
-		) );
+		parent::__construct();
 	}
 
 	/** Actions ***************************************************************/
@@ -51,12 +59,11 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function update_callback( $post ) {
-		$user = $this->get_user( $post );
-		$text = __( '%1$s updated WordPress %2$s.', 'wp-user-activity' );
+	public function update_action_callback( $post ) {
+		$text = esc_html__( '%1$s updated WordPress %2$s.', 'wp-user-activity' );
 
 		return sprintf( $text,
-			$user->display_name,
+			$this->get_activity_author( $post ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -71,8 +78,8 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 	 *
 	 * @return string
 	 */
-	public function auto_update_callback( $post ) {
-		$text = __( 'WordPress auto-updated %1$s.', 'wp-user-activity' );
+	public function auto_update_action_callback( $post ) {
+		$text = esc_html__( 'WordPress auto-updated %1$s.', 'wp-user-activity' );
 
 		return sprintf( $text,
 			$this->get_how_long_ago( $post )
@@ -95,7 +102,7 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 		// Auto updated
 		if ( 'update-core.php' !== $pagenow ) {
 			$object_name = 'WordPress Auto Updated';
-			$action      = 'auto-updated';
+			$action      = 'auto_update';
 		} else {
 			$object_name = 'WordPress Updated';
 			$action      = 'update';
