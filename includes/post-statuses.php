@@ -6,7 +6,7 @@ function wp_user_activity_register_post_statuses() {
 	// Emergency
 	register_post_status( 'emergency', array(
 		'label'                     => _x( 'Emergency', 'activity', 'wp-user-activity' ),
-		'label_count'               => _nx_noop( 'Emergency <span class="count">(%s)</span>', 'Emengency <span class="count">(%s)</span>', 'activity', 'wp-user-activity' ),
+		'label_count'               => _nx_noop( 'Emergency <span class="count">(%s)</span>', 'Emergency <span class="count">(%s)</span>', 'activity', 'wp-user-activity' ),
 		'protected'                 => true,
 		'exclude_from_search'       => true,
 		'show_in_admin_status_list' => true,
