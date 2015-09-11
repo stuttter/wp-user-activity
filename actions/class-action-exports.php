@@ -26,20 +26,22 @@ class WP_User_Activity_Action_Export extends WP_User_Activity_Action {
 	public $object_type = 'export';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'export' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Export
+			'export' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s exported "%2$s" %3$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( 'export_wp', array( $this, 'export_wp' ) );
@@ -61,10 +63,8 @@ class WP_User_Activity_Action_Export extends WP_User_Activity_Action {
 	 * @return string
 	 */
 	public function export_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s exported "%2$s" %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'export' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
