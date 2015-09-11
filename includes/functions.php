@@ -289,19 +289,19 @@ function wp_get_user_activity_severity( $post = 0, $meta = array() ) {
  */
 function wp_get_user_activity_action( $post = 0, $meta = array() ) {
 
-	// Assemble the filter key
-	$key = "wp_get_user_activity_{$meta['object_type']}_{$meta['action']}";
-
 	// Get the post
-	$post = get_post( $post );
+	$_post = get_post( $post );
 
 	// Get meta if none passed
 	if ( empty( $meta ) ) {
-		$meta = wp_get_user_activity_meta( $post->ID );
+		$meta = wp_get_user_activity_meta( $_post->ID );
 	}
 
+	// Assemble the filter key
+	$key = "wp_get_user_activity_{$meta['object_type']}_{$meta['action']}";
+
 	// Filter & return
-	$retval = apply_filters( $key, $post, (object) $meta );
+	$retval = apply_filters( $key, $_post, (object) $meta );
 
 	// Return the action if no human readable action was found
 	if ( $retval instanceof WP_Post ) {
@@ -309,7 +309,7 @@ function wp_get_user_activity_action( $post = 0, $meta = array() ) {
 	}
 
 	// Filter & return
-	return apply_filters( 'wp_get_user_activity_action', $retval, $post, $meta );
+	return apply_filters( 'wp_get_user_activity_action', $retval, $_post, $meta );
 }
 
 /**
@@ -324,25 +324,25 @@ function wp_get_user_activity_action( $post = 0, $meta = array() ) {
  */
 function wp_get_user_activity_object( $post = 0, $meta = array() ) {
 
-	// Assemble the filter key
-	$key = "wp_get_user_activity_{$meta['object_type']}_{$meta['object_subtype']}";
-
 	// Get the post
-	$post = get_post( $post );
+	$_post = get_post( $post );
 
 	// Get meta if none passed
 	if ( empty( $meta ) ) {
-		$meta = wp_get_user_activity_meta( $post->ID );
+		$meta = wp_get_user_activity_meta( $_post->ID );
 	}
 
+	// Assemble the filter key
+	$key = "wp_get_user_activity_{$meta['object_type']}_{$meta['object_subtype']}";
+
 	// Filter & return
-	$retval = apply_filters( $key, $post, (object) $meta );
+	$retval = apply_filters( $key, $_post, (object) $meta );
 
 	// Return the action if no human readable action was found
 	if ( $retval instanceof WP_Post ) {
 
 		// Set return value as empty array
-		$retval = array();
+		$object = array();
 
 		// Assemble the object data
 		foreach ( $meta as $key => $value ) {
@@ -353,13 +353,13 @@ function wp_get_user_activity_object( $post = 0, $meta = array() ) {
 			}
 
 			// Output the object data
-			$retval[] = sprintf( '%s : %s', ucfirst( str_replace( 'object_', '', $key ) ), $value );
+			$object[] = sprintf( '%s : %s', ucfirst( str_replace( 'object_', '', $key ) ), $value );
 		}
 
 		// Assemble
-		$retval = implode( '<br>', $retval );
+		$retval = implode( '<br>', $object );
 	}
 
 	// Filter & return
-	return apply_filters( 'wp_get_user_activity_object', $retval, $post, $meta );
+	return apply_filters( 'wp_get_user_activity_object', $retval, $_post, $meta );
 }

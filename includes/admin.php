@@ -23,9 +23,8 @@ function wp_user_activity_manage_posts_columns( $columns = array() ) {
 	$new_columns = array(
 		'cb'       => '<input type="checkbox" />',
 		'severity' => '<span class="screen-reader-text">' . esc_html__( 'Severity', 'wp-user-activity' ) . '</span><span class="dashicons dashicons-shield" title="' . esc_html__( 'Severity', 'wp-user-activity' ) . '"></span>',
-		'username' => esc_html__( 'User',     'wp-user-activity' ),
-		'action'   => esc_html__( 'Action',   'wp-user-activity' ),
-		'object'   => esc_html__( 'Object',   'wp-user-activity' )
+		'username' => esc_html__( 'Action', 'wp-user-activity' ),
+		'when'     => esc_html__( 'Date',   'wp-user-activity' )
 	);
 
 	// Return overridden columns
@@ -43,7 +42,7 @@ function wp_user_activity_list_table_primary_column( $name = '', $screen_id = ''
 
 	// Only on the `edit-activity` screen
 	if ( 'edit-activity' === $screen_id ) {
-		$name = 'action';
+		$name = 'username';
 	}
 
 	// Return possibly overridden name
@@ -72,19 +71,19 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 			echo wp_get_user_activity_severity( $post, $meta );
 			break;
 
-		// Attempt to output human-readable action
-		case 'action' :
+		// User who performed this activity
+		case 'username' :
 			echo wp_get_user_activity_action( $post, $meta );
 			break;
 
-		// User who performed this activity
-		case 'username' :
-			echo '<a href="">' . get_avatar( $post->post_author, 32 ) . '</a>';
-			break;
-
 		// Attempt to output helpful connection to object
-		case 'object' :
-			echo wp_get_user_activity_object( $post, $meta );
+		case 'when' :
+			$when = strtotime( $post->post_date );
+			$date = get_option( 'date_format' );
+			$time = get_option( 'time_format' );
+			echo date_i18n( $date, $when, true );
+			echo '<br>';
+			echo date_i18n( $time, $when, true );
 			break;
 	}
 }
@@ -101,6 +100,47 @@ function wp_user_activity_admin_assets() {
 		return;
 	}
 
-	// Date picker CSS (for jQuery UI calendar)
-	wp_enqueue_style( 'wp_event_calendar_datepicker', wp_user_activity_get_plugin_url() . '/assets/css/activity.css', false, wp_user_activity_get_asset_version(), false );
+	// Activity styling
+	wp_enqueue_style( 'wp_user_activity', wp_user_activity_get_plugin_url() . '/assets/css/activity.css', false, wp_user_activity_get_asset_version(), false );
+}
+
+/**
+ * Disable months dropdown
+ *
+ * @since 0.1.2
+ */
+function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type = 'post' ) {
+
+	// Disable dropdown for events
+	if ( 'activity' === $post_type ) {
+		$disabled = true;
+	}
+
+	// Return maybe modified value
+	return $disabled;
+}
+
+/**
+ * Output dropdowns & filters
+ *
+ * @since 0.1.2
+ */
+function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
+
+	// Bail if not the event post type
+	if ( 'activity' !== $post_type ) {
+		return;
+	}
+
+	ob_start(); ?>
+
+	<label class="screen-reader-text" for="cat">' . __( 'Filter by action', 'wp-user-activity' ) . '</label>
+	<select name="wp-user-activity-actions">
+		<option value=""><?php esc_html_e( 'All actions', 'wp-user-activity' ); ?></option>
+	</select>
+
+	<?php
+
+	// Output the filters
+	ob_end_flush();
 }

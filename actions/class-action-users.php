@@ -69,7 +69,7 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -108,7 +108,7 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -127,7 +127,7 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -146,7 +146,7 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -165,7 +165,7 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
 	}

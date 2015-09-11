@@ -43,12 +43,6 @@ function wp_user_activity_register_post_types() {
 		'post-formats'
 	);
 
-	// Capability types
-	$cap_types = array(
-		'activity',
-		'activities'
-	);
-
 	// Post type arguments
 	$args = array(
 		'labels'               => $labels,
@@ -64,9 +58,7 @@ function wp_user_activity_register_post_types() {
 		'show_in_admin_bar'    => true,
 		'menu_position'        => 3,
 		'menu_icon'            => 'dashicons-backup',
-		'capability_type'      => $cap_types,
-		'capabilities'         => array(),
-		'map_meta_cap'         => true,
+		'capability_type'      => 'page',
 		'register_meta_box_cb' => null,
 		'taxonomies'           => array(),
 		'has_archive'          => true,
@@ -78,4 +70,35 @@ function wp_user_activity_register_post_types() {
 
 	// Register the activity type
 	register_post_type( 'activity', $args );
+}
+
+function wp_user_activity_append_action_to_the_content( $content = '' ) {
+
+	// Get the current post
+	$post = get_post();
+
+	// Bail if not an activity post
+	if ( 'activity' !== $post->post_type ) {
+		return $content;
+	}
+
+	// Setup empty array
+	$retval = array();
+
+	// Maybe append action, if not empty
+	$action = wp_get_user_activity_action( $post );
+	if ( ! empty( $action ) ) {
+		$retval[] = $action;
+	}
+
+	// Maybe append content, if not empty
+	if ( ! empty( $content ) ) {
+		$retval[] = $content;
+	}
+
+	// Prepend the action
+	$_retval = implode( '<br>', $retval );
+
+	// Return content with action prepended
+	return $_retval;
 }

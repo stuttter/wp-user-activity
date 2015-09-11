@@ -68,7 +68,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -89,7 +89,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -110,7 +110,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -131,7 +131,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -152,7 +152,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -174,7 +174,7 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 
 		return sprintf(
 			$text,
-			$this->get_activity_author( $post ),
+			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
