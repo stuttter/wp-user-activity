@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Export extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_Export extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?

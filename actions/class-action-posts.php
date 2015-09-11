@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_Posts extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -26,20 +26,71 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	public $object_type = 'post';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'create', 'update', 'delete', 'trash', 'untrash', 'spam', 'unspam', 'future' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Create
+			'create' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s created "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Update
+			'update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s edited the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Delete
+			'delete' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Trash
+			'trash' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s trashed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Untrash
+			'untrash' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s untrashed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Spam
+			'spam' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s spammed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Unspam
+			'unspam' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s unspammed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Future
+			'future' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s scheduled the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( 'transition_post_status', array( $this, 'transition_post_status' ), 10, 3 );
@@ -62,10 +113,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function create_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s created "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'create' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -84,10 +133,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function update_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s edited the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -106,10 +153,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function delete_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -128,10 +173,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function trash_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s trashed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'trash' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -150,10 +193,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function untrash_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s untrashed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'untrash' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -172,10 +213,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function spam_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s spammed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'spam' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -194,10 +233,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function unspam_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s unspammed the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'unspam' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -216,10 +253,8 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function future_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s scheduled the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'future' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),

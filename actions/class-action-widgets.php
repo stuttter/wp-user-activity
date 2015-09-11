@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -26,20 +26,30 @@ class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action_Base {
 	public $object_type = 'widget';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'update', 'delete' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Update
+			'update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s edited the "%2$s" widget %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Delete
+			'delete' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s deleted the "%2$s" widget %3$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( 'widget_update_callback', array( $this, 'widget_update_callback' ), 9999, 4 );
@@ -62,10 +72,8 @@ class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function update_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s edited the "%2$s" widget %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -83,10 +91,8 @@ class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function delete_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s deleted the "%2$s" widget %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),
 			ucfirst( $meta->object_name ),
 			$this->get_how_long_ago( $post )

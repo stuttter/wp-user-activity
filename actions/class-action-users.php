@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_User extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -26,20 +26,57 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	public $object_type = 'user';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'login', 'logout', 'create', 'delete', 'update', 'login_fail' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Login
+			'login' => array(
+				'labels' => array(
+					'description' => esc_attr__( '%1$s logged in %2$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Logout
+			'logout' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s logged out %2$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Create
+			'create' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s registered %2$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Update
+			'update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s updated their account %2$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Delete
+			'delete' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s deleted their account %2$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Delete
+			'login_fail' => array(
+				'labels' => array(
+					'description' => esc_html__( 'Failed login attempt for "%1$s" %2$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( 'wp_login',        array( $this, 'wp_login'        ), 10, 2 );
@@ -65,10 +102,8 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function login_action_callback( $post, $meta = array() ) {
-		$text = esc_attr__( '%1$s logged in %2$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'login' ),
 			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
@@ -85,10 +120,8 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function login_fail_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( 'Failed login attempt for "%1$s" %2$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'login_fail' ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
@@ -104,10 +137,8 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function logout_action_callback( $post ) {
-		$text = esc_html__( '%1$s logged out %2$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'logout' ),
 			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
@@ -123,10 +154,8 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function create_action_callback( $post ) {
-		$text = esc_html__( '%1$s registered %2$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'create' ),
 			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
@@ -142,10 +171,8 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function update_action_callback( $post ) {
-		$text = esc_html__( '%1$s updated their account %2$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
@@ -161,10 +188,8 @@ class WP_User_Activity_Action_User extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function delete_action_callback( $post ) {
-		$text = esc_html__( '%1$s deleted their account %2$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);

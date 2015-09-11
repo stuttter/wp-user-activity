@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_Theme extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -26,20 +26,57 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	public $object_type = 'theme';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'customize', 'activate', 'update', 'install', 'file_update', 'delete' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Customize
+			'customize' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s customized the "%2$s" theme %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Activate
+			'activate' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s activated the "%2$s" theme %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Update
+			'update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s updated the "%2$s" theme %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Install
+			'install' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s installed the "%2$s" theme %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Update file
+			'file_update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s edited "%2$s" in the "%3$s" theme file %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Delete
+			'delete' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s deleted the "%2$s" theme %3$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( 'delete_site_transient_update_themes', array( $this, 'theme_deleted'           ) );
@@ -67,10 +104,8 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function customize_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s customized the "%2$s" theme %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'customize' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_subtype,
 			$this->get_how_long_ago( $post )
@@ -88,10 +123,8 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function activate_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s activated the "%2$s" theme %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'customize' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -109,10 +142,8 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function update_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s updated the "%2$s" theme %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -130,10 +161,8 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function install_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s installed the "%2$s" theme %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'install' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -151,10 +180,8 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function file_update_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s edited "%2$s" in the "%3$s" theme file %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'file_update' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
@@ -173,10 +200,8 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function delete_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s deleted the "%2$s" theme %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )

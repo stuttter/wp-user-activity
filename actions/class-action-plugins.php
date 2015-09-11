@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -26,20 +26,57 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	public $object_type = 'plugin';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'activate', 'deactivate', 'update', 'install', 'file_update', 'delete' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Activate
+			'activate' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s activated the "%2$s" plugin %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Deactivate
+			'deactivate' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s deactivated the "%2$s" plugin %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Update
+			'update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s updated the "%2$s" plugin %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Install
+			'install' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s installed the "%2$s" plugin %3$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Update file
+			'file_update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s edited "%2$s" in the "%3$s" theme file %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Delete
+			'delete' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s deleted the "%2$s" plugin %3$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( 'activated_plugin',          array( $this, 'activated_plugin'         ) );
@@ -64,10 +101,8 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function activate_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s activated the "%2$s" plugin %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'activate' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -85,10 +120,8 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function deactivate_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s deactivated the "%2$s" plugin %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'deactivate' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -106,10 +139,8 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function update_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s updated the "%2$s" plugin %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -127,10 +158,8 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function install_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s installed the "%2$s" plugin %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'install' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )
@@ -148,10 +177,8 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function file_update_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s edited "%2$s" in the "%3$s" plugin file %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'file_update' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$meta->object_subtype,
@@ -170,10 +197,8 @@ class WP_User_Activity_Action_Plugins extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function delete_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s deleted the "%2$s" plugin %3$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_how_long_ago( $post )

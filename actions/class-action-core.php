@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_Core extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -26,20 +26,29 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 	public $object_type = 'core';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'update', 'auto_update' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Update
+			'update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s updated WordPress %2$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Auto-update
+			'auto-update' => array(
+				'labels' => array(
+					'description' => esc_html__( 'WordPress auto-updated %1$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( '_core_updated_successfully', array( $this, 'core_updated_successfully' ) );
@@ -60,9 +69,8 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function update_action_callback( $post ) {
-		$text = esc_html__( '%1$s updated WordPress %2$s.', 'wp-user-activity' );
-
-		return sprintf( $text,
+		return sprintf(
+			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
 			$this->get_how_long_ago( $post )
 		);
@@ -79,9 +87,8 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function auto_update_action_callback( $post ) {
-		$text = esc_html__( 'WordPress auto-updated %1$s.', 'wp-user-activity' );
-
-		return sprintf( $text,
+		return sprintf(
+			$this->get_activity_action( 'auto-update' ),
 			$this->get_how_long_ago( $post )
 		);
 	}

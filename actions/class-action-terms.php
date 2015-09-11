@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
+class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -26,20 +26,36 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	public $object_type = 'term';
 
 	/**
-	 * Array of actions in this class
-	 *
-	 * @since 0.1.1
-	 *
-	 * @var array
-	 */
-	public $action_callbacks = array( 'create', 'update', 'delete' );
-
-	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Setup callbacks
+		$this->action_callbacks = array(
+
+			// Create
+			'create' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s created the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Update
+			'update' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s edited the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			),
+
+			// Delete
+			'delete' => array(
+				'labels' => array(
+					'description' => esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+				)
+			)
+		);
 
 		// Actions
 		add_action( 'created_term', array( $this, 'created_edited_deleted_term' ), 10, 3 );
@@ -63,10 +79,8 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function create_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s created the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'create' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_taxonomy_singular_name( $meta->object_subtype ),
@@ -85,10 +99,8 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function update_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s edited "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_taxonomy_singular_name( $meta->object_subtype ),
@@ -107,10 +119,8 @@ class WP_User_Activity_Action_Taxonomy extends WP_User_Activity_Action_Base {
 	 * @return string
 	 */
 	public function delete_action_callback( $post, $meta = array() ) {
-		$text = esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' );
-
 		return sprintf(
-			$text,
+			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_taxonomy_singular_name( $meta->object_subtype ),

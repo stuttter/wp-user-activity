@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * Class WP_User_Activity_Action_Base
  */
-abstract class WP_User_Activity_Action_Base {
+abstract class WP_User_Activity_Action {
 
 	/**
 	 * What type of object is this?
@@ -49,16 +49,33 @@ abstract class WP_User_Activity_Action_Base {
 	 * @since 0.1.1
 	 */
 	protected function register_action_callbacks() {
-		foreach ( $this->action_callbacks as $callback ) {
+		foreach ( $this->action_callbacks as $callback_id => $callback ) {
 
 			// Create a method callback key
-			$method = "{$callback}_action_callback";
+			$method = "{$callback_id}_action_callback";
 
 			// Register method if it exists
 			if ( method_exists( $this, $method ) ) {
-				wp_user_activity_register_action_callback( $this->object_type, $callback, array( $this, $method ) );
+				wp_user_activity_register_action_callback( $this->object_type, $callback_id, array( $this, $method ) );
 			}
 		}
+	}
+
+	/**
+	 * Get the string used to output an action
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param   string  $action
+	 *
+	 * @return  string
+	 */
+	protected function get_activity_action( $action = '' ) {
+		if ( isset( $this->action_callbacks[ $action ]['labels']['description'] ) ) {
+			return $this->action_callbacks[ $action ]['labels']['description'];
+		}
+
+		return '%s %s %s %s';
 	}
 
 	/**
