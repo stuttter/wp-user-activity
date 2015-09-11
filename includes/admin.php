@@ -50,6 +50,76 @@ function wp_user_activity_list_table_primary_column( $name = '', $screen_id = ''
 }
 
 /**
+ * Sortable activity columns
+ *
+ * @since 0.1.0
+ *
+ * @param   array  $columns
+ *
+ * @return  array
+ */
+function wp_user_activity_sortable_columns( $columns = array() ) {
+
+	// Override columns
+	$columns = array(
+		'severity' => 'severity',
+		'username' => 'username',
+		'when'     => 'when'
+	);
+
+	return $columns;
+}
+
+/**
+ * Set the relevant query vars for sorting posts by our front-end sortables.
+ *
+ * @since 0.1.0
+ *
+ * @param WP_Query $wp_query The current WP_Query object.
+ */
+function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
+
+	// Bail if not 'activty' post type
+	if ( empty( $wp_query->query['post_type'] ) || ! in_array( 'activity', (array) $wp_query->query['post_type'] ) ) {
+		return;
+	}
+
+	// Default order
+	$order = 'DESC';
+
+	// Some default order values
+	if ( ! empty( $_REQUEST['order'] ) ) {
+		$new_order = strtolower( $_REQUEST['order'] );
+		if ( ! in_array( $order, array( 'asc', 'desc' ) ) ) {
+			$order = $new_order;
+		}
+	}
+
+	// Set by 'orderby'
+	switch ( $wp_query->query['orderby'] ) {
+
+		// Severity
+		case 'severity' :
+			$wp_query->set( 'order',   $order );
+			$wp_query->set( 'orderby', 'post_status' );
+			break;
+
+		// Action
+		case 'username' :
+			$wp_query->set( 'order',   $order );
+			$wp_query->set( 'orderby', 'post_author' );
+			break;
+
+		// Date (default)
+		case 'when' :
+		default :
+			$wp_query->set( 'order',   $order );
+			$wp_query->set( 'orderby', 'post_date' );
+			break;
+	}
+}
+
+/**
  * Output content for each activity item
  *
  * @since 0.1.0
@@ -95,7 +165,7 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
  */
 function wp_user_activity_admin_assets() {
 
-	// Bail if not an event post type
+	// Bail if not an activity post type
 	if ( 'activity' !== get_post_type() ) {
 		return;
 	}
@@ -111,7 +181,7 @@ function wp_user_activity_admin_assets() {
  */
 function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type = 'post' ) {
 
-	// Disable dropdown for events
+	// Disable dropdown for activities
 	if ( 'activity' === $post_type ) {
 		$disabled = true;
 	}
@@ -127,7 +197,7 @@ function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type
  */
 function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 
-	// Bail if not the event post type
+	// Bail if not the activity post type
 	if ( 'activity' !== $post_type ) {
 		return;
 	}
