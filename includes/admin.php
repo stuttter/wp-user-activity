@@ -134,7 +134,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 
 	ob_start(); ?>
 
-	<label class="screen-reader-text" for="cat">' . __( 'Filter by action', 'wp-user-activity' ) . '</label>
+	<label class="screen-reader-text" for="cat"><?php esc_html_e( 'Filter by action', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-actions">
 		<option value=""><?php esc_html_e( 'All actions', 'wp-user-activity' ); ?></option>
 	</select>
