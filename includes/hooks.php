@@ -25,5 +25,9 @@ add_action( 'restrict_manage_posts',   'wp_user_activity_add_dropdown_filters'  
 add_filter( 'manage_activity_posts_columns',         'wp_user_activity_manage_posts_columns'             );
 add_filter( 'manage_activity_posts_custom_column',   'wp_user_activity_manage_custom_column_data', 10, 2 );
 add_filter( 'manage_edit-activity_sortable_columns', 'wp_user_activity_sortable_columns' );
-add_filter( 'pre_get_posts',                         'wp_user_activity_maybe_sort_by_fields' );
 add_filter( 'list_table_primary_column',             'wp_user_activity_list_table_primary_column', 10, 2 );
+
+// Admin only filter for list-table sorting
+if ( is_admin() ) {
+	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_sort_by_fields' );
+}
