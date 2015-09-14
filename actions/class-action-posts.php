@@ -303,10 +303,14 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @return  string
 	 */
 	protected function _draft_or_post_title( $post = 0 ) {
-		$post = get_post( $post );
+
+		// Get post & title
+		$post  = get_post( $post );
+		$title = $post->post_title;
 
 		// Force title to empty string
 		if ( empty( $post->post_title ) || esc_html__( 'Auto Draft' ) === $post->post_title ) {
+			var_dump( $post->post_type ); die;
 			$title = '';
 		}
 
