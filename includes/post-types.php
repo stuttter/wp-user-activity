@@ -15,6 +15,17 @@ defined( 'ABSPATH' ) || exit;
  * @since 0.1.0
  */
 function wp_user_activity_register_post_types() {
+	register_post_type( 'activity', wp_user_activity_get_post_type_args() );
+}
+
+/**
+ * Return the post type arguments
+ *
+ * @since 0.1.0
+ *
+ * @return array
+ */
+function wp_user_activity_get_post_type_args() {
 
 	// Labels
 	$labels = array(
@@ -43,8 +54,8 @@ function wp_user_activity_register_post_types() {
 		'post-formats'
 	);
 
-	// Post type arguments
-	$args = array(
+	// Filter & return
+	return apply_filters( 'wp_user_activity_get_post_type_args', array(
 		'labels'               => $labels,
 		'supports'             => $supports,
 		'description'          => '',
@@ -66,12 +77,18 @@ function wp_user_activity_register_post_types() {
 		'query_var'            => true,
 		'can_export'           => true,
 		'delete_with_user'     => true,
-	);
-
-	// Register the activity type
-	register_post_type( 'activity', $args );
+	) );
 }
 
+/**
+ * Filter the post content & append activity action to it
+ *
+ * @since 0.1.0
+ *
+ * @param   string  $content
+ *
+ * @return  string
+ */
 function wp_user_activity_append_action_to_the_content( $content = '' ) {
 
 	// Get the current post
