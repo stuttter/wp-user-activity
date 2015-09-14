@@ -17,13 +17,22 @@ defined( 'ABSPATH' ) || exit;
 class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 
 	/**
-	 * What type of object is this?
+	 * The unique type for this activity
 	 *
 	 * @since 0.1.0
 	 *
 	 * @var string
 	 */
 	public $object_type = 'user';
+
+	/**
+	 * Icon of this activity type
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $icon = 'admin-users';
 
 	/**
 	 * Add hooks
@@ -192,10 +201,10 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 *
 	 * @return string
 	 */
-	public function delete_action_callback( $post ) {
+	public function delete_action_callback( $post, $meta = array() ) {
 		return sprintf(
 			$this->get_activity_action( 'delete' ),
-			$this->get_activity_author_link( $post ),
+			$meta->object_name,
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -289,7 +298,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 		// Insert activity
 		wp_insert_user_activity( array(
 			'object_type' => $this->object_type,
-			'object_name' => $user->user_nicename,
+			'object_name' => $user->display_name,
 			'object_id'   => $user->ID,
 			'action'      => 'delete'
 		) );

@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 abstract class WP_User_Activity_Type {
 
 	/**
-	 * What type of object is this?
+	 * The unique type for this activity
 	 *
 	 * @since 0.1.0
 	 *
@@ -26,7 +26,7 @@ abstract class WP_User_Activity_Type {
 	public $object_type = '';
 
 	/**
-	 * Name of this activity action
+	 * Name of this activity type
 	 *
 	 * @since 0.1.0
 	 *
@@ -35,7 +35,16 @@ abstract class WP_User_Activity_Type {
 	public $name = '';
 
 	/**
-	 * Description of this activity action
+	 * Icon of this activity type
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $icon = '';
+
+	/**
+	 * Description of this activity type
 	 *
 	 * @since 0.1.0
 	 *
@@ -93,11 +102,22 @@ abstract class WP_User_Activity_Type {
 	 * @return string
 	 */
 	public function get_name() {
-		if ( ! empty( $this->name ) ) {
-			return $this->name;
-		}
+		return ! empty( $this->name )
+			? $this->name
+			: ucfirst( $this->object_type );
+	}
 
-		return ucfirst( $this->object_type );
+	/**
+	 * Return the activity name
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
+	public function get_icon() {
+		return ! empty( $this->icon )
+			? sanitize_key( $this->icon )
+			: '';
 	}
 
 	/**
@@ -110,11 +130,9 @@ abstract class WP_User_Activity_Type {
 	 * @return  string
 	 */
 	public function get_activity_action_name( $action = '' ) {
-		if ( ! empty( $this->action_callbacks[ $action ]->name ) ) {
-			return $this->action_callbacks[ $action ]->name;
-		}
-
-		return ucwords( $action );
+		return ! empty( $this->action_callbacks[ $action ]->name )
+			? $this->action_callbacks[ $action ]->name
+			: ucwords( $action );
 	}
 
 	/**
@@ -221,13 +239,39 @@ abstract class WP_User_Activity_Type {
 	 * @return  string
 	 */
 	protected function get_how_long_ago( $post_id = 0 ) {
+
+		// Get the post
 		$post  = get_post( $post_id );
 		$date  = get_the_date( get_option( 'date_format' ), $post->ID );
 		$time  = get_the_time( get_option( 'time_format' ), $post->ID );
 		$both  = "{$date} {$time}";
+
+		// Get the human readable difference
 		$pt    = strtotime( $post->post_date_gmt );
 		$human = wp_user_activity_human_diff_time( $pt, current_time( 'timestamp', true ) );
-		return '<time pubdate datetime="' . esc_attr( $both ) . '" title="' . esc_attr( $both ) . '">' . sprintf( '%s ago', $human ) . '</time>';
+
+		// Start with the timestamp
+		$classes = get_post_class( 'wp-user-activity', $post->ID );
+		$url     = false;
+		$retval  = '<time class="diff-time" pubdate datetime="' . esc_attr( $both ) . '" title="' . esc_attr( $both ) . '">' . sprintf( '%s ago', $human ) . '</time>';
+
+		// Edit link
+		if ( is_admin() && current_user_can( 'edit_post', $post->ID ) ) {
+			$classes[] = 'edit-link';
+			$url       = get_edit_post_link( $post->ID );
+
+		// View link
+		} elseif ( is_post_type_viewable( $post->post_type ) ) {
+			$classes[] = 'view-link';
+			$url       = get_post_permalink( $post->ID );
+		}
+
+		// Wrap time in anchor tag
+		if ( ! empty( $url ) ) {
+			$retval = '<a href="' . esc_url( $url ) . '" class="' . join( ' ', $classes ) . '">' . $retval . '</a>';
+		}
+
+		return $retval;
 	}
 }
 

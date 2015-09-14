@@ -1,7 +1,13 @@
-.column-severity {
-	width: 5%;
+.column-type {
+	width: 60px;
 }
 
+.column-session,
 .column-when {
-	width: 25%;
+	width: 18%;
+}
+
+.column-session abbr {
+	cursor: pointer;
+	border-bottom: 1px dotted #aaa;
 }

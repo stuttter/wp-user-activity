@@ -17,13 +17,22 @@ defined( 'ABSPATH' ) || exit;
 class WP_User_Activity_Type_Menu extends WP_User_Activity_Type {
 
 	/**
-	 * What type of object is this?
+	 * The unique type for this activity
 	 *
 	 * @since 0.1.0
 	 *
 	 * @var string
 	 */
 	public $object_type = 'menu';
+
+	/**
+	 * Icon of this activity type
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $icon = 'menu';
 
 	/**
 	 * Add hooks
@@ -48,7 +57,7 @@ class WP_User_Activity_Type_Menu extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'update',
 			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
-			'message' => esc_html__( '%1$s edited "%2$s" menu %3$s.', 'wp-user-activity' )
+			'message' => esc_html__( '%1$s edited the "%2$s" menu %3$s.', 'wp-user-activity' )
 		) );
 
 		// Delete
@@ -56,7 +65,7 @@ class WP_User_Activity_Type_Menu extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'delete',
 			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
-			'message' => esc_html__( '%1$s deleted "%2$s" menu %3$s.', 'wp-user-activity' )
+			'message' => esc_html__( '%1$s deleted the "%2$s" menu %3$s.', 'wp-user-activity' )
 		) );
 
 		// Actions

@@ -23,6 +23,8 @@ function wp_user_activity_register_default_types() {
 /**
  * Get the default user activity types
  *
+ * Filter this array to autoload more activity types
+ *
  * @since 0.1.0
  */
 function wp_get_default_user_activity_types() {
@@ -74,22 +76,24 @@ function wp_insert_user_activity( $args = array() ) {
 		'object_name'    => '',
 		'object_id'      => 0,
 		'action'         => '',
-		'severity'       => 'info'
+		'status'         => 'info',
+		'ip'             => wp_user_activity_current_user_ip(),
+		'ua'             => wp_user_activity_current_user_ua(),
 	) );
 
 	// Create activity entry
 	$post_id = wp_insert_post( array(
 		'post_type'   => 'activity',
 		'post_author' => $r['user_id'],
-		'post_status' => $r['severity']
+		'post_status' => $r['status']
 	) );
 
 	// Don't save user ID to meta
-	unset( $r['user_id'], $r['severity'] );
+	unset( $r['user_id'], $r['status'] );
 
 	// Add post meta
 	foreach ( $r as $key => $value ) {
-		update_post_meta( $post_id, $key, $value );
+		update_post_meta( $post_id, 'wp_user_activity_' . $key, $value );
 	}
 }
 
@@ -102,13 +106,15 @@ function wp_insert_user_activity( $args = array() ) {
  * @return array
  */
 function wp_get_user_activity_meta( $post_id = 0 ) {
-	return array(
-		'object_type'    => get_post_meta( $post_id, 'object_type',     true ),
-		'object_subtype' => get_post_meta( $post_id, 'object_subtype',  true ),
-		'object_name'    => get_post_meta( $post_id, 'object_name',     true ),
-		'object_id'      => get_post_meta( $post_id, 'object_id',       true ),
-		'action'         => get_post_meta( $post_id, 'action',          true )
-	);
+	return apply_filters( 'wp_get_user_activity_meta', array(
+		'object_type'    => get_post_meta( $post_id, 'wp_user_activity_object_type',    true ),
+		'object_subtype' => get_post_meta( $post_id, 'wp_user_activity_object_subtype', true ),
+		'object_name'    => get_post_meta( $post_id, 'wp_user_activity_object_name',    true ),
+		'object_id'      => get_post_meta( $post_id, 'wp_user_activity_object_id',      true ),
+		'action'         => get_post_meta( $post_id, 'wp_user_activity_action',         true ),
+		'ip'             => get_post_meta( $post_id, 'wp_user_activity_ip',             true ),
+		'ua'             => get_post_meta( $post_id, 'wp_user_activity_ua',             true )
+	) );
 }
 
 /**
@@ -290,7 +296,7 @@ function wp_user_activity_register_action_callback( $object_type = '', $action =
 }
 
 /**
- * Get the activity severity
+ * Get the activity status
  *
  * @since 0.1.0
  *
@@ -299,19 +305,14 @@ function wp_user_activity_register_action_callback( $object_type = '', $action =
  *
  * @return  string
  */
-function wp_get_user_activity_severity( $post = 0, $meta = array() ) {
+function wp_get_user_activity_status_icon( $post = 0, $meta = array() ) {
 
 	// Get the post
-	$post     = get_post( $post );
-	$severity = get_post_status( $post );
+	$post   = get_post( $post );
+	$status = get_post_status( $post );
 
-	// Assemble the filter key
-	$key = "wp_get_user_activity_{$meta['object_type']}_{$severity}";
-
-	// Filter & return
-	$retval = apply_filters( $key, $severity, $post, $meta );
-
-	switch ( $retval ) {
+	// Decide based on status
+	switch ( $status ) {
 
 		// Severities
 		case 'debug' :
@@ -351,11 +352,53 @@ function wp_get_user_activity_severity( $post = 0, $meta = array() ) {
 			break;
 	}
 
-	// Return the severity if no human readable action was found
+	// Return the status if no human readable action was found
 	$retval = '<i class="dashicons dashicons-' . esc_attr( $icon ) . '"></i>';
 
 	// Filter & return
-	return apply_filters( 'wp_get_user_activity_severity', $retval, $post, $meta );
+	return apply_filters( 'wp_get_user_activity_status', $retval, $post, $meta );
+}
+
+/**
+ * Get the icon for an activity-type
+ *
+ * @since 0.1.0
+ *
+ * @param   int    $post
+ * @param   array  $meta
+ *
+ * @return  string
+ */
+function wp_get_user_activity_type_icon( $post = 0, $meta = array() ) {
+
+	// Get the post
+	$_post = get_post( $post );
+
+	// Get meta if none passed
+	if ( empty( $meta ) ) {
+		$meta = wp_get_user_activity_meta( $_post->ID );
+	}
+
+	// Get activity type
+	$type = isset( $GLOBALS['wp_user_activity_actions'][ $meta['object_type'] ] )
+		? $GLOBALS['wp_user_activity_actions'][ $meta['object_type'] ]
+		: '';
+
+	// Get type name
+	$type_name = ! empty( $type )
+		? $type->get_name()
+		: '';
+
+	// Get type name
+	$type_icon = ! empty( $type )
+		? $type->get_icon()
+		: '';
+
+	// Format the icon
+	$retval = '<i class="dashicons dashicons-' . esc_attr( $type_icon ) . '" title="' . esc_attr( $type_name ) . '"></i>';
+
+	// Filter & return
+	return apply_filters( 'wp_get_user_activity_icon', $retval, $post, $meta );
 }
 
 /**
@@ -394,16 +437,16 @@ function wp_get_user_activity_action( $post = 0, $meta = array() ) {
 }
 
 /**
- * Get the activity object data
+ * Get the activity action
  *
  * @since 0.1.0
  *
- * @param   int   $post
- * @param   array $meta
+ * @param   int    $post
+ * @param   array  $meta
  *
  * @return  string
  */
-function wp_get_user_activity_object( $post = 0, $meta = array() ) {
+function wp_get_user_activity_ip( $post = 0, $meta = array() ) {
 
 	// Get the post
 	$_post = get_post( $post );
@@ -413,34 +456,105 @@ function wp_get_user_activity_object( $post = 0, $meta = array() ) {
 		$meta = wp_get_user_activity_meta( $_post->ID );
 	}
 
-	// Assemble the filter key
-	$key = "wp_get_user_activity_{$meta['object_type']}_{$meta['object_subtype']}";
+	// Get IP address
+	$retval = ! empty( $meta['ip'] )
+		? $meta['ip']
+		: '0.0.0.0';
 
 	// Filter & return
-	$retval = apply_filters( $key, $_post, (object) $meta );
+	return apply_filters( 'wp_get_user_activity_ip', $retval, $_post, $meta );
+}
 
-	// Return the action if no human readable action was found
-	if ( $retval instanceof WP_Post ) {
+/**
+ * Get the activity action
+ *
+ * @since 0.1.0
+ *
+ * @param   int    $post
+ * @param   array  $meta
+ *
+ * @return  string
+ */
+function wp_get_user_activity_ua( $post = 0, $meta = array() ) {
 
-		// Set return value as empty array
-		$object = array();
+	// Get the post
+	$_post = get_post( $post );
 
-		// Assemble the object data
-		foreach ( $meta as $key => $value ) {
+	// Get meta if none passed
+	if ( empty( $meta ) ) {
+		$meta = wp_get_user_activity_meta( $_post->ID );
+	}
 
-			// Dash if empty
-			if ( empty( $value ) ) {
-				continue;
-			}
+	// Get IP address
+	$retval = ! empty( $meta['ua'] )
+		? $meta['ua']
+		: '&mdash;';
 
-			// Output the object data
-			$object[] = sprintf( '%s : %s', ucfirst( str_replace( 'object_', '', $key ) ), $value );
-		}
+	// Filter & return
+	return apply_filters( 'wp_get_user_activity_ua', $retval, $_post, $meta );
+}
 
-		// Assemble
-		$retval = implode( '<br>', $object );
+/**
+ * Get the user's IP address
+ *
+ * @since 0.1.0
+ *
+ * @return string
+ */
+function wp_user_activity_current_user_ip() {
+
+	// Default value
+	$retval = false;
+
+	// Look for logged in session
+	if ( is_user_logged_in() ) {
+		$manager = WP_Session_Tokens::get_instance( get_current_user_id() );
+		$session = $manager->get( wp_get_session_token() );
+		$retval  = $session['ip'];
+	}
+
+	// No session IP
+	if ( empty( $retval ) || ! is_user_logged_in() ) {
+
+		// Check for remote address
+		$remote_address = ! empty( $_SERVER['REMOTE_ADDR'] )
+			? $_SERVER['REMOTE_ADDR']
+			: '0.0.0.0';
+
+		// Remove any unsavory bits
+		$retval = preg_replace( '/[^0-9a-fA-F:., ]/', '', $remote_address );
 	}
 
 	// Filter & return
-	return apply_filters( 'wp_get_user_activity_object', $retval, $_post, $meta );
+	return apply_filters( 'wp_user_activity_current_user_ip', $retval );
+}
+
+/**
+ * Get the user's browser user-agent
+ *
+ * @since 0.1.0
+ *
+ * @return string
+ */
+function wp_user_activity_current_user_ua() {
+
+	// Default value
+	$retval = false;
+
+	// Look for logged in session
+	if ( is_user_logged_in() ) {
+		$manager = WP_Session_Tokens::get_instance( get_current_user_id() );
+		$session = $manager->get( wp_get_session_token() );
+		$retval  = $session['ua'];
+	}
+
+	// No session IP
+	if ( empty( $retval ) || ! is_user_logged_in() ) {
+		$retval = ! empty( $_SERVER['HTTP_USER_AGENT'] )
+			? substr( $_SERVER['HTTP_USER_AGENT'], 0, 254 )
+			: '';
+	}
+
+	// Filter & return
+	return apply_filters( 'wp_user_activity_current_user_ua', $retval );
 }

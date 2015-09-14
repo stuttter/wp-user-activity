@@ -17,13 +17,22 @@ defined( 'ABSPATH' ) || exit;
 class WP_User_Activity_Type_Taxonomy extends WP_User_Activity_Type {
 
 	/**
-	 * What type of object is this?
+	 * The unique type for this activity
 	 *
 	 * @since 0.1.0
 	 *
 	 * @var string
 	 */
 	public $object_type = 'term';
+
+	/**
+	 * Icon of this activity type
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $icon = 'tag';
 
 	/**
 	 * Add hooks

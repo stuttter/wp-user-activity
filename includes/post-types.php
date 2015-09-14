@@ -47,17 +47,10 @@ function wp_user_activity_get_post_type_args() {
 		'use_featured_image'    => __( 'Use as featured image', 'wp-user-activity' ),
 	);
 
-	// Supports
-	$supports = array(
-		'editor',
-		'comments',
-		'post-formats'
-	);
-
 	// Filter & return
 	return apply_filters( 'wp_user_activity_get_post_type_args', array(
 		'labels'               => $labels,
-		'supports'             => $supports,
+		'supports'             => false,
 		'description'          => '',
 		'public'               => true,
 		'hierarchical'         => true,

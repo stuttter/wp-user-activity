@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 class WP_User_Activity_Type_Site_Settings extends WP_User_Activity_Type {
 
 	/**
-	 * What type of object is this?
+	 * The unique type for this activity
 	 *
 	 * @since 0.1.0
 	 *
@@ -26,11 +26,23 @@ class WP_User_Activity_Type_Site_Settings extends WP_User_Activity_Type {
 	public $object_type = 'site-setting';
 
 	/**
+	 * Icon of this activity type
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $icon = 'admin-settings';
+
+	/**
 	 * Add hooks
 	 *
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+
+		// Set name
+		$this->name = esc_html__( 'Site Settings', 'wp-user-activity' );
 
 		// Update
 		new WP_User_Activity_Action( array(
