@@ -95,7 +95,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 		parent::__construct();
 	}
 
-	/** Actions ***************************************************************/
+	/** Callbacks *************************************************************/
 
 	/**
 	 * Callback for returning human-readable output.
