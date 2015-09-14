@@ -38,7 +38,7 @@ class WP_User_Activity_Type_Taxonomy extends WP_User_Activity_Type {
 		// Create
 		new WP_User_Activity_Action( array(
 			'type'    => $this,
-			'action'  > 'create',
+			'action'  => 'create',
 			'name'    => esc_html__( 'Create', 'wp-user-activity' ),
 			'message' => esc_html__( '%1$s created the "%2$s" %3$s %4$s.', 'wp-user-activity' )
 		) );
