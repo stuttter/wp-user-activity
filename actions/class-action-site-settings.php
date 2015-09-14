@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Site_Settings extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Site_Settings extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,16 +32,13 @@ class WP_User_Activity_Action_Site_Settings extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
-
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s updated the "%2$s" site setting %3$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s updated the "%2$s" site setting %3$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'updated_option', array( $this, 'updated_option' ), 10, 3 );
@@ -183,4 +180,3 @@ class WP_User_Activity_Action_Site_Settings extends WP_User_Activity_Action {
 		) );
 	}
 }
-new WP_User_Activity_Action_Site_Settings();

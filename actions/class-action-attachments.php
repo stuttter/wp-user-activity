@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Attachment extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,30 +32,32 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
+		// Set name
+		$this->name = esc_html__( 'Attachments', 'wp-user-actiivity' );
 
-			// Create
-			'create' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s uploaded "%2$s" %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Create
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'create',
+			'name'    => esc_html__( 'Create', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s uploaded "%2$s" %3$s.', 'wp-user-activity' )
+		) );
 
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s edited "%2$s" %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s edited "%2$s" %3$s.', 'wp-user-activity' )
+		) );
 
-			// Delete
-			'delete' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s deleted "%2$s" %3$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Delete
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'delete',
+			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s deleted "%2$s" %3$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'add_attachment',    array( $this, 'add_attachment'    ) );
@@ -141,8 +143,8 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action {
 		// Insert activity
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
-			'object_subtype' => get_post_mime_type( $post->ID ),
-			'object_name'    => get_the_title( $post->ID ),
+			'object_subtype' => $post->post_mime_type,
+			'object_name'    => $post->post_title,
 			'object_id'      => $attachment_id,
 			'action'         => $action,
 		) );
@@ -181,4 +183,3 @@ class WP_User_Activity_Action_Attachment extends WP_User_Activity_Action {
 		$this->add_attachment_activity( 'delete', $attachment_id );
 	}
 }
-new WP_User_Activity_Action_Attachment();

@@ -12,8 +12,13 @@ defined( 'ABSPATH' ) || exit;
 // Global
 add_action( 'init', 'wp_user_activity_register_post_types'    );
 add_action( 'init', 'wp_user_activity_register_post_statuses' );
+add_action( 'init', 'wp_user_activity_register_post_metadata' );
+
+// Setup the default activity types
+add_action( 'init', 'wp_user_activity_register_default_types', 11 );
 
 add_filter( 'the_content', 'wp_user_activity_append_action_to_the_content', 10, 2 );
+
 // Assets
 add_action( 'admin_head', 'wp_user_activity_admin_assets' );
 

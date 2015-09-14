@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Core extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Core extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,23 +32,24 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
+		// Set name
+		$this->name = esc_html__( 'Core', 'wp-user-actiivity' );
 
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s updated WordPress %2$s.', 'wp-user-activity' )
-				)
-			),
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s updated WordPress %2$s.', 'wp-user-activity' )
+		) );
 
-			// Auto-update
-			'auto-update' => array(
-				'labels' => array(
-					'description' => esc_html__( 'WordPress auto-updated %1$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Auto-update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'auto_update',
+			'name'    => esc_html__( 'Auto-update', 'wp-user-activity' ),
+			'message' => esc_html__( 'WordPress auto-updated %1$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( '_core_updated_successfully', array( $this, 'core_updated_successfully' ) );
@@ -88,7 +89,7 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action {
 	 */
 	public function auto_update_action_callback( $post ) {
 		return sprintf(
-			$this->get_activity_action( 'auto-update' ),
+			$this->get_activity_action( 'auto_update' ),
 			$this->get_how_long_ago( $post )
 		);
 	}
@@ -125,4 +126,3 @@ class WP_User_Activity_Action_Core extends WP_User_Activity_Action {
 		) );
 	}
 }
-new WP_User_Activity_Action_Core();

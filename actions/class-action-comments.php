@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Comments extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Comments extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,58 +32,64 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
+		// Set name
+		$this->name = esc_html__( 'Comments', 'wp-user-actiivity' );
 
-			// Create
-			'create' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s left a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Create
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'create',
+			'name'    => esc_html__( 'Create', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s left a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s updated a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s updated a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Delete
-			'delete' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s deleted a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Delete
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'delete',
+			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s deleted a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Trash
-			'trash' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s trashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Trash
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'trash',
+			'name'    => esc_html__( 'Trash', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s trashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Untrash
-			'untrash' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s untrashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Untrash
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'untrash',
+			'name'    => esc_html__( 'Untrash', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s untrashed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Spam
-			'spam' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s spammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Spam
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'spam',
+			'name'    => esc_html__( 'Spam', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s spammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Unspam
-			'unspam' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s unspammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Unspammed
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'unspam',
+			'name'    => esc_html__( 'Unspam', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s unspammed a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'wp_insert_comment', array( $this, 'handle_comment' ), 10, 2 );
@@ -258,11 +264,14 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action {
 			$comment = get_comment( $id );
 		}
 
+		// Get the post so we can use raw db data
+		$post = get_post( $comment->comment_post_ID );
+
 		// Insert activity
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
-			'object_subtype' => get_post_type( $comment->comment_post_ID ),
-			'object_name'    => get_the_title( $comment->comment_post_ID ),
+			'object_subtype' => $post->post_type,
+			'object_name'    => $post->post_title,
 			'object_id'      => $id,
 			'action'         => $action
 		) );
@@ -342,4 +351,4 @@ class WP_User_Activity_Action_Comments extends WP_User_Activity_Action {
 		$this->add_comment_activity( $comment->comment_ID, $new_status, $comment );
 	}
 }
-new WP_User_Activity_Action_Comments();
+new WP_User_Activity_Type_Comments();

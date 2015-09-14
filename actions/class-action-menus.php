@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Menu extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Menu extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,30 +32,32 @@ class WP_User_Activity_Action_Menu extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
+		// Set name
+		$this->name = esc_html__( 'Menus', 'wp-user-activity' );
 
-			// Create
-			'create' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s created the "%2$s" menu %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Create
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'create',
+			'name'    => esc_html__( 'Create', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s created the "%2$s" menu %3$s.', 'wp-user-activity' )
+		) );
 
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s edited the "%2$s" menu %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s edited "%2$s" menu %3$s.', 'wp-user-activity' )
+		) );
 
-			// Delete
-			'delete' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s deleted the "%2$s" menu %3$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Delete
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'delete',
+			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s deleted "%2$s" menu %3$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'wp_update_nav_menu', array( $this, 'menu_created_or_updated' ) );
@@ -176,4 +178,3 @@ class WP_User_Activity_Action_Menu extends WP_User_Activity_Action {
 		) );
 	}
 }
-new WP_User_Activity_Action_Menu();

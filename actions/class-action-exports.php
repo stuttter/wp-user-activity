@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Export extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Export extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,16 +32,13 @@ class WP_User_Activity_Action_Export extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
-
-			// Export
-			'export' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s exported "%2$s" %3$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Export
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'export',
+			'name'    => esc_html__( 'Export', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s exported "%2$s" %3$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'export_wp', array( $this, 'export_wp' ) );
@@ -96,4 +93,3 @@ class WP_User_Activity_Action_Export extends WP_User_Activity_Action {
 		) );
 	}
 }
-new WP_User_Activity_Action_Export();

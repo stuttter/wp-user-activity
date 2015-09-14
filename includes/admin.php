@@ -207,6 +207,21 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 	<label class="screen-reader-text" for="cat"><?php esc_html_e( 'Filter by action', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-actions">
 		<option value=""><?php esc_html_e( 'All actions', 'wp-user-activity' ); ?></option>
+
+		<?php foreach ( $GLOBALS['wp_user_activity_actions'] as $action_class ) : ?>
+
+		<optgroup label="<?php echo esc_html( $action_class->get_name() ); ?>">
+
+			<?php foreach ( $action_class->action_callbacks as $callback_id => $callback ) : ?>
+
+				<option value="<?php echo esc_attr( $callback_id ); ?>"><?php echo esc_html( $action_class->get_activity_action_name( $callback_id ) ); ?></option>
+
+			<?php endforeach; ?>
+
+		</optgroup>
+
+		<?php endforeach; ?>
+
 	</select>
 
 	<?php

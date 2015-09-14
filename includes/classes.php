@@ -12,9 +12,9 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Empty abstract class
  *
- * Class WP_User_Activity_Action_Base
+ * Class WP_User_Activity_Type_Base
  */
-abstract class WP_User_Activity_Action {
+abstract class WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -24,6 +24,24 @@ abstract class WP_User_Activity_Action {
 	 * @var string
 	 */
 	public $object_type = '';
+
+	/**
+	 * Name of this activity action
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $name = '';
+
+	/**
+	 * Description of this activity action
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $description = '';
 
 	/**
 	 * Array of action callback methods
@@ -40,6 +58,12 @@ abstract class WP_User_Activity_Action {
 	 * @since 0.1.0
 	 */
 	public function __construct() {
+		global $wp_user_activity_actions;
+
+		// Set the global action
+		$wp_user_activity_actions[ $this->object_type ] = $this;
+
+		// Register action callbacks
 		$this->register_action_callbacks();
 	}
 
@@ -62,6 +86,38 @@ abstract class WP_User_Activity_Action {
 	}
 
 	/**
+	 * Return the activity name
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
+	public function get_name() {
+		if ( ! empty( $this->name ) ) {
+			return $this->name;
+		}
+
+		return ucfirst( $this->object_type );
+	}
+
+	/**
+	 * Get the string used to output an action
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param   string  $action
+	 *
+	 * @return  string
+	 */
+	public function get_activity_action_name( $action = '' ) {
+		if ( ! empty( $this->action_callbacks[ $action ]->name ) ) {
+			return $this->action_callbacks[ $action ]->name;
+		}
+
+		return ucwords( $action );
+	}
+
+	/**
 	 * Get the string used to output an action
 	 *
 	 * @since 0.1.0
@@ -71,11 +127,11 @@ abstract class WP_User_Activity_Action {
 	 * @return  string
 	 */
 	protected function get_activity_action( $action = '' ) {
-		if ( isset( $this->action_callbacks[ $action ]['labels']['description'] ) ) {
-			return $this->action_callbacks[ $action ]['labels']['description'];
+		if ( ! empty( $this->action_callbacks[ $action ]->message ) ) {
+			return $this->action_callbacks[ $action ]->message;
 		}
 
-		return '%s %s %s %s';
+		return '%s %s %s';
 	}
 
 	/**
@@ -172,5 +228,66 @@ abstract class WP_User_Activity_Action {
 		$pt    = strtotime( $post->post_date_gmt );
 		$human = wp_user_activity_human_diff_time( $pt, current_time( 'timestamp', true ) );
 		return '<time pubdate datetime="' . esc_attr( $both ) . '" title="' . esc_attr( $both ) . '">' . sprintf( '%s ago', $human ) . '</time>';
+	}
+}
+
+/**
+ * An activity action
+ *
+ * @since 0.1.0
+ */
+class WP_User_Activity_Action {
+
+	/**
+	 * What type of object is this?
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $action = '';
+
+	/**
+	 * Name of this activity action
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $name = '';
+
+	/**
+	 * Message for this activity action
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $message = '';
+
+	/**
+	 * Probably hook things in here
+	 *
+	 * @since 0.1.0
+	 */
+	public function __construct( $args = array() ) {
+
+		// Parse args
+		$r = wp_parse_args( $args, array(
+			'type'    => '',
+			'action'  => '',
+			'name'    => '',
+			'message' => '',
+			'order'   => 0
+		) );
+
+		// Set object vars
+		$this->action  = sanitize_key( $r['action'] );
+		$this->order   = intval( $r['order'] );
+		$this->name    = wp_kses( $r['name'],    array() );
+		$this->message = wp_kses( $r['message'], array() );
+
+		// Setup the callback
+		$r['type']->action_callbacks[ $r['action'] ] = $this;
 	}
 }

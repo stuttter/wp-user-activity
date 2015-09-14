@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-function wp_user_activity_init() {
+function _wp_user_activity_init() {
 
 	// Include the files
 	$dir = dirname( __FILE__ );
@@ -32,6 +32,7 @@ function wp_user_activity_init() {
 	include $dir . '/includes/post-types.php';
 	include $dir . '/includes/post-statuses.php';
 	include $dir . '/includes/taxonomies.php';
+	include $dir . '/includes/metadata.php';
 	include $dir . '/includes/hooks.php';
 
 	// Actions
@@ -48,7 +49,7 @@ function wp_user_activity_init() {
 	include $dir . '/actions/class-action-users.php';
 	include $dir . '/actions/class-action-widgets.php';
 }
-add_action( 'plugins_loaded', 'wp_user_activity_init' );
+add_action( 'plugins_loaded', '_wp_user_activity_init' );
 
 /**
  * Return the plugin's URL

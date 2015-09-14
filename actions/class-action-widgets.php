@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Widgets extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,24 +32,21 @@ class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => '',
+			'message' => esc_html__( '%1$s edited the "%2$s" widget %3$s.', 'wp-user-activity' )
+		) );
 
-		// Setup callbacks
-		$this->action_callbacks = array(
-
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s edited the "%2$s" widget %3$s.', 'wp-user-activity' )
-				)
-			),
-
-			// Delete
-			'delete' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s deleted the "%2$s" widget %3$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Delete
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'delete',
+			'name'    => '',
+			'message' => esc_html__( '%1$s deleted the "%2$s" widget %3$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'widget_update_callback', array( $this, 'widget_update_callback' ), 9999, 4 );
@@ -188,4 +185,3 @@ class WP_User_Activity_Action_Widgets extends WP_User_Activity_Action {
 		return 'unknown';
 	}
 }
-new WP_User_Activity_Action_Widgets();

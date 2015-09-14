@@ -10,6 +10,54 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Register the default user activity types
+ *
+ * @since 0.1.0
+ */
+function wp_user_activity_register_default_types() {
+	foreach ( wp_get_default_user_activity_types() as $type ) {
+		wp_register_user_activity_type( $type );
+	}
+}
+
+/**
+ * Get the default user activity types
+ *
+ * @since 0.1.0
+ */
+function wp_get_default_user_activity_types() {
+	return apply_filters( 'wp_get_default_user_activity_types', array(
+		'WP_User_Activity_Type_Attachment',
+		'WP_User_Activity_Type_Comments',
+		'WP_User_Activity_Type_Core',
+		'WP_User_Activity_Type_Export',
+		'WP_User_Activity_Type_Menu',
+		'WP_User_Activity_Type_Plugins',
+		'WP_User_Activity_Type_Posts',
+		'WP_User_Activity_Type_Site_Settings',
+		'WP_User_Activity_Type_Taxonomy',
+		'WP_User_Activity_Type_Theme',
+		'WP_User_Activity_Type_User',
+		'WP_User_Activity_Type_Widgets'
+	) );
+}
+
+/**
+ * Register a new activity type
+ *
+ * This is pretty lame, but it's
+ *
+ * @since 0.1.0
+ *
+ * @param  string  $class_name
+ */
+function wp_register_user_activity_type( $class_name = '' ) {
+	if ( class_exists( $class_name ) ) {
+		new $class_name;
+	}
+}
+
+/**
  * Insert a new user activity item
  *
  * @since 0.1.0
@@ -26,7 +74,7 @@ function wp_insert_user_activity( $args = array() ) {
 		'object_name'    => '',
 		'object_id'      => 0,
 		'action'         => '',
-		'severity'       => 'info',
+		'severity'       => 'info'
 	) );
 
 	// Create activity entry
@@ -37,11 +85,11 @@ function wp_insert_user_activity( $args = array() ) {
 	) );
 
 	// Don't save user ID to meta
-	unset( $r['user_id'] );
+	unset( $r['user_id'], $r['severity'] );
 
 	// Add post meta
 	foreach ( $r as $key => $value ) {
-		add_post_meta( $post_id, $key, $value );
+		update_post_meta( $post_id, $key, $value );
 	}
 }
 
@@ -59,8 +107,7 @@ function wp_get_user_activity_meta( $post_id = 0 ) {
 		'object_subtype' => get_post_meta( $post_id, 'object_subtype',  true ),
 		'object_name'    => get_post_meta( $post_id, 'object_name',     true ),
 		'object_id'      => get_post_meta( $post_id, 'object_id',       true ),
-		'action'         => get_post_meta( $post_id, 'action',          true ),
-		'severity'       => get_post_meta( $post_id, 'severity',        true )
+		'action'         => get_post_meta( $post_id, 'action',          true )
 	);
 }
 
@@ -254,27 +301,61 @@ function wp_user_activity_register_action_callback( $object_type = '', $action =
  */
 function wp_get_user_activity_severity( $post = 0, $meta = array() ) {
 
-	// Assemble the filter key
-	$key = "wp_get_user_activity_{$meta['object_type']}_{$meta['severity']}";
-
 	// Get the post
-	$post = get_post( $post );
+	$post     = get_post( $post );
+	$severity = get_post_status( $post );
 
-	// Get meta if none passed
-	if ( empty( $meta ) ) {
-		$meta = wp_get_user_activity_meta( $post->ID );
-	}
+	// Assemble the filter key
+	$key = "wp_get_user_activity_{$meta['object_type']}_{$severity}";
 
 	// Filter & return
-	$retval = apply_filters( $key, $post, (object) $meta );
+	$retval = apply_filters( $key, $severity, $post, $meta );
+
+	switch ( $retval ) {
+
+		// Severities
+		case 'debug' :
+			$icon = 'editor-code';
+			break;
+		case 'info' :
+			$icon = 'info';
+			break;
+		case 'notice' :
+			$icon = 'lightbulb';
+			break;
+		case 'warning' :
+			$icon = 'warning';
+			break;
+		case 'error' :
+			$icon = 'dismiss';
+			break;
+		case 'critical' :
+			$icon = 'lightbulb';
+			break;
+		case 'alert' :
+			$icon = 'flag';
+			break;
+		case 'emergency' :
+			$icon = 'help';
+			break;
+
+		// Statuses
+		case 'publish' :
+			$icon = 'testimonial';
+			break;
+		case 'trash' :
+			$icon = 'trash';
+			break;
+		case 'private' :
+			$icon = 'hidden';
+			break;
+	}
 
 	// Return the severity if no human readable action was found
-	if ( $retval instanceof WP_Post ) {
-		return '<i class="dashicons dashicons-' . $meta['severity'] . '"></i>';
-	}
+	$retval = '<i class="dashicons dashicons-' . esc_attr( $icon ) . '"></i>';
 
 	// Filter & return
-	return apply_filter( 'wp_get_user_activity_severity', $retval, $post, $meta );
+	return apply_filters( 'wp_get_user_activity_severity', $retval, $post, $meta );
 }
 
 /**

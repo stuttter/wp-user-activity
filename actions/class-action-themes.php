@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Theme extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,51 +32,56 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
+		// Set name
+		$this->name = esc_html__( 'Themes', 'wp-user-activity' );
 
-			// Customize
-			'customize' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s customized the "%2$s" theme %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Customize
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'customize',
+			'name'    => esc_html__( 'Customize', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s customized the "%2$s" theme %3$s.', 'wp-user-activity' )
+		) );
 
-			// Activate
-			'activate' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s activated the "%2$s" theme %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Activate
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'activate',
+			'name'    => esc_html__( 'Activate', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s activated the "%2$s" theme %3$s.', 'wp-user-activity' )
+		) );
 
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s updated the "%2$s" theme %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s updated the "%2$s" theme %3$s.', 'wp-user-activity' )
+		) );
 
-			// Install
-			'install' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s installed the "%2$s" theme %3$s.', 'wp-user-activity' )
-				)
-			),
+		// Install
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'install',
+			'name'    => esc_html__( 'Install', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s installed the "%2$s" theme %3$s.', 'wp-user-activity' )
+		) );
 
-			// Update file
-			'file_update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s edited "%2$s" in the "%3$s" theme file %4$s.', 'wp-user-activity' )
-				)
-			),
+		// File update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'file_update',
+			'name'    => esc_html__( 'File Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s edited "%2$s" in the "%3$s" theme file %4$s.', 'wp-user-activity' )
+		) );
 
-			// Delete
-			'delete' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s deleted the "%2$s" theme %3$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Delete
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'delete',
+			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s deleted the "%2$s" theme %3$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'delete_site_transient_update_themes', array( $this, 'theme_deleted'           ) );
@@ -392,4 +397,3 @@ class WP_User_Activity_Action_Theme extends WP_User_Activity_Action {
 		}
 	}
 }
-new WP_User_Activity_Action_Theme();

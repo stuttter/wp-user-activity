@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-class WP_User_Activity_Action_Posts extends WP_User_Activity_Action {
+class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 
 	/**
 	 * What type of object is this?
@@ -32,65 +32,72 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action {
 	 */
 	public function __construct() {
 
-		// Setup callbacks
-		$this->action_callbacks = array(
+		// Set name
+		$this->name = esc_html__( 'Posts', 'wp-user-actiivity' );
 
-			// Create
-			'create' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s created "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Create
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'create',
+			'name'    => esc_html__( 'Create', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s created the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Update
-			'update' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s edited the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Update
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'update',
+			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s edited the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Delete
-			'delete' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Delete
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'delete',
+			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s deleted the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Trash
-			'trash' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s trashed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Trash
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'trash',
+			'name'    => esc_html__( 'Trash', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s trashed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Untrash
-			'untrash' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s untrashed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Untrash
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'untrash',
+			'name'    => esc_html__( 'Untrash', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s untrashed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Spam
-			'spam' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s spammed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Spam
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'spam',
+			'name'    => esc_html__( 'Spam', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s spammed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Unspam
-			'unspam' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s unspammed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			),
+		// Unspammed
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'unspam',
+			'name'    => esc_html__( 'Unspam', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s unspammed the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
-			// Future
-			'future' => array(
-				'labels' => array(
-					'description' => esc_html__( '%1$s scheduled the "%2$s" %3$s %4$s.', 'wp-user-activity' )
-				)
-			)
-		);
+		// Future
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'future',
+			'name'    => esc_html__( 'Unspam', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s scheduled the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
 
 		// Actions
 		add_action( 'transition_post_status', array( $this, 'transition_post_status' ), 10, 3 );
@@ -296,10 +303,15 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action {
 	 * @return  string
 	 */
 	protected function _draft_or_post_title( $post = 0 ) {
-		$title = get_the_title( $post );
+		$post = get_post( $post );
 
 		// Force title to empty string
-		if ( empty( $title ) || __( 'Auto Draft' ) === $title ) {
+		if ( empty( $post->post_title ) || esc_html__( 'Auto Draft' ) === $post->post_title ) {
+			$title = '';
+		}
+
+		// No title if not supported
+		if ( ! post_type_supports( $post->post_type, 'title' ) ) {
 			$title = '';
 		}
 
@@ -436,4 +448,3 @@ class WP_User_Activity_Action_Posts extends WP_User_Activity_Action {
 		) );
 	}
 }
-new WP_User_Activity_Action_Posts();
