@@ -23,6 +23,10 @@ add_filter( 'the_content', 'wp_user_activity_append_action_to_the_content', 10, 
 add_action( 'add_meta_boxes', 'wp_user_activity_add_metabox'  );
 add_action( 'save_post',      'wp_user_activity_metabox_save' );
 
+// Quick edit
+add_filter( 'page_row_actions',           'wp_user_activity_disable_quick_edit_link', 10, 2 );
+add_filter( 'bulk_actions-edit-activity', 'wp_user_activity_disable_bulk_action'            );
+
 // Assets
 add_action( 'admin_head', 'wp_user_activity_admin_assets' );
 

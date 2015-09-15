@@ -143,7 +143,7 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 
 	// Get post & metadata
 	$post  = get_post( $post_id );
-	$meta  = wp_get_user_activity_meta( $post_id );
+	$meta  = wp_user_activity_get_meta( $post_id );
 
 	// Custom column IDs
 	switch ( $column ) {
@@ -205,6 +205,40 @@ function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type
 
 	// Return maybe modified value
 	return $disabled;
+}
+
+/**
+ * Unset the "Quick Edit" row action
+ *
+ * @since 0.1.0
+ *
+ * @param array $actions
+ */
+function wp_user_activity_disable_quick_edit_link( $actions = array(), $post = '' ) {
+
+	// Unset the quick edit action
+	if ( 'activity' === $post->post_type ) {
+		unset( $actions['inline hide-if-no-js'] );
+	}
+
+	return $actions;
+}
+
+/**
+ * Filter bulk actions & unset the edit action
+ *
+ * @since 0.1.0
+ *
+ * @param   array  $actions
+ * @return  array
+ */
+function wp_user_activity_disable_bulk_action( $actions = array() ) {
+
+	// No bulk edit
+	unset( $actions['edit'] );
+
+	// Return without bulk edit
+	return $actions;
 }
 
 /**
