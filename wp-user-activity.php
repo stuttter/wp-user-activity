@@ -33,6 +33,7 @@ function _wp_user_activity_init() {
 	include $dir . '/includes/post-statuses.php';
 	include $dir . '/includes/taxonomies.php';
 	include $dir . '/includes/metadata.php';
+	include $dir . '/includes/metaboxes.php';
 	include $dir . '/includes/hooks.php';
 
 	// Actions
