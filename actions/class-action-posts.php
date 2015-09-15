@@ -104,7 +104,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		new WP_User_Activity_Action( array(
 			'type'    => $this,
 			'action'  => 'future',
-			'name'    => esc_html__( 'Unspam', 'wp-user-activity' ),
+			'name'    => esc_html__( 'Scheduled', 'wp-user-activity' ),
 			'message' => esc_html__( '%1$s scheduled the "%2$s" %3$s %4$s.', 'wp-user-activity' )
 		) );
 
