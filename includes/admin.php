@@ -277,7 +277,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 
 	<label class="screen-reader-text" for="type"><?php esc_html_e( 'Filter by type', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-action" id="wp-user-activity-action">
-		<option value=""><?php esc_html_e( '&mdash; All actions &mdash;', 'wp-user-activity' ); ?></option>
+		<option value=""><?php esc_html_e( 'All actions', 'wp-user-activity' ); ?></option>
 
 		<?php foreach ( $action_types as $action_class ) : ?>
 
@@ -300,7 +300,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 
 	<label class="screen-reader-text" for="wp-user-activity-user"><?php esc_html_e( 'Filter by user', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-user" id="wp-user-activity-user">
-		<option value="0"><?php esc_html_e( '&mdash; All users &mdash;', 'wp-user-activity' ); ?></option>
+		<option value="0"><?php esc_html_e( 'All users', 'wp-user-activity' ); ?></option>
 
 		<?php foreach ( $users as $user ) : ?>
 
