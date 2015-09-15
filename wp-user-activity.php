@@ -31,7 +31,6 @@ function _wp_user_activity_init() {
 	include $dir . '/includes/capabilities.php';
 	include $dir . '/includes/functions.php';
 	include $dir . '/includes/post-types.php';
-	include $dir . '/includes/post-statuses.php';
 	include $dir . '/includes/taxonomies.php';
 	include $dir . '/includes/metadata.php';
 	include $dir . '/includes/metaboxes.php';

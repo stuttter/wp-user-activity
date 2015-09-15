@@ -76,7 +76,6 @@ function wp_insert_user_activity( $args = array() ) {
 		'object_name'    => '',
 		'object_id'      => 0,
 		'action'         => '',
-		'status'         => 'info',
 		'ip'             => wp_user_activity_current_user_ip(),
 		'ua'             => wp_user_activity_current_user_ua(),
 	) );
@@ -85,11 +84,11 @@ function wp_insert_user_activity( $args = array() ) {
 	$post_id = wp_insert_post( array(
 		'post_type'   => 'activity',
 		'post_author' => $r['user_id'],
-		'post_status' => $r['status']
+		'post_status' => 'publish'
 	) );
 
 	// Don't save user ID to meta
-	unset( $r['user_id'], $r['status'] );
+	unset( $r['user_id'] );
 
 	// Add post meta
 	foreach ( $r as $key => $value ) {
@@ -293,70 +292,6 @@ function wp_user_activity_register_action_callback( $object_type = '', $action =
 	$key = "wp_get_user_activity_{$object_type}_{$action}";
 
 	add_filter( $key, $callback, 10, 2 );
-}
-
-/**
- * Get the activity status
- *
- * @since 0.1.0
- *
- * @param   int    $post
- * @param   array  $meta
- *
- * @return  string
- */
-function wp_get_user_activity_status_icon( $post = 0, $meta = array() ) {
-
-	// Get the post
-	$post   = get_post( $post );
-	$status = get_post_status( $post );
-
-	// Decide based on status
-	switch ( $status ) {
-
-		// Severities
-		case 'debug' :
-			$icon = 'editor-code';
-			break;
-		case 'info' :
-			$icon = 'info';
-			break;
-		case 'notice' :
-			$icon = 'lightbulb';
-			break;
-		case 'warning' :
-			$icon = 'warning';
-			break;
-		case 'error' :
-			$icon = 'dismiss';
-			break;
-		case 'critical' :
-			$icon = 'lightbulb';
-			break;
-		case 'alert' :
-			$icon = 'flag';
-			break;
-		case 'emergency' :
-			$icon = 'help';
-			break;
-
-		// Statuses
-		case 'publish' :
-			$icon = 'testimonial';
-			break;
-		case 'trash' :
-			$icon = 'trash';
-			break;
-		case 'private' :
-			$icon = 'hidden';
-			break;
-	}
-
-	// Return the status if no human readable action was found
-	$retval = '<i class="dashicons dashicons-' . esc_attr( $icon ) . '"></i>';
-
-	// Filter & return
-	return apply_filters( 'wp_get_user_activity_status', $retval, $post, $meta );
 }
 
 /**

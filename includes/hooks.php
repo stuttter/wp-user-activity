@@ -11,7 +11,6 @@ defined( 'ABSPATH' ) || exit;
 
 // Global
 add_action( 'init', 'wp_user_activity_register_post_types'    );
-add_action( 'init', 'wp_user_activity_register_post_statuses' );
 add_action( 'init', 'wp_user_activity_register_post_metadata' );
 
 // Setup the default activity types
