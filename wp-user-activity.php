@@ -28,6 +28,7 @@ function _wp_user_activity_init() {
 	// Include the files
 	include $dir . '/includes/admin.php';
 	include $dir . '/includes/classes.php';
+	include $dir . '/includes/capabilities.php';
 	include $dir . '/includes/functions.php';
 	include $dir . '/includes/post-types.php';
 	include $dir . '/includes/post-statuses.php';

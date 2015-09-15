@@ -256,7 +256,7 @@ abstract class WP_User_Activity_Type {
 		$retval  = '<time class="diff-time" pubdate datetime="' . esc_attr( $both ) . '" title="' . esc_attr( $both ) . '">' . sprintf( '%s ago', $human ) . '</time>';
 
 		// Edit link
-		if ( is_admin() && current_user_can( 'edit_post', $post->ID ) ) {
+		if ( is_admin() && current_user_can( 'edit_activity', $post->ID ) ) {
 			$classes[] = 'edit-link';
 			$url       = get_edit_post_link( $post->ID );
 

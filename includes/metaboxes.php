@@ -212,7 +212,7 @@ function wp_user_activity_metabox_save( $post_id = 0 ) {
 	}
 
 	// Bail if user cannot edit this activity
-	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+	if ( ! current_user_can( 'edit_activity', $post_id ) ) {
 		return $post_id;
 	}
 

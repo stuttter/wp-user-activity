@@ -47,6 +47,24 @@ function wp_user_activity_get_post_type_args() {
 		'use_featured_image'    => __( 'Use as featured image', 'wp-user-activity' ),
 	);
 
+	// Capability types
+	$cap_types = array(
+		'activity',
+		'activities'
+	);
+
+	// Capabilities
+	$caps = array(
+		'create_posts'        => 'create_activities',
+		'edit_posts'          => 'edit_activities',
+		'edit_others_posts'   => 'edit_others_activities',
+		'publish_posts'       => 'publish_activities',
+		'read_private_posts'  => 'read_private_activities',
+		'read_hidden_posts'   => 'read_hidden_activities',
+		'delete_posts'        => 'delete_activities',
+		'delete_others_posts' => 'delete_others_activities'
+	);
+
 	// Filter & return
 	return apply_filters( 'wp_user_activity_get_post_type_args', array(
 		'labels'               => $labels,
@@ -62,7 +80,8 @@ function wp_user_activity_get_post_type_args() {
 		'show_in_admin_bar'    => true,
 		'menu_position'        => 3,
 		'menu_icon'            => 'dashicons-backup',
-		'capability_type'      => 'page',
+		'capabilities'         => $caps,
+		'capability_type'      => $cap_types,
 		'register_meta_box_cb' => null,
 		'taxonomies'           => array(),
 		'has_archive'          => true,

@@ -17,6 +17,10 @@ add_action( 'init', 'wp_user_activity_register_post_metadata' );
 // Setup the default activity types
 add_action( 'init', 'wp_user_activity_register_default_types', 11 );
 
+// Caps
+add_filter( 'map_meta_cap', 'wp_user_activity_meta_caps', 10, 4 );
+
+// Append activity action
 add_filter( 'the_content', 'wp_user_activity_append_action_to_the_content', 10, 2 );
 
 // Metaboxes
