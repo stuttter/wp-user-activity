@@ -28,7 +28,7 @@ function wp_user_activity_meta_caps( $caps = array(), $cap = '', $user_id = 0, $
 
 		// Reading
 		case 'read_activity' :
-			$caps = array( 'read' );
+			$caps = array( 'list_users' );
 			break;
 
 		// Creating
