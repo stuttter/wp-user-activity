@@ -105,8 +105,8 @@ function wp_insert_user_activity( $args = array() ) {
  * @param  int  $post_id
  * @return array
  */
-function wp_get_user_activity_meta( $post_id = 0 ) {
-	return apply_filters( 'wp_get_user_activity_meta', array(
+function wp_user_activity_get_meta( $post_id = 0 ) {
+	return apply_filters( 'wp_user_activity_get_meta', array(
 		'object_type'    => get_post_meta( $post_id, 'wp_user_activity_object_type',    true ),
 		'object_subtype' => get_post_meta( $post_id, 'wp_user_activity_object_subtype', true ),
 		'object_name'    => get_post_meta( $post_id, 'wp_user_activity_object_name',    true ),
@@ -376,7 +376,7 @@ function wp_get_user_activity_type_icon( $post = 0, $meta = array() ) {
 
 	// Get meta if none passed
 	if ( empty( $meta ) ) {
-		$meta = wp_get_user_activity_meta( $_post->ID );
+		$meta = wp_user_activity_get_meta( $_post->ID );
 	}
 
 	// Get activity type
@@ -418,7 +418,7 @@ function wp_get_user_activity_action( $post = 0, $meta = array() ) {
 
 	// Get meta if none passed
 	if ( empty( $meta ) ) {
-		$meta = wp_get_user_activity_meta( $_post->ID );
+		$meta = wp_user_activity_get_meta( $_post->ID );
 	}
 
 	// Assemble the filter key
@@ -453,7 +453,7 @@ function wp_get_user_activity_ip( $post = 0, $meta = array() ) {
 
 	// Get meta if none passed
 	if ( empty( $meta ) ) {
-		$meta = wp_get_user_activity_meta( $_post->ID );
+		$meta = wp_user_activity_get_meta( $_post->ID );
 	}
 
 	// Get IP address
@@ -482,7 +482,7 @@ function wp_get_user_activity_ua( $post = 0, $meta = array() ) {
 
 	// Get meta if none passed
 	if ( empty( $meta ) ) {
-		$meta = wp_get_user_activity_meta( $_post->ID );
+		$meta = wp_user_activity_get_meta( $_post->ID );
 	}
 
 	// Get IP address
