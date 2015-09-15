@@ -19,6 +19,10 @@ add_action( 'init', 'wp_user_activity_register_default_types', 11 );
 
 add_filter( 'the_content', 'wp_user_activity_append_action_to_the_content', 10, 2 );
 
+// Metaboxes
+add_action( 'add_meta_boxes', 'wp_user_activity_add_metabox'  );
+add_action( 'save_post',      'wp_user_activity_metabox_save' );
+
 // Assets
 add_action( 'admin_head', 'wp_user_activity_admin_assets' );
 
