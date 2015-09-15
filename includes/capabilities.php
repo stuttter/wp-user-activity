@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Maps event capabilities
+ * Maps activity capabilities
  *
  * @since 0.1.0
  *
