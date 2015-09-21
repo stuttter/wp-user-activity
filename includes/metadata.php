@@ -63,10 +63,10 @@ function wp_user_activity_sanitize_object_name( $value = '' ) {
  *
  * @since 0.1.2
  *
- * @param   string  $value
- * @return  string
+ * @param   int  $value
+ * @return  int
  */
-function wp_user_activity_sanitize_object_id( $value = '' ) {
+function wp_user_activity_sanitize_object_id( $value = 0 ) {
 	return absint( $value );
 }
 
