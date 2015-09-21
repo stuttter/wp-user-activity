@@ -230,7 +230,7 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 function wp_user_activity_admin_assets() {
 
 	// Bail if not an activity post type
-	if ( 'activity' !== get_post_type() ) {
+	if ( 'activity' !== $GLOBALS['typenow'] ) {
 		return;
 	}
 
