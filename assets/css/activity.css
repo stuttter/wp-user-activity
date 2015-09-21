@@ -2,13 +2,27 @@ body.post-type-activity #post-body-content {
 	margin: 0;
 }
 
-body.post-type-activity th.column-type {
-	width: 60px;
+@media screen and ( max-width: 782px ) {
+	body.post-type-activity .column-type {
+		display: none !important;
+		visibility: hidden;
+		height: 0;
+		width: 0;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+	}
 }
 
-body.post-type-activity th.column-session,
-body.post-type-activity th.column-when {
-	width: 18%;
+@media screen and ( min-width: 782px ) {
+	body.post-type-activity th.column-type {
+		width: 60px;
+	}
+
+	body.post-type-activity th.column-session,
+	body.post-type-activity th.column-when {
+		width: 18%;
+	}
 }
 
 body.post-type-activity .column-session abbr {
