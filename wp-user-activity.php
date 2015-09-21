@@ -71,5 +71,5 @@ function wp_user_activity_get_plugin_url() {
  * @return int
  */
 function wp_user_activity_get_asset_version() {
-	return 201509210001;
+	return 201509210002;
 }
