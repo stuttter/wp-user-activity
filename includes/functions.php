@@ -333,7 +333,7 @@ function wp_get_user_activity_type_icon( $post = 0, $meta = array() ) {
 	$retval = '<i class="dashicons dashicons-' . esc_attr( $type_icon ) . '" title="' . esc_attr( $type_name ) . '"></i>';
 
 	// Filter & return
-	return apply_filters( 'wp_get_user_activity_icon', $retval, $post, $meta );
+	return apply_filters( 'wp_get_user_activity_type_icon', $retval, $post, $meta );
 }
 
 /**
