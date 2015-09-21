@@ -2,16 +2,16 @@ body.post-type-activity #post-body-content {
 	margin: 0;
 }
 
-.column-type {
+body.post-type-activity .column-type {
 	width: 60px;
 }
 
-.column-session,
-.column-when {
+body.post-type-activity .column-session,
+body.post-type-activity .column-when {
 	width: 18%;
 }
 
-.column-session abbr {
+body.post-type-activity .column-session abbr {
 	cursor: pointer;
 	border-bottom: 1px dotted #aaa;
 }
