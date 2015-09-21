@@ -6,7 +6,7 @@
  * Description: Activity streams, for your users
  * Author:      John James Jacoby
  * Author URI:  https://jjj.me
- * Version:     0.1.1
+ * Version:     0.1.2
  * Text Domain: wp-user-activity
  * Domain Path: /languages/
  * License:     GPLv2 or later (license.txt)
@@ -71,5 +71,5 @@ function wp_user_activity_get_plugin_url() {
  * @return int
  */
 function wp_user_activity_get_asset_version() {
-	return 201509210002;
+	return 201509210003;
 }
