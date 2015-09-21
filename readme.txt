@@ -3,7 +3,7 @@ Contributors: johnjamesjacoby, stuttter
 Tags: users, activity, log, attachment, comment, core, export, menu, plugin, post, settings, term, theme, user, widget
 Requires at least: 4.3
 Tested up to: 4.3
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,9 @@ The WordPress support forums: https://wordpress.org/support/plugin/wp-user-activ
 http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
+
+= 0.1.1 =
+* Improve admin styling 
 
 = 0.1.0 =
 * Initial release
