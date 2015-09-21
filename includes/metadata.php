@@ -15,24 +15,70 @@ defined( 'ABSPATH' ) || exit;
  * @since 0.1.0
  */
 function wp_user_activity_register_post_metadata() {
-	register_meta( 'post', 'wp_user_activity_object_type',    'sanitize_key'   );
-	register_meta( 'post', 'wp_user_activity_object_subtype', '__return_value' );
-	register_meta( 'post', 'wp_user_activity_object_name',    '__return_value' );
-	register_meta( 'post', 'wp_user_activity_object_id',      'absint'         );
-	register_meta( 'post', 'wp_user_activity_action',         'sanitize_key'   );
+	register_meta( 'post', 'wp_user_activity_object_type',    'wp_user_activity_sanitize_object_type'    );
+	register_meta( 'post', 'wp_user_activity_object_subtype', 'wp_user_activity_sanitize_object_subtype' );
+	register_meta( 'post', 'wp_user_activity_object_name',    'wp_user_activity_sanitize_object_name'    );
+	register_meta( 'post', 'wp_user_activity_object_id',      'wp_user_activity_sanitize_object_id'      );
+	register_meta( 'post', 'wp_user_activity_action',         'wp_user_activity_sanitize_object_action'  );
 }
 
 /**
- * Return the value being passed into it.
+ * Return the object type
  *
- * This is a very dumb hack to allow us to register meta keys when the value
- * does not require additional input sanitization.
- *
- * @since 0.1.0
+ * @since 0.1.2
  *
  * @param   string  $value
  * @return  string
  */
-function __return_value( $value = '' ) {
+function wp_user_activity_sanitize_object_type( $value = '' ) {
+	return sanitize_key( $value );
+}
+
+/**
+ * Return the object subtype
+ *
+ * @since 0.1.2
+ *
+ * @param   string  $value
+ * @return  string
+ */
+function wp_user_activity_sanitize_object_subtype( $value = '' ) {
 	return $value;
 }
+
+/**
+ * Return the object name
+ *
+ * @since 0.1.2
+ *
+ * @param   string  $value
+ * @return  string
+ */
+function wp_user_activity_sanitize_object_name( $value = '' ) {
+	return $value;
+}
+
+/**
+ * Return the object name
+ *
+ * @since 0.1.2
+ *
+ * @param   string  $value
+ * @return  string
+ */
+function wp_user_activity_sanitize_object_id( $value = '' ) {
+	return absint( $value );
+}
+
+/**
+ * Return the object action
+ *
+ * @since 0.1.2
+ *
+ * @param   string  $value
+ * @return  string
+ */
+function wp_user_activity_sanitize_object_action( $value = '' ) {
+	return sanitize_key( $value );
+}
+
