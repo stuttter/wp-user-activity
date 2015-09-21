@@ -2,12 +2,12 @@ body.post-type-activity #post-body-content {
 	margin: 0;
 }
 
-body.post-type-activity .column-type {
+body.post-type-activity th.column-type {
 	width: 60px;
 }
 
-body.post-type-activity .column-session,
-body.post-type-activity .column-when {
+body.post-type-activity th.column-session,
+body.post-type-activity th.column-when {
 	width: 18%;
 }
 
