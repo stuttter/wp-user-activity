@@ -15,17 +15,17 @@ Activity is broken down into object "Types" and "Actions." Types are the objects
 
 = Examples =
 
-```
+`
 Admin logged in 2 minutes ago.
-```
+`
 
-```
+`
 Admin created the post "Hello World" 33 seconds ago.
-```
+`
 
-```
+`
 Admin created the topic "I need help!" 5 days ago.
-```
+`
 
 = Available Actions =
 
@@ -74,13 +74,13 @@ Yes. It will work perfectly with all post-types & taxonomies that define their o
 
 Yes. The autoloader can be filtered, so adding new object types is as simple as:
 
-```
+`
 add_filter( 'wp_get_default_user_activity_types', function( $types = array() ) {
-	$types[] = 'Your_New_Type' // extends `WP_User_Activity_Type`
+	$types[] = 'Your_New_Type' // class that extends WP_User_Activity_Type
 } );
-```
+`
 
-The `WP_User_Activity_Type_Taxonomy` is a good example to start with, if you'd like to create your own actions. It registers simple create/update/delete methods, with easy to understand messages & integrations.
+The `WP_User_Activity_Type_Taxonomy` class is a good example to start with, if you'd like to create your own actions. It registers simple create/update/delete methods, with easy to understand messages & integrations.
 
 = Does this create new database tables? =
 
