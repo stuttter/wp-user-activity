@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 function _wp_user_activity_init() {
 
 	// Include the files
-	$dir = dirname( __FILE__ );
+	$dir = plugin_dir_path( __FILE__ );
 
 	// Include the files
 	include $dir . '/includes/admin.php';
