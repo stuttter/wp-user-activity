@@ -1,0 +1,18 @@
+{
+  "name": "stuttter/wp-user-activity",
+  "description": "The best way to log activity in WordPress",
+  "homepage": "https://github.com/stuttter/wp-user-activity",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.2",
+    "composer/installers": "^1.0"
+  },
+  "license": "GPLv2 or later",
+  "authors": [
+    {
+      "name": "John James Jacoby",
+      "email": "johnjamesjacoby@me.com"
+    }
+  ]
+}
+
