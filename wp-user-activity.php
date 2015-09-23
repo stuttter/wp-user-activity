@@ -3,7 +3,7 @@
 /**
  * Plugin Name: WP User Activity
  * Plugin URI:  https://wordpress.org/plugins/wp-user-activity/
- * Description: Activity streams, for your users
+ * Description: The best way to log activity in WordPress
  * Author:      John James Jacoby
  * Author URI:  https://jjj.me
  * Version:     0.1.2
