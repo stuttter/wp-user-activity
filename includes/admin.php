@@ -21,11 +21,10 @@ function wp_user_activity_menu_humility() {
 		return;
 	}
 
-	// Unset top level page
-	remove_menu_page( 'edit.php?post_type=activity' );
-
-	// Add dashboard page
-	add_dashboard_page( esc_html__( 'Activity', 'wp-user-activity' ), esc_html__( 'Activity', 'wp-user-activity' ), 'edit_activities', 'edit.php?post_type=activity' );
+	// Unset top level page & add a dashboard page on success
+	if ( remove_menu_page( 'edit.php?post_type=activity' ) ) {
+		add_dashboard_page( esc_html__( 'Activity', 'wp-user-activity' ), esc_html__( 'Activity', 'wp-user-activity' ), 'edit_activities', 'edit.php?post_type=activity' );
+	}
 }
 
 /**
