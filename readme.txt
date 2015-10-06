@@ -100,6 +100,10 @@ http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
 
+= 0.1.3 =
+* Add menu humility filter
+* Improve capability checks
+
 = 0.1.2 =
 * Improve admin styling
 * Add metadata callbacks

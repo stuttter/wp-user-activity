@@ -33,6 +33,9 @@ add_filter( 'bulk_actions-edit-activity', 'wp_user_activity_disable_bulk_action'
 // Assets
 add_action( 'admin_head', 'wp_user_activity_admin_assets' );
 
+// Menu Humility
+add_action( 'admin_menu', 'wp_user_activity_menu_humility' );
+
 // List Table
 add_filter( 'disable_months_dropdown', 'wp_user_activity_disable_months_dropdown', 10, 2 );
 add_action( 'restrict_manage_posts',   'wp_user_activity_add_dropdown_filters'           );

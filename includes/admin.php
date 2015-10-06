@@ -10,6 +10,25 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Tuck the top level menu underneath the dashboard menu instead
+ *
+ * @since 0.1.3
+ */
+function wp_user_activity_menu_humility() {
+
+	// Bail if not using menu humility
+	if ( ! apply_filters( 'wp_user_activity_menu_humility', false ) ) {
+		return;
+	}
+
+	// Unset top level page
+	remove_menu_page( 'edit.php?post_type=activity' );
+
+	// Add dashboard page
+	add_dashboard_page( esc_html__( 'Activity', 'wp-user-activity' ), esc_html__( 'Activity', 'wp-user-activity' ), 'edit_activities', 'edit.php?post_type=activity' );
+}
+
+/**
  * Filter activity posts list-table columns
  *
  * @since 0.1.0
