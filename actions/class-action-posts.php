@@ -319,7 +319,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 
 		// Force title to empty string
 		if ( empty( $title ) || esc_html__( 'Auto Draft' ) === $title ) {
-			$title = 'unnamed';
+			$title = 'untitled';
 		}
 
 		// No title if not supported
