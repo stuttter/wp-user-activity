@@ -80,20 +80,27 @@ function wp_insert_user_activity( $args = array() ) {
 		'ua'             => wp_user_activity_current_user_ua(),
 	) );
 
-	// Create activity entry
-	$post_id = wp_insert_post( array(
-		'post_type'   => 'activity',
-		'post_author' => $r['user_id'],
-		'post_status' => 'publish'
-	) );
+	// Copy user ID
+	$user_id = $r['user_id'];
 
-	// Don't save user ID to meta
+	// Unset user_id from $r array so it's not saved in meta
 	unset( $r['user_id'] );
+
+	// Setup empty meta-input array
+	$meta_input = array();
 
 	// Add post meta
 	foreach ( $r as $key => $value ) {
-		update_post_meta( $post_id, 'wp_user_activity_' . $key, $value );
+		$meta_input[ 'wp_user_activity_' . $key ] = $value;
 	}
+
+	// Create activity entry
+	wp_insert_post( array(
+		'post_type'   => 'activity',
+		'post_author' => $user_id,
+		'post_status' => 'publish',
+		'meta_input'  => $meta_input
+	) );
 }
 
 /**
