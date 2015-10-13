@@ -324,7 +324,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 
 		// No title if not supported
 		if ( ! post_type_supports( $post->post_type, 'title' ) ) {
-			$title = '';
+			$title = 'untitled';
 		}
 
 		return $title;
