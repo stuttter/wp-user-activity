@@ -6,7 +6,7 @@
  * Description: The best way to log activity in WordPress
  * Author:      John James Jacoby
  * Author URI:  https://jjj.me
- * Version:     0.1.3
+ * Version:     0.1.4
  * Text Domain: wp-user-activity
  * Domain Path: /languages/
  * License:     GPLv2 or later (license.txt)
@@ -30,10 +30,11 @@ function _wp_user_activity() {
 	require_once $dir . '/includes/classes.php';
 	require_once $dir . '/includes/capabilities.php';
 	require_once $dir . '/includes/functions.php';
-	require_once $dir . '/includes/post-types.php';
-	require_once $dir . '/includes/taxonomies.php';
+	require_once $dir . '/includes/list-table.php';
 	require_once $dir . '/includes/metadata.php';
 	require_once $dir . '/includes/metaboxes.php';
+	require_once $dir . '/includes/post-types.php';
+	require_once $dir . '/includes/taxonomies.php';
 	require_once $dir . '/includes/hooks.php';
 
 	// Actions
@@ -71,5 +72,5 @@ function wp_user_activity_get_plugin_url() {
  * @return int
  */
 function wp_user_activity_get_asset_version() {
-	return 201509210003;
+	return 201510230001;
 }

@@ -23,8 +23,8 @@ add_filter( 'map_meta_cap', 'wp_user_activity_meta_caps', 10, 4 );
 add_filter( 'the_content', 'wp_user_activity_append_action_to_the_content', 10, 2 );
 
 // Metaboxes
-add_action( 'add_meta_boxes', 'wp_user_activity_add_metabox'  );
-add_action( 'save_post',      'wp_user_activity_metabox_save' );
+add_action( 'add_meta_boxes', 'wp_user_activity_add_metaboxes' );
+add_action( 'save_post',      'wp_user_activity_metabox_save'  );
 
 // Quick edit
 add_filter( 'page_row_actions',           'wp_user_activity_disable_quick_edit_link', 10, 2 );
@@ -51,3 +51,6 @@ if ( is_admin() ) {
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_sort_by_fields'   );
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_filter_by_fields' );
 }
+
+// WP User Profiles
+add_filter( 'wp_user_profiles_sections', 'wp_user_activity_add_profile_section' );

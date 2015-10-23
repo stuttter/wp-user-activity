@@ -14,9 +14,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since  0.1.0
 */
-function wp_user_activity_add_metabox() {
+function wp_user_activity_add_metaboxes() {
+
+	// Activity add/edit
 	add_meta_box( 'wp_user_activity_object_details', __( 'Object', 'wp-user-activity' ), 'wp_user_activity_object_metabox', 'activity', 'normal', 'default' );
 	add_meta_box( 'wp_user_activity_user_details',   __( 'User',   'wp-user-activity' ), 'wp_user_activity_user_metabox',   'activity', 'normal', 'default' );
+
+	// WP User Profiles
+	add_meta_box( 'wp_user_activity_user_profile',   __( 'Activity', 'wp-user-activity' ), 'wp_user_activity_list_metabox', 'users_page_activity', 'normal', 'default' );
 }
 
 /**
@@ -259,4 +264,41 @@ function wp_user_activity_metabox_save( $post_id = 0 ) {
 			update_post_meta( $post_id, 'wp_user_activity_' . $key, $value );
 		}
 	}
+}
+
+/**
+ * Output the user activity metabox
+ *
+ * @since 0.1.9
+ *
+ * @param object $user_id
+ */
+function wp_user_activity_list_metabox( $user_id = 0 ) {
+
+	// Bail if no user ID
+	if ( empty( $user_id ) ) {
+		return;
+	}
+
+	// Bail if somehow in the wrong section
+	if ( ! function_exists( 'wp_user_profiles_sections' ) ) {
+		return;
+	}
+
+	// Page
+	$page = isset( $_REQUEST['page'] )
+		? $_REQUEST['page']
+		: 0;
+
+	// Load up the list table
+	$list_table = new WP_User_Activity_List_table();
+	$list_table->prepare_items( $user_id ); ?>
+
+	<form id="wp-user-activity" method="get">
+		<input type="hidden" name="page" value="<?php echo esc_attr( $page ); ?>" />
+
+		<?php $list_table->display(); ?>
+	</form>
+
+	<?php
 }

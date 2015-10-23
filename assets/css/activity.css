@@ -1,9 +1,9 @@
-body.post-type-activity #post-body-content {
+table.wp-list-table #post-body-content {
 	margin: 0;
 }
 
 @media screen and ( max-width: 782px ) {
-	body.post-type-activity .column-type {
+	table.wp-list-table .column-activity_type {
 		display: none !important;
 		visibility: hidden;
 		height: 0;
@@ -15,17 +15,22 @@ body.post-type-activity #post-body-content {
 }
 
 @media screen and ( min-width: 782px ) {
-	body.post-type-activity th.column-type {
+	table.wp-list-table th.column-activity_type {
 		width: 60px;
 	}
 
-	body.post-type-activity th.column-session,
-	body.post-type-activity th.column-when {
+	table.wp-list-table th.column-activity_session,
+	table.wp-list-table th.column-activity_when {
 		width: 18%;
 	}
 }
 
-body.post-type-activity .column-session abbr {
+table.wp-list-table .column-activity_username img {
+	margin-right: 10px;
+	height: 32px;
+	width: 32px;
+}
+table.wp-list-table .column-activity_session abbr {
 	cursor: pointer;
 	border-bottom: 1px dotted #aaa;
 }
