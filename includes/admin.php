@@ -116,36 +116,38 @@ function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
 	}
 
 	// Set by 'orderby'
-	switch ( $wp_query->query['orderby'] ) {
+	if ( ! empty( $wp_query->query['orderby'] ) ) {
+		switch ( $wp_query->query['orderby'] ) {
 
-		// Type
-		case 'type' :
-			$wp_query->set( 'order',     $order                         );
-			$wp_query->set( 'orderby',   'meta_value'                   );
-			$wp_query->set( 'meta_key',  'wp_user_activity_object_type' );
-			$wp_query->set( 'meta_type', 'CHAR'                         );
-			break;
+			// Type
+			case 'type' :
+				$wp_query->set( 'order',     $order                         );
+				$wp_query->set( 'orderby',   'meta_value'                   );
+				$wp_query->set( 'meta_key',  'wp_user_activity_object_type' );
+				$wp_query->set( 'meta_type', 'CHAR'                         );
+				break;
 
-		// Action
-		case 'username' :
-			$wp_query->set( 'order',   $order        );
-			$wp_query->set( 'orderby', 'post_author' );
-			break;
+			// Action
+			case 'username' :
+				$wp_query->set( 'order',   $order        );
+				$wp_query->set( 'orderby', 'post_author' );
+				break;
 
-		// Session
-		case 'session' :
-			$wp_query->set( 'order',     $order                );
-			$wp_query->set( 'orderby',   'meta_value'          );
-			$wp_query->set( 'meta_key',  'wp_user_activity_ip' );
-			$wp_query->set( 'meta_type', 'NUMERIC'             );
-			break;
+			// Session
+			case 'session' :
+				$wp_query->set( 'order',     $order                );
+				$wp_query->set( 'orderby',   'meta_value'          );
+				$wp_query->set( 'meta_key',  'wp_user_activity_ip' );
+				$wp_query->set( 'meta_type', 'NUMERIC'             );
+				break;
 
-		// Date (default)
-		case 'when' :
-		default :
-			$wp_query->set( 'order',   $order      );
-			$wp_query->set( 'orderby', 'post_date' );
-			break;
+			// Date (default)
+			case 'when' :
+			default :
+				$wp_query->set( 'order',   $order      );
+				$wp_query->set( 'orderby', 'post_date' );
+				break;
+		}
 	}
 }
 
