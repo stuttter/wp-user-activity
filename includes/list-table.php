@@ -120,7 +120,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 * @uses $this->get_pagenum()
 	 * @uses $this->set_pagination_args()
 	 */
-	public function prepare_items( $user_id = 0 ) {
+	public function prepare_items( $user = null ) {
 
 		// Set column headers
 		$this->_column_headers = array(
@@ -142,7 +142,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 		$query = new WP_Query( array(
 			'post_type'           => 'activity',
 			'post_status'         => 'publish',
-			'post_author'         => $user_id,
+			'author'              => $user->ID,
 			'posts_per_page'      => $per_page,
 			'paged'               => $current_page,
 			'orderby'             => $orderby,
