@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.1.0
  */
-function _wp_user_activity_init() {
+function _wp_user_activity() {
 
 	// Include the files
 	$dir = plugin_dir_path( __FILE__ );
@@ -50,7 +50,7 @@ function _wp_user_activity_init() {
 	require_once $dir . '/actions/class-action-users.php';
 	require_once $dir . '/actions/class-action-widgets.php';
 }
-add_action( 'plugins_loaded', '_wp_user_activity_init' );
+add_action( 'plugins_loaded', '_wp_user_activity' );
 
 /**
  * Return the plugin's URL
