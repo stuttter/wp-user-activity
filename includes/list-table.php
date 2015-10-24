@@ -4,8 +4,8 @@
 defined( 'ABSPATH' ) || exit;
 
 // Include the main list table class if it's not included
-if ( ! class_exists( 'WP_Posts_List_Table' ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-wp-posts-list-table.php';
+if ( ! class_exists( 'WP_List_Table' ) ) {
+	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
 // No list table class, so something went very wrong
