@@ -5,8 +5,8 @@
  * Plugin URI:  https://wordpress.org/plugins/wp-user-activity/
  * Description: The best way to log activity in WordPress
  * Author:      John James Jacoby
- * Author URI:  https://jjj.me
- * Version:     0.1.7
+ * Author URI:  http://jjj.me
+ * Version:     0.1.8
  * Text Domain: wp-user-activity
  * Domain Path: /languages/
  * License:     GPLv2 or later (license.txt)
@@ -72,5 +72,5 @@ function wp_user_activity_get_plugin_url() {
  * @return int
  */
 function wp_user_activity_get_asset_version() {
-	return 201510240001;
+	return 201510290001;
 }
