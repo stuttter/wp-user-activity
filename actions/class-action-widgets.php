@@ -58,8 +58,8 @@ class WP_User_Activity_Type_Widgets extends WP_User_Activity_Type {
 		) );
 
 		// Actions
-		add_action( 'widget_update_callback', array( $this, 'widget_update_callback' ), 9999, 4 );
-		add_action( 'sidebar_admin_setup',    array( $this, 'widget_delete'          )          );
+		add_action( 'widget_update_callback', array( $this, 'widget_update_action_callback' ), 9999, 4 );
+		add_action( 'sidebar_admin_setup',    array( $this, 'widget_delete' ) );
 
 		// Setup callbacks
 		parent::__construct();
@@ -118,6 +118,8 @@ class WP_User_Activity_Type_Widgets extends WP_User_Activity_Type {
 	 * @param  WP_Widget  $widget
 	 */
 	public function widget_update_action_callback( $instance, $new_instance, $old_instance, WP_Widget $widget ) {
+
+		// Insert activity
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
 			'object_subtype' => $this->get_sidebar(),
@@ -125,6 +127,9 @@ class WP_User_Activity_Type_Widgets extends WP_User_Activity_Type {
 			'object_id'      => 0,
 			'action'         => 'update'
 		) );
+
+		// Always return this filtered instance
+		return $instance;
 	}
 
 	/**
