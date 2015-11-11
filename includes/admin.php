@@ -396,9 +396,11 @@ function wp_user_activity_add_profile_section( $sections = array() ) {
 
 	// Add the "Activity" section
 	$new_sections['activity'] = array(
-		'slug' => 'activity',
-		'name' => esc_html__( 'Activity', 'wp-user-activity' ),
-		'cap'  => 'read_activity'
+		'slug'  => 'activity',
+		'name'  => esc_html__( 'Activity', 'wp-user-activity' ),
+		'cap'   => 'read_activity',
+		'icon'  => 'dashicons-backup',
+		'order' => 95
 	);
 
 	// Filter & return
