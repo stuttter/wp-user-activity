@@ -14,14 +14,54 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since  0.1.0
 */
-function wp_user_activity_add_metaboxes() {
+function wp_user_activity_add_metaboxes( $type = '' ) {
 
-	// Activity add/edit
-	add_meta_box( 'wp_user_activity_object_details', __( 'Object', 'wp-user-activity' ), 'wp_user_activity_object_metabox', 'activity', 'normal', 'default' );
-	add_meta_box( 'wp_user_activity_user_details',   __( 'User',   'wp-user-activity' ), 'wp_user_activity_user_metabox',   'activity', 'normal', 'default' );
+	// Plugin page
+	$plugin_page = 'activity';
+
+	// Activity add/edit (object)
+	add_meta_box(
+		'wp_user_activity_object_details',
+		__( 'Object', 'wp-user-activity' ),
+		'wp_user_activity_object_metabox',
+		$plugin_page,
+		'normal',
+		'default'
+	);
+
+	// Activity add/edit (user)
+	add_meta_box(
+		'wp_user_activity_user_details',
+		__( 'User', 'wp-user-activity' ),
+		'wp_user_activity_user_metabox',
+		$plugin_page,
+		'normal',
+		'default'
+	);
 
 	// WP User Profiles
-	add_meta_box( 'wp_user_activity_user_profile',   __( 'Activity', 'wp-user-activity' ), 'wp_user_activity_list_metabox', 'users_page_activity', 'normal', 'default' );
+
+	// Bail if no profile sections
+	if ( ! function_exists( 'wp_user_profiles_get_section_hooknames' ) ) {
+		return;
+	}
+
+	// Get hookname
+	$hooks = wp_user_profiles_get_section_hooknames( $plugin_page );
+
+	// Bail if not the correct type
+	if ( ! in_array( $type, $hooks, true ) ) {
+		return;
+	}
+
+	add_meta_box(
+		'wp_user_activity_user_profile',
+		__( 'Activity', 'wp-user-activity' ),
+		'wp_user_activity_list_metabox',
+		$hooks[0],
+		'normal',
+		'default'
+	);
 }
 
 /**
