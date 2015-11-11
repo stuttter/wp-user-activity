@@ -3,7 +3,7 @@ Contributors: johnjamesjacoby, stuttter
 Tags: users, activity, log, attachment, comment, core, export, menu, plugin, post, settings, term, theme, user, widget
 Requires at least: 4.3
 Tested up to: 4.4
-Stable tag: 0.1.8
+Stable tag: 0.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9Q4F4EL5YJ62J
@@ -103,6 +103,9 @@ The WordPress support forums: https://wordpress.org/support/plugin/wp-user-activ
 http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
+
+= 0.1.9 =
+* Support for WP User Profiles 0.1.9
 
 = 0.1.8 =
 * Fix conflict causing widgets not to save
