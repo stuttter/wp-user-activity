@@ -95,6 +95,7 @@ class WP_User_Activity_Type_Plugins extends WP_User_Activity_Type {
 		// Actions
 		add_action( 'activated_plugin',          array( $this, 'activated_plugin'         ) );
 		add_action( 'deactivated_plugin',        array( $this, 'deactivated_plugin'       ) );
+		add_action( 'delete_plugin',             array( $this, 'deleted_plugin'           ) );
 		add_action( 'upgrader_process_complete', array( $this, 'plugin_install_or_update' ), 10, 2 );
 		add_filter( 'wp_redirect',               array( $this, 'plugin_modify'            ), 10, 2 );
 
@@ -236,7 +237,11 @@ class WP_User_Activity_Type_Plugins extends WP_User_Activity_Type {
 			$plugin_dir  = explode( '/', $plugin_name );
 			$plugin_data = array_values( get_plugins( '/' . $plugin_dir[0] ) );
 			$plugin_data = array_shift( $plugin_data );
-			$plugin_name = $plugin_data['Name'];
+
+			// Only override plugin name if a literal name was found
+			if ( ! empty( $plugin_data['Name'] ) ) {
+				$plugin_name = $plugin_data['Name'];
+			}
 		}
 
 		// Insert activity
@@ -268,6 +273,17 @@ class WP_User_Activity_Type_Plugins extends WP_User_Activity_Type {
 	 */
 	public function activated_plugin( $plugin_name = '' ) {
 		$this->add_plugin_activity( 'activate', $plugin_name );
+	}
+
+	/**
+	 * Plugin deleted
+	 *
+	 * @since 0.1.10
+	 *
+	 * @param string $plugin_name
+	 */
+	public function deleted_plugin( $plugin_name = '' ) {
+		$this->add_plugin_activity( 'delete', $plugin_name );
 	}
 
 	/**
