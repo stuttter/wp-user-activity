@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since  0.1.0
 */
-function wp_user_activity_add_metaboxes( $type = '' ) {
+function wp_user_activity_add_metaboxes() {
 
 	// Plugin page
 	$plugin_page = 'activity';
@@ -38,27 +38,31 @@ function wp_user_activity_add_metaboxes( $type = '' ) {
 		'normal',
 		'default'
 	);
+}
 
-	// WP User Profiles
-
-	// Bail if no profile sections
-	if ( ! function_exists( 'wp_user_profiles_get_section_hooknames' ) ) {
-		return;
-	}
+/**
+ * Add metabox to User Profiles section
+ *
+ * @since 0.2.0
+ *
+ * @param string $type
+ */
+function wp_user_activitiy_add_user_profiles_metabox( $type = '' ) {
 
 	// Get hookname
-	$hooks = wp_user_profiles_get_section_hooknames( $plugin_page );
+	$hooks = wp_user_profiles_get_section_hooknames( 'activity' );
 
 	// Bail if not the correct type
 	if ( ! in_array( $type, $hooks, true ) ) {
 		return;
 	}
 
+	// Add the metabox
 	add_meta_box(
 		'wp_user_activity_user_profile',
 		__( 'Activity', 'wp-user-activity' ),
 		'wp_user_activity_list_metabox',
-		$hooks[0],
+		$type,
 		'normal',
 		'default'
 	);
