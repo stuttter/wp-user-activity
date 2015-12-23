@@ -3,13 +3,14 @@
 /**
  * Plugin Name: WP User Activity
  * Plugin URI:  https://wordpress.org/plugins/wp-user-activity/
- * Description: The best way to log activity in WordPress
  * Author:      John James Jacoby
- * Author URI:  http://jjj.me
+ * Author URI:  https://profiles.wordpress.org/johnjamesjacoby/
+ * License:     GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Description: The best way to log activity in WordPress
  * Version:     0.2.0
  * Text Domain: wp-user-activity
- * Domain Path: /languages/
- * License:     GPLv2 or later (license.txt)
+ * Domain Path: /assets/lang/
  */
 
 // Exit if accessed directly
@@ -72,5 +73,5 @@ function wp_user_activity_get_plugin_url() {
  * @return int
  */
 function wp_user_activity_get_asset_version() {
-	return 201512210001;
+	return 201512230001;
 }
