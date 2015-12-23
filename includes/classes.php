@@ -261,7 +261,7 @@ abstract class WP_User_Activity_Type {
 			$url       = get_edit_post_link( $post->ID );
 
 		// View link
-		} elseif ( is_post_type_viewable( $post->post_type ) ) {
+		} elseif ( is_post_type_viewable( get_post_type_object( $post->post_type ) ) ) {
 			$classes[] = 'view-link';
 			$url       = get_post_permalink( $post->ID );
 		}
