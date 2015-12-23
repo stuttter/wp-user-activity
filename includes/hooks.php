@@ -27,7 +27,8 @@ add_action( 'save_post',      'wp_user_activity_metabox_save'  );
 add_action( 'add_meta_boxes', 'wp_user_activity_add_metaboxes' );
 
 // User Profiles
-add_action( 'wp_user_profiles_add_meta_boxes', 'wp_user_activitiy_add_user_profiles_metabox' );
+add_filter( 'wp_user_profiles_sections',       'wp_user_activity_add_profile_section' );
+add_action( 'wp_user_profiles_add_meta_boxes', 'wp_user_activity_add_user_profiles_metabox', 10, 2 );
 
 // Quick edit
 add_filter( 'page_row_actions',           'wp_user_activity_disable_quick_edit_link', 10, 2 );
@@ -54,6 +55,3 @@ if ( is_admin() ) {
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_sort_by_fields'   );
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_filter_by_fields' );
 }
-
-// WP User Profiles
-add_filter( 'wp_user_profiles_sections', 'wp_user_activity_add_profile_section' );

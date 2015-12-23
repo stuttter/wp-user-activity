@@ -1,9 +1,9 @@
 === WP User Activity ===
 Contributors: johnjamesjacoby, stuttter
 Tags: users, activity, log, attachment, comment, core, export, menu, plugin, post, settings, term, theme, user, widget
-Requires at least: 4.3
+Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 0.1.10
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9Q4F4EL5YJ62J
@@ -103,6 +103,9 @@ The WordPress support forums: https://wordpress.org/support/plugin/wp-user-activ
 http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
+
+= 0.2.0 =
+* Support for User Profiles 0.2.0
 
 = 0.1.10 =
 * Add missing action for 'plugin delete'

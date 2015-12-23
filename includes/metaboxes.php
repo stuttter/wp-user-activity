@@ -47,7 +47,7 @@ function wp_user_activity_add_metaboxes() {
  *
  * @param string $type
  */
-function wp_user_activitiy_add_user_profiles_metabox( $type = '' ) {
+function wp_user_activity_add_user_profiles_metabox( $type = '', $user = null ) {
 
 	// Get hookname
 	$hooks = wp_user_profiles_get_section_hooknames( 'activity' );
@@ -64,7 +64,8 @@ function wp_user_activitiy_add_user_profiles_metabox( $type = '' ) {
 		'wp_user_activity_list_metabox',
 		$type,
 		'normal',
-		'default'
+		'default',
+		$user
 	);
 }
 
