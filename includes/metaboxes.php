@@ -193,9 +193,17 @@ function wp_user_activity_user_metabox() {
 				<select name="post_author" id="post_author">
 					<option value="0"><?php esc_html_e( '&mdash; No user &mdash;', 'wp-user-activity' ); ?></option>
 
-					<?php foreach ( $users as $user ) : ?>
+					<?php foreach ( $users as $user ) :
+						$user->filter = 'display';
 
-						<option value="<?php echo esc_attr( $user->ID ); ?>" <?php selected( $post->post_author, $user->ID ); ?>><?php echo esc_html( $user->display_name ); ?></option>
+						// Prefer first & last name, fallback to display name
+						if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
+							$display_name = "{$user->first_name} {$user->last_name}";
+						} else {
+							$display_name = $user->display_name;
+						} ?>
+
+						<option value="<?php echo esc_attr( $user->ID ); ?>" <?php selected( $post->post_author, $user->ID ); ?>><?php echo esc_html( $display_name ); ?></option>
 
 					<?php endforeach; ?>
 
