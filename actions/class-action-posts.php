@@ -322,11 +322,6 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 			$title = 'untitled';
 		}
 
-		// No title if not supported
-		if ( ! post_type_supports( $post->post_type, 'title' ) ) {
-			$title = 'untitled';
-		}
-
 		return $title;
 	}
 
@@ -385,7 +380,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
 			'object_subtype' => $post->post_type,
-			'object_name'    => $this->_draft_or_post_title( $post->ID ),
+			'object_name'    => $this->_draft_or_post_title( $post ),
 			'object_id'      => $post->ID,
 			'action'         => $action
 		) );
@@ -422,7 +417,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
 			'object_subtype' => $post->post_type,
-			'object_name'    => $this->_draft_or_post_title( $post->ID ),
+			'object_name'    => $this->_draft_or_post_title( $post ),
 			'object_id'      => $post->ID,
 			'action'         => 'delete'
 		) );
@@ -454,7 +449,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
 			'object_subtype' => $post->post_type,
-			'object_name'    => $this->_draft_or_post_title( $post->ID ),
+			'object_name'    => $this->_draft_or_post_title( $post ),
 			'object_id'      => $post->ID,
 			'action'         => 'update'
 		) );
