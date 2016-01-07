@@ -176,9 +176,16 @@ abstract class WP_User_Activity_Type {
 			return false;
 		}
 
+		// Prefer fullname over display_name
+		if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
+			$display_name = "{$user->first_name} {$user->last_name}";
+		} else {
+			$display_name = $user->display_name;
+		}
+
 		// Set author defaults
 		$avatar = '';
-		$author = esc_html( $user->display_name );
+		$author = esc_html( $display_name );
 
 		// Get avatar
 		if ( true === $r['author_avatar'] ) {
@@ -188,9 +195,10 @@ abstract class WP_User_Activity_Type {
 		// Link user if a link was found
 		if ( true === $r['author_link'] ) {
 			$link = $this->get_activity_author_url( $user );
+
 			if ( false !== $link ) {
 				$avatar = '<a href="' . esc_url( $link ) . '" class="wp-user-activity user-link alignleft">' . $avatar . '</a>';
-				$author = '<a href="' . esc_url( $link ) . '" class="wp-user-activity user-link">' . esc_html( $user->display_name ) . '</a>';
+				$author = '<a href="' . esc_url( $link ) . '" class="wp-user-activity user-link">' . esc_html( $display_name ) . '</a>';
 			}
 		}
 
