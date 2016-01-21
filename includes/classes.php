@@ -236,6 +236,9 @@ abstract class WP_User_Activity_Type {
 	 */
 	protected function get_activity_author_url( $user = 0 ) {
 
+		// No link
+		$link = false;
+
 		// If in admin, user admin area links
 		if ( is_admin() && current_user_can( 'edit_user', $user->ID ) ) {
 			$link = get_edit_user_link( $user->ID );
