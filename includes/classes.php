@@ -199,6 +199,9 @@ abstract class WP_User_Activity_Type {
 			if ( false !== $link ) {
 				$avatar = '<a href="' . esc_url( $link ) . '" class="wp-user-activity user-link alignleft">' . $avatar . '</a>';
 				$author = '<a href="' . esc_url( $link ) . '" class="wp-user-activity user-link">' . esc_html( $display_name ) . '</a>';
+			} else {
+				$avatar = '<span class="wp-user-activity alignleft">' . $avatar . '</span>';
+				$author = '<span class="wp-user-activity">' . esc_html( $display_name ) . '</span>';
 			}
 		}
 
