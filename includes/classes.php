@@ -214,7 +214,19 @@ abstract class WP_User_Activity_Type {
 	 * @param  int  $post
 	 */
 	protected function get_activity_author( $post = 0 ) {
-		return get_user_by( 'id', get_post( $post )->post_author );
+
+		// Try to get author of post
+		$author = get_post( $post )->post_author;
+		$user   = get_user_by( 'id', $author );
+
+		// Support for unknown user
+		if ( empty( $user ) ) {
+			$user = new WP_User();
+			$user->ID           = 0;
+			$user->display_name = __( 'Someone', 'wp-user-activity' );
+		}
+
+		return $user;
 	}
 
 	/**
