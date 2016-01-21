@@ -241,7 +241,7 @@ abstract class WP_User_Activity_Type {
 			$link = get_edit_user_link( $user->ID );
 
 		// Link to author URL if not in admin
-		} elseif ( ! empty( $user ) ) {
+		} elseif ( ! empty( $user->ID ) ) {
 			$link = get_author_posts_url( $user->ID );
 		}
 
