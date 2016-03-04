@@ -55,14 +55,14 @@ function wp_user_activity_get_post_type_args() {
 
 	// Capabilities
 	$caps = array(
-		'create_pages'        => 'create_activities',
-		'edit_pages'          => 'edit_activities',
-		'edit_others_pages'   => 'edit_others_activities',
-		'publish_pages'       => 'publish_activities',
-		'read_private_pages'  => 'read_private_activities',
-		'read_hidden_pages'   => 'read_hidden_activities',
-		'delete_pages'        => 'delete_activities',
-		'delete_others_pages' => 'delete_others_activities'
+		'create_posts'        => 'create_activities',
+		'edit_posts'          => 'edit_activities',
+		'edit_others_posts'   => 'edit_others_activities',
+		'publish_posts'       => 'publish_activities',
+		'read_private_posts'  => 'read_private_activities',
+		'read_hidden_posts'   => 'read_hidden_activities',
+		'delete_posts'        => 'delete_activities',
+		'delete_others_posts' => 'delete_others_activities'
 	);
 
 	// Filter & return
