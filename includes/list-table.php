@@ -183,6 +183,8 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 */
 	public function display() {
 
+		ob_start();
+
 		// Top
 		$this->display_tablenav( 'top' ); ?>
 
@@ -208,6 +210,9 @@ class WP_User_Activity_List_table extends WP_List_Table {
 
 		// Bottom
 		$this->display_tablenav( 'bottom' );
+
+		// Flush the buffer
+		ob_end_flush();
 	}
 
 	/**
