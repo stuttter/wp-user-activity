@@ -119,6 +119,9 @@ class WP_User_Activity_Type_Widgets extends WP_User_Activity_Type {
 	 */
 	public function widget_update_action_callback( $instance, $new_instance, $old_instance, WP_Widget $widget ) {
 
+		// Unhook to prevent recursion
+		remove_action( 'transition_post_status', '_update_posts_count_on_transition_post_status', 10, 2 );
+
 		// Insert activity
 		wp_insert_user_activity( array(
 			'object_type'    => $this->object_type,
