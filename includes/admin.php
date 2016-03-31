@@ -339,7 +339,10 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 		: 0;
 
 	// Start an output buffer
-	ob_start(); ?>
+	ob_start();
+
+	// Show the action filter
+	if ( apply_filters( 'wp_user_activity_show_action_filter', true ) ) : ?>
 
 	<label class="screen-reader-text" for="type"><?php esc_html_e( 'Filter by type', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-action" id="wp-user-activity-action">
@@ -362,14 +365,19 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 
 		<?php endforeach; ?>
 
-	</select>
+	</select><?php
+
+	endif;
+
+	// Show the user filter
+	if ( apply_filters( 'wp_user_activity_show_user_filter', true ) ) : ?>
 
 	<label class="screen-reader-text" for="wp-user-activity-user"><?php esc_html_e( 'Filter by user', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-user" id="wp-user-activity-user">
 		<option value="0"><?php esc_html_e( 'All users', 'wp-user-activity' ); ?></option>
 
 		<?php foreach ( $users as $user ) :
-			$user->filter = 'display'; 
+			$user->filter = 'display';
 
 			// Prefer first & last name, fallback to display name
 			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
@@ -385,6 +393,8 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 	</select>
 
 	<?php
+
+	endif;
 
 	// Output the filters
 	ob_end_flush();
