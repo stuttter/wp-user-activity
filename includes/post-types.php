@@ -55,14 +55,29 @@ function wp_user_activity_get_post_type_args() {
 
 	// Capabilities
 	$caps = array(
-		'create_posts'        => 'create_activities',
-		'edit_posts'          => 'edit_activities',
-		'edit_others_posts'   => 'edit_others_activities',
-		'publish_posts'       => 'publish_activities',
-		'read_private_posts'  => 'read_private_activities',
-		'read_hidden_posts'   => 'read_hidden_activities',
-		'delete_posts'        => 'delete_activities',
-		'delete_others_posts' => 'delete_others_activities'
+
+		// Meta caps
+		'edit_post'              => 'edit_activity',
+		'read_post'              => 'read_activity',
+		'delete_post'            => 'delete_activity',
+
+		// Primitive/meta caps
+		'read'                   => 'read',
+		'create_posts'           => 'create_activities',
+
+		// Primitive caps (used outside of map_meta_cap)
+		'edit_posts'             => 'edit_activities',
+		'edit_others_posts'      => 'edit_others_activities',
+		'publish_posts'          => 'publish_activities',
+		'read_private_posts'     => 'read_private_activities',
+
+		// Primitive caps (used inside of map_meta_cap)
+		'delete_posts'           => 'delete_activities',
+		'delete_private_posts'   => 'delete_private_activities',
+		'delete_published_posts' => 'delete_published_activities',
+		'delete_others_posts'    => 'delete_others_activities',
+		'edit_private_posts'     => 'edit_private_activities',
+		'edit_published_posts'   => 'edit_published_activities'
 	);
 
 	// Filter & return
