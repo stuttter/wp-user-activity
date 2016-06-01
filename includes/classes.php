@@ -226,7 +226,7 @@ abstract class WP_User_Activity_Type {
 		if ( empty( $user ) ) {
 			$user = new WP_User();
 			$user->ID           = 0;
-			$user->display_name = __( 'Someone', 'wp-user-activity' );
+			$user->display_name = get_bloginfo( 'name' );
 		}
 
 		return $user;
@@ -242,13 +242,16 @@ abstract class WP_User_Activity_Type {
 		// No link
 		$link = false;
 
-		// If in admin, user admin area links
-		if ( is_admin() && current_user_can( 'edit_user', $user->ID ) ) {
-			$link = get_edit_user_link( $user->ID );
+		if ( ! empty( $user->ID ) ) {
 
-		// Link to author URL if not in admin
-		} elseif ( ! empty( $user->ID ) ) {
-			$link = get_author_posts_url( $user->ID );
+			// If in admin, user admin area links
+			if ( is_admin() && current_user_can( 'edit_user', $user->ID ) ) {
+				$link = get_edit_user_link( $user->ID );
+
+			// Link to author URL if not in admin
+			} else {
+				$link = get_author_posts_url( $user->ID );
+			}
 		}
 
 		// Return a URL to the author
