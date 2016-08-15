@@ -337,11 +337,8 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 */
 	public function transition_post_status( $new_status, $old_status, $post ) {
 
-		// Get the current post's type
-		$post_type = get_post_type( $post->ID );
-
 		// Bail if nav menu item or activity item
-		if ( in_array( $post_type, array( 'nav_menu_item', 'activity' ) ) ) {
+		if ( in_array( $post->post_type, array( 'nav_menu_item', 'activity' ), true ) ) {
 			return;
 		}
 
@@ -353,7 +350,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		// Bail if not hierarchical and post_parent of same type is not empty
 		// This is a funny edge-case where duplicate activity entries may get
 		// generated for post types that already save their own history
-		if ( ! is_post_type_hierarchical( $post_type ) && ! empty( $post->post_parent ) && ( get_post_type( $post->post_parent ) === $post_type ) ) {
+		if ( ! is_post_type_hierarchical( $post->post_type ) && ! empty( $post->post_parent ) && ( get_post_type( $post->post_parent ) === $post->post_type ) ) {
 			return;
 		}
 
@@ -405,21 +402,26 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 */
 	public function delete_post( $post_id = 0 ) {
 
+		// Get the post
+		$post = get_post( $post_id );
+
+		// Bail if no post
+		if ( empty( $post ) ) {
+			return;
+		}
+
 		// @todo handle revisions better
-		if ( wp_is_post_revision( $post_id ) ) {
+		if ( wp_is_post_revision( $post->ID ) ) {
 			return;
 		}
 
 		// Bail if nav menu item or activity item
-		if ( in_array( get_post_type( $post_id ), array( 'nav_menu_item', 'activity' ) ) ) {
+		if ( in_array( $post->post_type, array( 'nav_menu_item', 'activity' ), true ) ) {
 			return;
 		}
 
-		// Get the post
-		$post = get_post( $post_id );
-
 		// Bail if auto-draft (@todo handle inherited children)
-		if ( in_array( $post->post_status, array( 'auto-draft', 'inherit' ) ) ) {
+		if ( in_array( $post->post_status, array( 'auto-draft', 'inherit' ), true ) ) {
 			return;
 		}
 
@@ -442,16 +444,21 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 */
 	public function edit_post( $post_id = 0 ) {
 
-		// Bail if nav menu item or activity item
-		if ( in_array( get_post_type( $post_id ), array( 'nav_menu_item', 'activity' ) ) ) {
-			return;
-		}
-
 		// Get the post
 		$post = get_post( $post_id );
 
+		// Bail if no post
+		if ( empty( $post ) ) {
+			return;
+		}
+
+		// Bail if nav menu item or activity item
+		if ( in_array( $post->post_type, array( 'nav_menu_item', 'activity' ), true ) ) {
+			return;
+		}
+
 		// Bail if auto-draft (@todo handle inherited children)
-		if ( in_array( $post->post_status, array( 'auto-draft', 'inherit' ) ) ) {
+		if ( in_array( $post->post_status, array( 'auto-draft', 'inherit' ), true ) ) {
 			return;
 		}
 
