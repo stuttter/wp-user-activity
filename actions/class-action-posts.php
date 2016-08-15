@@ -337,13 +337,23 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 */
 	public function transition_post_status( $new_status, $old_status, $post ) {
 
+		// Get the current post's type
+		$post_type = get_post_type( $post->ID );
+
 		// Bail if nav menu item or activity item
-		if ( in_array( get_post_type( $post->ID ), array( 'nav_menu_item', 'activity' ) ) ) {
+		if ( in_array( $post_type, array( 'nav_menu_item', 'activity' ) ) ) {
 			return;
 		}
 
 		// Bail if auto-draft
 		if ( 'auto-draft' === $new_status || ( 'new' === $old_status && 'inherit' === $new_status ) ) {
+			return;
+		}
+
+		// Bail if not hierarchical and post_parent of same type is not empty
+		// This is a funny edge-case where duplicate activity entries may get
+		// generated for post types that already save their own history
+		if ( ! is_post_type_hierarchical( $post_type ) && ! empty( $post->post_parent ) && ( get_post_type( $post->post_parent ) === $post_type ) ) {
 			return;
 		}
 
