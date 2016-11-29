@@ -80,6 +80,11 @@ function wp_insert_user_activity( $args = array() ) {
 		'ua'             => wp_user_activity_current_user_ua(),
 	) );
 
+	// Allow JIT bypass of user activity insertion
+	if ( apply_filters( 'wp_pre_insert_user_activity', false, $r, $args ) ) {
+		return;
+	}
+
 	// Copy user ID
 	$user_id = $r['user_id'];
 
