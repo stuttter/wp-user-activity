@@ -179,23 +179,31 @@ function wp_user_activity_maybe_filter_by_fields( WP_Query $wp_query ) {
 		? sanitize_key( $_GET['wp-user-activity-action'] )
 		: '';
 
-	if ( ! empty( $activity_action ) ) {
-		$parts = explode( '-', $activity_action );
-		$wp_query->set( 'meta_query', array(
-			array(
-				'key'     => 'wp_user_activity_object_type',
-				'value'   => $parts[0],
-				'type'    => 'CHAR',
-				'compare' => '='
-			),
-			array(
-				'key'     => 'wp_user_activity_action',
-				'value'   => $parts[1],
-				'type'    => 'CHAR',
-				'compare' => '='
-			)
-		) );
+	// Bail if no activity action
+	if ( empty( $activity_action ) ) {
+		return;
 	}
+
+	// Get type & action
+	$parts  = explode( '-', $activity_action );
+	$type   = implode( '-', array_slice( $parts, 0, -1 ) );
+	$action = array_pop( $parts );
+
+	// Set meta_query based on type & action
+	$wp_query->set( 'meta_query', array(
+		array(
+			'key'     => 'wp_user_activity_object_type',
+			'value'   => $type,
+			'type'    => 'CHAR',
+			'compare' => '='
+		),
+		array(
+			'key'     => 'wp_user_activity_action',
+			'value'   => $action,
+			'type'    => 'CHAR',
+			'compare' => '='
+		)
+	) );
 }
 
 /**

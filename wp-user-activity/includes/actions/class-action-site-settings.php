@@ -23,7 +23,7 @@ class WP_User_Activity_Type_Site_Settings extends WP_User_Activity_Type {
 	 *
 	 * @var string
 	 */
-	public $object_type = 'setting';
+	public $object_type = 'site-setting';
 
 	/**
 	 * Icon of this activity type
