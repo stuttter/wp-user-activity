@@ -52,6 +52,14 @@ class WP_User_Activity_Type_Comments extends WP_User_Activity_Type {
 			'message' => esc_html__( '%1$s left a comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
 		) );
 
+		// Pending
+		new WP_User_Activity_Action( array(
+			'type'    => $this,
+			'action'  => 'pending',
+			'name'    => esc_html__( 'Pending', 'wp-user-activity' ),
+			'message' => esc_html__( '%1$s left a pending comment on the "%2$s" %3$s %4$s.', 'wp-user-activity' )
+		) );
+
 		// Update
 		new WP_User_Activity_Action( array(
 			'type'    => $this,
@@ -114,6 +122,26 @@ class WP_User_Activity_Type_Comments extends WP_User_Activity_Type {
 	}
 
 	/** Callbacks *************************************************************/
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  object  $post
+	 * @param  array   $meta
+	 *
+	 * @return string
+	 */
+	public function pending_action_callback( $post, $meta = array() ) {
+		return sprintf(
+			$this->get_activity_action( 'pending' ),
+			$this->get_activity_author_link( $post ),
+			$meta->object_name,
+			$meta->object_subtype,
+			$this->get_how_long_ago( $post )
+		);
+	}
 
 	/**
 	 * Callback for returning human-readable output.
