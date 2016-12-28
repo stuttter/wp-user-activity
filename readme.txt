@@ -1,9 +1,9 @@
 === WP User Activity ===
 Contributors: johnjamesjacoby, stuttter
 Tags: users, activity, log, attachment, comment, core, export, menu, plugin, post, settings, term, theme, user, widget
-Requires at least: 4.4
-Tested up to: 4.4
-Stable tag: 0.2.0
+Requires at least: 4.7
+Tested up to: 4.8
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9Q4F4EL5YJ62J
@@ -31,7 +31,7 @@ Admin created the topic "I need help!" 5 days ago.
 = Available Actions =
 
 * Attachments (Upload, Edit, Delete)
-* Comments (Create, Approve, Unaprove, Trash, Untrash, Spam, Unspam, Delete)
+* Comments (Create, Pending, Approve, Unaprove, Trash, Untrash, Spam, Unspam, Delete)
 * Core (Update, Auto-update)
 * Exports (Download)
 * Menus (Create, Update, Delete)
@@ -91,21 +91,27 @@ The `WP_User_Activity_Type_Taxonomy` class is a good example to start with, if y
 
 = Does this create new database tables? =
 
-No. It uses WordPress's custom post-type and metadata APIs.
+No. It uses the WordPress custom post-type and metadata APIs.
 
 = Does this modify existing database tables? =
 
-No. All of WordPress's core database tables remain untouched.
+No. All of the WordPress core database tables remain untouched.
 
 = Where can I get support? =
 
-The WordPress support forums: https://wordpress.org/support/plugin/wp-user-activity/
+* Basic: https://wordpress.org/support/plugin/wp-user-activity/
+* Priority: https://chat.flox.io/support/channels/wp-user-activity/
 
 = Where can I find documentation? =
 
 http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
+
+= 1.0.0 =
+* Official public release
+* Add support for "pending" comments
+* Improved mu-plugins location support
 
 = 0.2.0 =
 * Support for User Profiles 0.2.0

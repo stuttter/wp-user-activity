@@ -7,7 +7,7 @@ Activity is broken down into object "Types" and "Actions." Types are the objects
 # Available actions
 
 * Attachments (Upload, Edit, Delete)
-* Comments (Create, Approve, Unaprove, Trash, Untrash, Spam, Unspam, Delete)
+* Comments (Create, Pending, Approve, Unaprove, Trash, Untrash, Spam, Unspam, Delete)
 * Core (Update, Auto-update)
 * Exports (Download)
 * Menus (Create, Update, Delete)
@@ -59,16 +59,17 @@ The `WP_User_Activity_Type_Taxonomy` is a good example to start with, if you'd l
 
 ### Does this create new database tables?
 
-No. It uses WordPress's custom post-type and metadata APIs.
+No. It uses the WordPress custom post-type and metadata APIs.
 
 ### Does this modify existing database tables?
 
-No. All of WordPress's core database tables remain untouched.
+No. All of the WordPress core database tables remain untouched.
 
 ### Where can I get support?
 
-The WordPress support forums: https://wordpress.org/plugin/support/wp-user-activity/
+* Basic: https://wordpress.org/support/plugin/wp-user-activity/
+* Priority: https://chat.flox.io/support/channels/wp-user-activity/
 
 ### Can I contribute?
 
-Yes, please! The number of users needing activity logging in WordPress is always growing. Having an easy-to-use API and powerful set of functions is critical to managing complex WordPress installations. If this is your thing, please help us out!
+Yes, please! The number of users needing activity logging in WordPress is always growing. Having an easy-to-use API and powerful set of functions is critical to managing complex WordPress installations. If this is your thing, please help out!
