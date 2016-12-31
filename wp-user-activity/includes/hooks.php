@@ -55,3 +55,110 @@ if ( is_admin() ) {
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_sort_by_fields'   );
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_filter_by_fields' );
 }
+
+/** Helpers *******************************************************************/
+
+/**
+ * Removes all actions from a WordPress actions, and stashes them in a global
+ * in the event they need to be restored later.
+ *
+ * @since 1.1.0
+ *
+ * @global WP_filter $wp_filter
+ * @global array $merged_filters
+ * @param string $tag
+ * @param int $priority
+ * @return bool
+ */
+function wp_user_activity_remove_all_actions( $tag, $priority = false ) {
+	global $wp_filter, $merged_filters, $wp_user_activity_actions;
+
+	// Reset the global
+	$wp_user_activity_actions = new stdClass();
+
+	// Filters exist
+	if ( isset( $wp_filter[ $tag ] ) ) {
+
+		// Filters exist in this priority
+		if ( ! empty( $priority ) && isset( $wp_filter[ $tag ][ $priority ] ) ) {
+
+			// Store filters in a backup
+			$wp_user_activity_actions->wp_filter[ $tag ][ $priority ] = $wp_filter[ $tag ][ $priority ];
+
+			// Unset the filters
+			unset( $wp_filter[ $tag ][ $priority ] );
+
+		// Priority is empty
+		} else {
+
+			// Store filters in a backup
+			$wp_user_activity_actions->wp_filter[ $tag ] = $wp_filter[ $tag ];
+
+			// Unset the filters
+			unset( $wp_filter[ $tag ] );
+		}
+	}
+
+	// Check merged filters
+	if ( isset( $merged_filters[ $tag ] ) ) {
+
+		// Store filters in a backup
+		$wp_user_activity_actions->merged_filters[ $tag ] = $merged_filters[ $tag ];
+
+		// Unset the filters
+		unset( $merged_filters[ $tag ] );
+	}
+
+	return true;
+}
+
+/**
+ * Restores filters from the $bbp global that were removed using
+ * wp_user_activity_remove_all_actions()
+ *
+ * @since 1.1.0
+ *
+ * @global WP_filter $wp_filter
+ * @global array $merged_filters
+ * @param string $tag
+ * @param int $priority
+ * @return bool
+ */
+function wp_user_activity_restore_all_actions( $tag, $priority = false ) {
+	global $wp_filter, $merged_filters, $wp_user_activity_actions;
+
+	// Filters exist
+	if ( isset( $wp_user_activity_actions->wp_filter[ $tag ] ) ) {
+
+		// Filters exist in this priority
+		if ( ! empty( $priority ) && isset( $wp_user_activity_actions->wp_filter[ $tag ][ $priority  ] ) ) {
+
+			// Store filters in a backup
+			$wp_filter[ $tag ][ $priority ] = $wp_user_activity_actions->wp_filter[ $tag ][ $priority ];
+
+			// Unset the filters
+			unset( $wp_user_activity_actions->wp_filter[ $tag ][ $priority ] );
+
+		// Priority is empty
+		} else {
+
+			// Store filters in a backup
+			$wp_filter[ $tag ] = $wp_user_activity_actions->wp_filter[ $tag ];
+
+			// Unset the filters
+			unset( $wp_user_activity_actions->wp_filter[ $tag ] );
+		}
+	}
+
+	// Check merged filters
+	if ( isset( $wp_user_activity_actions->merged_filters[ $tag ] ) ) {
+
+		// Store filters in a backup
+		$merged_filters[ $tag ] = $wp_user_activity_actions->merged_filters[ $tag ];
+
+		// Unset the filters
+		unset( $wp_user_activity_actions->merged_filters[ $tag ] );
+	}
+
+	return true;
+}

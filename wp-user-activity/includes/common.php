@@ -99,6 +99,9 @@ function wp_insert_user_activity( $args = array() ) {
 		$meta_input[ 'wp_user_activity_' . $key ] = $value;
 	}
 
+	// Remove all actions to avoid infinite loops
+	wp_user_activity_remove_all_actions( 'transition_post_status' );
+
 	// Create activity entry
 	wp_insert_post( array(
 		'post_type'   => 'activity',
@@ -106,6 +109,9 @@ function wp_insert_user_activity( $args = array() ) {
 		'post_status' => 'publish',
 		'meta_input'  => $meta_input
 	) );
+
+	// Restore all actions to avoid breaking other plugins
+	wp_user_activity_restore_all_actions( 'transition_post_status' );
 }
 
 /**
