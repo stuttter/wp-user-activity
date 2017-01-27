@@ -23,7 +23,7 @@ function wp_user_activity_menu_humility() {
 
 	// Unset top level page & add a dashboard page on success
 	if ( remove_menu_page( 'edit.php?post_type=activity' ) ) {
-		add_dashboard_page( esc_html__( 'Activity', 'wp-user-activity' ), esc_html__( 'Activity', 'wp-user-activity' ), 'edit_activities', 'edit.php?post_type=activity' );
+		add_dashboard_page( esc_html_x( 'Activity', 'plural', 'wp-user-activity' ), esc_html_x( 'Activity', 'post type general name', 'wp-user-activity' ), 'edit_activities', 'edit.php?post_type=activity' );
 	}
 }
 
