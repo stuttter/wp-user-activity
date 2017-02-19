@@ -82,8 +82,9 @@ Yes. It will work perfectly with all post-types & taxonomies that define their o
 Yes. The autoloader can be filtered, so adding new object types is as simple as:
 
 `
-add_filter( 'wp_get_default_user_activity_types', function( $types = array() ) {
-	$types[] = 'Your_New_Type' // class that extends WP_User_Activity_Type
+add_filter( 'wp_get_default_user_activity_types', function ( $types ) {
+	$types[] = 'Your_New_Type'; // Class that extends WP_User_Activity_Type
+	return $types;
 } );
 `
 
