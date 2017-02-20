@@ -229,7 +229,7 @@ function wp_user_activity_user_metabox() {
 			</td>
 
 			<td>
-				<textarea class="wp_user_activity_ua" name="wp_user_activity_ua" id="wp_user_activity_ua"><?php echo esc_attr( $meta['ua'] ); ?></textarea>
+				<textarea class="wp_user_activity_ua" name="wp_user_activity_ua" id="wp_user_activity_ua" rows="6"><?php echo esc_attr( $meta['ua'] ); ?></textarea>
 			</td>
 		</tr>
 	</table>
