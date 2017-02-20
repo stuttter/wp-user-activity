@@ -28,8 +28,8 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 */
 	public function __construct( $args = array() ) {
 		$args = array(
-			'singular' => esc_html__( 'Activity', 'wp-user-activity' ),
-			'plural'   => esc_html__( 'Activity', 'wp-user-activity' ),
+			'singular' => esc_html_x( 'Activity', 'singular', 'wp-user-activity' ),
+			'plural'   => esc_html_x( 'Activity', 'plural', 'wp-user-activity' ),
 			'ajax'     => true
 		);
 		parent::__construct( $args );
@@ -171,7 +171,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 * @since 0.1.4
 	 */
 	public function no_items() {
-		esc_html_e( 'No activity.', 'wp-user-activity' );
+		echo esc_html_x( 'No activity.', 'plural', 'wp-user-activity' );
 	}
 
 	/**

@@ -282,7 +282,7 @@ abstract class WP_User_Activity_Type {
 		// Start with the timestamp
 		$classes = get_post_class( 'wp-user-activity', $post->ID );
 		$url     = false;
-		$retval  = '<time class="diff-time" pubdate datetime="' . esc_attr( $both ) . '" title="' . esc_attr( $both ) . '">' . sprintf( '%s ago', $human ) . '</time>';
+		$retval  = '<time class="diff-time" pubdate datetime="' . esc_attr( $both ) . '" title="' . esc_attr( $both ) . '">' . sprintf( __( '%s ago', 'wp-user-activity' ), $human ) . '</time>';
 
 		// Edit link
 		if ( is_admin() && current_user_can( 'edit_activity', $post->ID ) ) {

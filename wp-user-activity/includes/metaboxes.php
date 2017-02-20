@@ -60,7 +60,7 @@ function wp_user_activity_add_user_profiles_metabox( $type = '', $user = null ) 
 	// Add the metabox
 	add_meta_box(
 		'wp_user_activity_user_profile',
-		__( 'Activity', 'wp-user-activity' ),
+		_x( 'Activity', 'plural', 'wp-user-activity' ),
 		'wp_user_activity_list_metabox',
 		$type,
 		'normal',
