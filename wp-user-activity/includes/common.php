@@ -65,6 +65,7 @@ function wp_register_user_activity_type( $class_name = '' ) {
  * @since 0.1.0
  *
  * @param array $args
+ * @return int  $activity_id ID of new activity item
  */
 function wp_insert_user_activity( $args = array() ) {
 
@@ -103,7 +104,7 @@ function wp_insert_user_activity( $args = array() ) {
 	wp_user_activity_remove_all_actions( 'transition_post_status' );
 
 	// Create activity entry
-	wp_insert_post( array(
+	$activity_id = wp_insert_post( array(
 		'post_type'   => 'activity',
 		'post_author' => $user_id,
 		'post_status' => 'publish',
@@ -112,6 +113,8 @@ function wp_insert_user_activity( $args = array() ) {
 
 	// Restore all actions to avoid breaking other plugins
 	wp_user_activity_restore_all_actions( 'transition_post_status' );
+
+	return $activity_id;
 }
 
 /**
