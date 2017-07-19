@@ -262,6 +262,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'object_type' => $this->object_type,
 			'object_name' => $user->user_nicename,
 			'object_id'   => $user->ID,
+			'user_id'     => $user->ID,
 			'action'      => 'create'
 		) );
 	}
