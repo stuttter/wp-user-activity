@@ -327,12 +327,6 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 		return;
 	}
 
-	// Query for users
-	$users = get_users( array(
-		'count_total' => false,
-		'orderby'     => 'display_name'
-	) );
-
 	// Setup action types
 	$action_types = $GLOBALS['wp_user_activity_actions'];
 
@@ -378,7 +372,14 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 	endif;
 
 	// Show the user filter
-	if ( apply_filters( 'wp_user_activity_show_user_filter', true ) ) : ?>
+	if ( apply_filters( 'wp_user_activity_show_user_filter', true ) ) :
+
+	// Query for users
+	$users = get_users( array(
+		'count_total' => false,
+		'orderby'     => 'display_name'
+	) );
+	?>
 
 	<label class="screen-reader-text" for="wp-user-activity-user"><?php esc_html_e( 'Filter by user', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-user" id="wp-user-activity-user">
