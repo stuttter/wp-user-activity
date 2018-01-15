@@ -2,8 +2,8 @@
 Contributors: johnjamesjacoby, stuttter
 Tags: users, activity, log, attachment, comment, core, export, menu, plugin, post, settings, term, theme, user, widget
 Requires at least: 4.7
-Tested up to: 4.8
-Stable tag: 1.1.0
+Tested up to: 5.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9Q4F4EL5YJ62J
@@ -108,6 +108,10 @@ No. All of the WordPress core database tables remain untouched.
 http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
+
+= 2.0.0 =
+* Add escaping to admin area row output
+* Return IDs in useful places for easier extending
 
 = 1.1.0 =
 * Remove all actions from transition_post_status to avoid infinite loops 
