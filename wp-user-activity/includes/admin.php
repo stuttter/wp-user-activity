@@ -225,17 +225,17 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 
 		// Attempt to output human-readable action
 		case 'activity_type' :
-			echo wp_get_user_activity_type_icon( $post, $meta );
+			echo wp_get_user_activity_type_icon( $post, $meta ); // HTML
 			break;
 
 		// User who performed this activity
 		case 'activity_username' :
-			echo wp_get_user_activity_action( $post, $meta );
+			echo wp_get_user_activity_action( $post, $meta ); // HTML
 			break;
 
 		// Session of the user who performed this activity
 		case 'activity_session' :
-			echo '<abbr title="' . wp_get_user_activity_ua( $post, $meta ) . '">' . wp_get_user_activity_ip( $post, $meta ) . '</abbr>';
+			echo '<abbr title="' . esc_attr( wp_get_user_activity_ua( $post, $meta ) ) . '">' . esc_html( wp_get_user_activity_ip( $post, $meta ) ) . '</abbr>';
 			break;
 
 		// Attempt to output helpful connection to object
@@ -243,9 +243,9 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 			$when = strtotime( $post->post_date );
 			$date = get_option( 'date_format' );
 			$time = get_option( 'time_format' );
-			echo date_i18n( $date, $when, true );
+			echo esc_html( date_i18n( $date, $when, true ) );
 			echo '<br>';
-			echo date_i18n( $time, $when, true );
+			echo esc_html( date_i18n( $time, $when, true ) );
 			break;
 	}
 }
