@@ -121,6 +121,11 @@ function wp_user_activity_append_action_to_the_content( $content = '' ) {
 	// Get the current post
 	$post = get_post();
 
+	// If `the_content` is called without setting a post context, don't trigger notices.
+	if ( ! $post instanceof \WP_Post ) {
+		return $content;
+	}
+
 	// Bail if not an activity post
 	if ( 'activity' !== $post->post_type ) {
 		return $content;
