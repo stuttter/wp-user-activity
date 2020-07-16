@@ -9,7 +9,7 @@ Tags:              users, activity, log,
 Requires PHP:      5.6.20
 Requires at least: 5.0
 Tested up to:      5.5
-Stable tag:        1.2.0
+Stable tag:        2.1.0
 
 == Description ==
 
@@ -109,8 +109,12 @@ http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
 
-= 1.2.0 =
+= 2.1.0 =
 * Fix user not being linked to "Logout" action
+
+= 2.0.2 =
+* Add escaping to admin area row output
+* Return IDs in useful places for easier extending
 
 = 1.1.0 =
 * Remove all actions from transition_post_status to avoid infinite loops
