@@ -19,17 +19,11 @@ Activity is broken down into object "Types" and "Actions." Types are the objects
 
 = Examples =
 
-`
-Admin logged in 2 minutes ago.
-`
+`Admin logged in 2 minutes ago.`
 
-`
-Admin created the post "Hello World" 33 seconds ago.
-`
+`Admin created the post "Hello World" 33 seconds ago.`
 
-`
-Admin created the topic "I need help!" 5 days ago.
-`
+`Admin created the topic "I need help!" 5 days ago.`
 
 = Available Actions =
 

@@ -7,6 +7,7 @@
  * Author:            John James Jacoby
  * Author URI:        https://jjj.blog
  * Text Domain:       wp-user-activity
+ * License:           GPL v2 or later
  * Domain Path:       /assets/lang/
  * Requires PHP:      5.6.20
  * Requires at least: 5.0
