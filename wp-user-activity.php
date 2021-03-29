@@ -9,9 +9,9 @@
  * Text Domain:       wp-user-activity
  * License:           GPL v2 or later
  * Domain Path:       /assets/lang/
- * Requires PHP:      5.6.20
- * Requires at least: 5.0
- * Version:           2.1.0
+ * Requires PHP:      7.2
+ * Requires at least: 5.2
+ * Version:           2.2.0
  */
 
 // Exit if accessed directly

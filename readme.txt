@@ -6,10 +6,10 @@ License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 License:           GPLv2 or later
 Contributors:      johnjamesjacoby, stuttter
 Tags:              users, activity, log,
-Requires PHP:      5.6.20
-Requires at least: 5.0
-Tested up to:      5.5
-Stable tag:        2.1.0
+Requires PHP:      7.2
+Requires at least: 5.2
+Tested up to:      5.8
+Stable tag:        2.2.0
 
 == Description ==
 
@@ -102,6 +102,12 @@ No. All of the WordPress core database tables remain untouched.
 http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
+
+= 2.2.0 =
+* Fix filtering by user
+* Fix compatibility with WP User Profiles
+* Fix untrashing individual items
+* Fix an incompatibility with ACF
 
 = 2.1.0 =
 * Fix user not being linked to "Logout" action
