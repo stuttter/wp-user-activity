@@ -1,3 +1,4 @@
+body.post-type-activity #post-body-content,
 table.wp-list-table #post-body-content {
 	margin: 0;
 }

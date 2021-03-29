@@ -327,12 +327,6 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 		return;
 	}
 
-	// Query for users
-	$users = get_users( array(
-		'count_total' => false,
-		'orderby'     => 'display_name'
-	) );
-
 	// Setup action types
 	$action_types = $GLOBALS['wp_user_activity_actions'];
 
@@ -378,7 +372,14 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 	endif;
 
 	// Show the user filter
-	if ( apply_filters( 'wp_user_activity_show_user_filter', true ) ) : ?>
+	if ( apply_filters( 'wp_user_activity_show_user_filter', true ) ) :
+
+	// Query for users
+	$users = get_users( array(
+		'count_total' => false,
+		'orderby'     => 'display_name'
+	) );
+	?>
 
 	<label class="screen-reader-text" for="wp-user-activity-user"><?php esc_html_e( 'Filter by user', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-user" id="wp-user-activity-user">
@@ -394,7 +395,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 				$display_name = $user->display_name;
 			} ?>
 
-			<option value="<?php echo esc_attr( $user->ID ); ?>" <?php selected( $current_user ); ?>><?php echo esc_html( $display_name ); ?></option>
+			<option value="<?php echo esc_attr( $user->ID ); ?>" <?php selected( $user->ID, $current_user ); ?>><?php echo esc_html( $display_name ); ?></option>
 
 		<?php endforeach; ?>
 
@@ -422,11 +423,12 @@ function wp_user_activity_add_profile_section( $sections = array() ) {
 
 	// Add the "Activity" section
 	$new_sections['activity'] = array(
-		'slug'  => 'activity',
-		'name'  => esc_html__( 'Activity', 'wp-user-activity' ),
-		'cap'   => 'read_activity',
-		'icon'  => 'dashicons-backup',
-		'order' => 95
+		'slug'   => 'activity',
+		'name'   => esc_html__( 'Activity', 'wp-user-activity' ),
+		'cap'    => 'read_activity',
+		'icon'   => 'dashicons-backup',
+		'parent' => '',
+		'order'  => 95
 	);
 
 	// Filter & return
