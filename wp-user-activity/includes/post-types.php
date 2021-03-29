@@ -151,3 +151,24 @@ function wp_user_activity_append_action_to_the_content( $content = '' ) {
 	// Return content with action prepended
 	return $_retval;
 }
+
+/**
+ * Filter callback which sets the status of an untrashed post to its previous status.
+ *
+ * @since 2.1.0
+ *
+ * @param string $new_status      The new status of the post being restored.
+ * @param int    $post_id         The ID of the post being restored.
+ * @param string $previous_status The status of the post at the point where it was trashed.
+ * @return string The new status of the post.
+ */
+function wp_user_activity_untrash_to_previous_status( $new_status = '', $post_id = 0, $previous_status = '' ) {
+
+	// Only filter Activity post types
+	if ( 'activity' === get_post_type( $post_id ) ) {
+		$new_status = $previous_status;
+	}
+
+	// Return untrashed status
+	return $new_status;
+}
