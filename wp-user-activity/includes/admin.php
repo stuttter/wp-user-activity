@@ -395,7 +395,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 				$display_name = $user->display_name;
 			} ?>
 
-			<option value="<?php echo esc_attr( $user->ID ); ?>" <?php selected( $current_user ); ?>><?php echo esc_html( $display_name ); ?></option>
+			<option value="<?php echo esc_attr( $user->ID ); ?>" <?php selected( $user->ID, $current_user ); ?>><?php echo esc_html( $display_name ); ?></option>
 
 		<?php endforeach; ?>
 
