@@ -84,7 +84,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'message' => esc_html__( '%1$s updated their account %2$s.', 'wp-user-activity' )
 		) );
 
-		// Create
+		// Delete
 		new WP_User_Activity_Action( array(
 			'type'    => $this,
 			'action'  => 'delete',
@@ -234,15 +234,18 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 * User logged out
 	 *
 	 * @since 0.1.0
+	 *
+	 * @param  int  $user_id
 	 */
-	public function wp_logout() {
-		$user = wp_get_current_user();
+	public function wp_logout( $user_id = 0 ) {
+		$user = get_user_by( 'id', $user_id );
 
 		// Insert activity
 		wp_insert_user_activity( array(
 			'object_type' => $this->object_type,
 			'object_name' => $user->user_nicename,
 			'object_id'   => $user->ID,
+			'user_id'     => $user->ID,
 			'action'      => 'logout'
 		) );
 	}
@@ -274,7 +277,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 *
 	 * @param  int  $user_id
 	 */
-	public function profile_update( $user_id ) {
+	public function profile_update( $user_id = 0 ) {
 		$user = get_user_by( 'id', $user_id );
 
 		// Insert activity
@@ -293,7 +296,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 *
 	 * @param  int  $user_id
 	 */
-	public function delete_user( $user_id ) {
+	public function delete_user( $user_id = 0 ) {
 		$user = get_user_by( 'id', $user_id );
 
 		// Insert activity

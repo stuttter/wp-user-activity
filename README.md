@@ -68,8 +68,7 @@ No. All of the WordPress core database tables remain untouched.
 
 ### Where can I get support?
 
-* Basic: https://wordpress.org/support/plugin/wp-user-activity/
-* Priority: https://chat.flox.io/support/channels/wp-user-activity/
+* Forums: https://wordpress.org/support/plugin/wp-user-activity/
 
 ### Can I contribute?
 

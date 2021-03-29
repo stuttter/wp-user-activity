@@ -50,6 +50,9 @@ add_filter( 'manage_activity_posts_custom_column',   'wp_user_activity_manage_cu
 add_filter( 'manage_edit-activity_sortable_columns', 'wp_user_activity_sortable_columns' );
 add_filter( 'list_table_primary_column',             'wp_user_activity_list_table_primary_column', 10, 2 );
 
+// Untrash
+add_filter( 'wp_untrash_post_status', 'wp_user_activity_untrash_to_previous_status', 10, 3 );
+
 // Admin only filter for list-table sorting
 if ( is_admin() ) {
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_sort_by_fields'   );

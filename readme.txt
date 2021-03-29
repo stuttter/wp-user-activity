@@ -1,12 +1,15 @@
 === WP User Activity ===
-Contributors: johnjamesjacoby, stuttter
-Tags: users, activity, log, attachment, comment, core, export, menu, plugin, post, settings, term, theme, user, widget
-Requires at least: 4.7
-Tested up to: 4.8
-Stable tag: 1.1.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9Q4F4EL5YJ62J
+Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9Q4F4EL5YJ62J
+Author URI:        https://jjj.blog
+Plugin URI:        https://wordpress.org/plugins/wp-user-activity/
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+License:           GPLv2 or later
+Contributors:      johnjamesjacoby, stuttter
+Tags:              users, activity, log,
+Requires PHP:      7.2
+Requires at least: 5.2
+Tested up to:      5.8
+Stable tag:        2.2.0
 
 == Description ==
 
@@ -16,17 +19,11 @@ Activity is broken down into object "Types" and "Actions." Types are the objects
 
 = Examples =
 
-`
-Admin logged in 2 minutes ago.
-`
+`Admin logged in 2 minutes ago.`
 
-`
-Admin created the post "Hello World" 33 seconds ago.
-`
+`Admin created the post "Hello World" 33 seconds ago.`
 
-`
-Admin created the topic "I need help!" 5 days ago.
-`
+`Admin created the topic "I need help!" 5 days ago.`
 
 = Available Actions =
 
@@ -46,19 +43,17 @@ Admin created the topic "I need help!" 5 days ago.
 = Also checkout =
 
 * [WP Chosen](https://wordpress.org/plugins/wp-chosen/ "Make long, unwieldy select boxes much more user-friendly.")
+* [WP User Profiles](https://wordpress.org/plugins/wp-user-profiles/ "A sophisticated way to edit users in WordPress.")
+* [WP User Avatars](https://wordpress.org/plugins/wp-user-avatars/ "Allow users to upload avatars or choose them from your media library.")
+* [WP User Groups](https://wordpress.org/plugins/wp-user-groups/ "Group users together with taxonomies & terms.")
 * [WP Pretty Filters](https://wordpress.org/plugins/wp-pretty-filters/ "Makes post filters better match what's already in Media & Attachments.")
-* [WP Event Calendar](https://wordpress.org/plugins/wp-event-calendar/ "The best way to manage events in WordPress.")
 * [WP Media Categories](https://wordpress.org/plugins/wp-media-categories/ "Add categories to media & attachments.")
-* [WP Term Meta](https://wordpress.org/plugins/wp-term-meta/ "Metadata, for taxonomy terms.")
 * [WP Term Authors](https://wordpress.org/plugins/wp-term-authors/ "Authors for categories, tags, and other taxonomy terms.")
 * [WP Term Colors](https://wordpress.org/plugins/wp-term-colors/ "Pretty colors for categories, tags, and other taxonomy terms.")
 * [WP Term Families](https://wordpress.org/plugins/wp-term-icons/ "Families for categories, tags, and other taxonomy terms.")
 * [WP Term Icons](https://wordpress.org/plugins/wp-term-icons/ "Pretty icons for categories, tags, and other taxonomy terms.")
 * [WP Term Order](https://wordpress.org/plugins/wp-term-order/ "Sort taxonomy terms, your way.")
 * [WP Term Visibility](https://wordpress.org/plugins/wp-term-visibility/ "Visibilities for categories, tags, and other taxonomy terms.")
-* [WP User Avatars](https://wordpress.org/plugins/wp-user-avatars/ "Allow users to upload avatars or choose them from your media library.")
-* [WP User Groups](https://wordpress.org/plugins/wp-user-groups/ "Group users together with taxonomies & terms.")
-* [WP User Profiles](https://wordpress.org/plugins/wp-user-profiles/ "A sophisticated way to edit users in WordPress.")
 
 == Screenshots ==
 
@@ -100,8 +95,7 @@ No. All of the WordPress core database tables remain untouched.
 
 = Where can I get support? =
 
-* Basic: https://wordpress.org/support/plugin/wp-user-activity/
-* Priority: https://chat.flox.io/support/channels/wp-user-activity/
+* Forums: https://wordpress.org/support/plugin/wp-user-activity/
 
 = Where can I find documentation? =
 
@@ -109,8 +103,21 @@ http://github.com/stuttter/wp-user-activity/
 
 == Changelog ==
 
+= 2.2.0 =
+* Fix filtering by user
+* Fix compatibility with WP User Profiles
+* Fix untrashing individual items
+* Fix an incompatibility with ACF
+
+= 2.1.0 =
+* Fix user not being linked to "Logout" action
+
+= 2.0.2 =
+* Add escaping to admin area row output
+* Return IDs in useful places for easier extending
+
 = 1.1.0 =
-* Remove all actions from transition_post_status to avoid infinite loops 
+* Remove all actions from transition_post_status to avoid infinite loops
 
 = 1.0.0 =
 * Official public release
