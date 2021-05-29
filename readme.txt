@@ -123,6 +123,19 @@ No. All of the WordPress core database tables remain untouched.
 * Add escaping to admin area row output
 * Return IDs in useful places for easier extending
 
+= 2.2.0 =
+* Fix filtering by user
+* Fix compatibility with WP User Profiles
+* Fix untrashing individual items
+* Fix an incompatibility with ACF
+
+= 2.1.0 =
+* Fix user not being linked to "Logout" action
+
+= 2.0.2 =
+* Add escaping to admin area row output
+* Return IDs in useful places for easier extending
+
 = 1.1.0 =
 * Remove all actions from transition_post_status to avoid infinite loops
 
