@@ -1,15 +1,16 @@
 === WP User Activity ===
-Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9Q4F4EL5YJ62J
-Author URI:        https://jjj.blog
-Plugin URI:        https://wordpress.org/plugins/wp-user-activity/
+Author:            Triple J Software, Inc.
+Author URI:        https://jjj.software
+Donate link:       https://buy.stripe.com/5kA4ghd8o2GC3pC8ww
+Plugin URI:        https://wordpress.org/plugins/wp-user-activity
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 License:           GPLv2 or later
-Contributors:      johnjamesjacoby, stuttter
-Tags:              users, activity, log,
+Contributors:      johnjamesjacoby
+Tags:              user, profile, activity, log
 Requires PHP:      7.2
 Requires at least: 5.2
 Tested up to:      5.8
-Stable tag:        2.2.0
+Stable tag:        2.2.1
 
 == Description ==
 
@@ -40,20 +41,25 @@ Activity is broken down into object "Types" and "Actions." Types are the objects
 * Users (Login, Login Failure, Logout, Register, Update, Delete)
 * Widgets (Update, Delete)
 
-= Also checkout =
+= Recommended Plugins =
 
-* [WP Chosen](https://wordpress.org/plugins/wp-chosen/ "Make long, unwieldy select boxes much more user-friendly.")
+If you like this plugin, you'll probably like these, too!
+
 * [WP User Profiles](https://wordpress.org/plugins/wp-user-profiles/ "A sophisticated way to edit users in WordPress.")
+* [WP User Activity](https://wordpress.org/plugins/wp-user-activity/ "The best way to log activity in WordPress.")
 * [WP User Avatars](https://wordpress.org/plugins/wp-user-avatars/ "Allow users to upload avatars or choose them from your media library.")
 * [WP User Groups](https://wordpress.org/plugins/wp-user-groups/ "Group users together with taxonomies & terms.")
-* [WP Pretty Filters](https://wordpress.org/plugins/wp-pretty-filters/ "Makes post filters better match what's already in Media & Attachments.")
-* [WP Media Categories](https://wordpress.org/plugins/wp-media-categories/ "Add categories to media & attachments.")
 * [WP Term Authors](https://wordpress.org/plugins/wp-term-authors/ "Authors for categories, tags, and other taxonomy terms.")
 * [WP Term Colors](https://wordpress.org/plugins/wp-term-colors/ "Pretty colors for categories, tags, and other taxonomy terms.")
-* [WP Term Families](https://wordpress.org/plugins/wp-term-icons/ "Families for categories, tags, and other taxonomy terms.")
+* [WP Term Families](https://wordpress.org/plugins/wp-term-families/ "Associate taxonomy terms with other taxonomy terms.")
 * [WP Term Icons](https://wordpress.org/plugins/wp-term-icons/ "Pretty icons for categories, tags, and other taxonomy terms.")
+* [WP Term Images](https://wordpress.org/plugins/wp-term-images/ "Pretty images for categories, tags, and other taxonomy terms.")
+* [WP Term Locks](https://wordpress.org/plugins/wp-term-locks/ "Protect categories, tags, and other taxonomy terms from being edited or deleted.")
 * [WP Term Order](https://wordpress.org/plugins/wp-term-order/ "Sort taxonomy terms, your way.")
 * [WP Term Visibility](https://wordpress.org/plugins/wp-term-visibility/ "Visibilities for categories, tags, and other taxonomy terms.")
+* [WP Media Categories](https://wordpress.org/plugins/wp-media-categories/ "Add categories to media & attachments.")
+* [WP Pretty Filters](https://wordpress.org/plugins/wp-pretty-filters/ "Makes post filters better match what's already in Media & Attachments.")
+* [WP Chosen](https://wordpress.org/plugins/wp-chosen/ "Make long, unwieldy select boxes much more user-friendly.")
 
 == Screenshots ==
 
@@ -95,13 +101,14 @@ No. All of the WordPress core database tables remain untouched.
 
 = Where can I get support? =
 
-* Forums: https://wordpress.org/support/plugin/wp-user-activity/
-
-= Where can I find documentation? =
-
-http://github.com/stuttter/wp-user-activity/
+* Community: https://wordpress.org/support/plugin/wp-user-activity
+* Development: https://github.com/stuttter/wp-user-activity/discussions
 
 == Changelog ==
+
+= [2.2.1] - 2021-05-29 =
+* Update author info
+* Add sponsor link
 
 = 2.2.0 =
 * Fix filtering by user

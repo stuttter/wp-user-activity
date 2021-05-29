@@ -37,6 +37,7 @@ Admin created the topic "I need help!" 5 days ago.
 
 * Download and install using the built in WordPress plugin installer.
 * Activate in the "Plugins" area of your admin by clicking the "Activate" link.
+* Consider sponsoring future development by clicking "Sponsor".
 * No further setup or configuration is necessary.
 
 # FAQ
@@ -68,8 +69,9 @@ No. All of the WordPress core database tables remain untouched.
 
 ### Where can I get support?
 
-* Forums: https://wordpress.org/support/plugin/wp-user-activity/
+* Community: https://wordpress.org/support/plugin/wp-user-activity
+* Development: https://github.com/stuttter/wp-user-activity/discussions
 
-### Can I contribute?
+### Contributing
 
-Yes, please! The number of users needing activity logging in WordPress is always growing. Having an easy-to-use API and powerful set of functions is critical to managing complex WordPress installations. If this is your thing, please help out!
+Please [open a new issue](/pull/new/master) to discuss whether the feature is a good fit for the project. Once you've decided to work on a pull request, please follow the [WordPress Coding Standards](http://make.wordpress.org/core/handbook/coding-standards/).

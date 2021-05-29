@@ -2,16 +2,18 @@
 
 /**
  * Plugin Name:       WP User Activity
- * Plugin URI:        https://wordpress.org/plugins/wp-user-activity/
- * Description:       The best way to log activity in WordPress
- * Author:            John James Jacoby
- * Author URI:        https://jjj.blog
+ * Description:       A sophisticated way to log user activity in WordPress
+ * Plugin URI:        https://wordpress.org/plugins/wp-user-profiles/
+ * Author:            Triple J Software, Inc.
+ * Author URI:        https://jjj.software
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-user-activity
- * License:           GPL v2 or later
- * Domain Path:       /assets/lang/
- * Requires PHP:      7.2
+ * Domain Path:       /wp-user-activity/includes/languages
  * Requires at least: 5.2
- * Version:           2.2.0
+ * Requires PHP:      7.2
+ * Tested up to:      5.8
+ * Version:           2.2.1
  */
 
 // Exit if accessed directly
@@ -36,6 +38,7 @@ function _wp_user_activity() {
 	require_once $dir . 'includes/metadata.php';
 	require_once $dir . 'includes/metaboxes.php';
 	require_once $dir . 'includes/post-types.php';
+	require_once $dir . 'includes/sponsor.php';
 	require_once $dir . 'includes/taxonomies.php';
 	require_once $dir . 'includes/hooks.php';
 
@@ -76,5 +79,5 @@ function wp_user_activity_get_plugin_url() {
 function wp_user_activity_get_asset_version() {
 	return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG
 		? time()
-		: 202103280001;
+		: 202105290001;
 }
