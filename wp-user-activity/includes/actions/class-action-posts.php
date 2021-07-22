@@ -295,7 +295,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 
 		// Use lowercase singular label
 		if ( ! empty( $pto ) ) {
-			$retval = strtolower( $pto->labels->singular_name );
+			$retval = mb_strtolower( $pto->labels->singular_name );
 		}
 
 		return $retval;
