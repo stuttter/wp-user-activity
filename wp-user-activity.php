@@ -12,8 +12,8 @@
  * Domain Path:       /wp-user-activity/includes/languages
  * Requires at least: 5.2
  * Requires PHP:      7.2
- * Tested up to:      5.8
- * Version:           2.2.1
+ * Tested up to:      5.9
+ * Version:           2.2.2
  */
 
 // Exit if accessed directly

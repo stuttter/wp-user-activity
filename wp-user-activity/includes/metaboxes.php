@@ -83,9 +83,7 @@ function wp_user_activity_object_metabox() {
 	$meta = wp_user_activity_get_meta( $post->ID );
 
 	// Action types (for dropdown)
-	$action_types = ! empty( $GLOBALS['wp_user_activity_actions'] )
-		? $GLOBALS['wp_user_activity_actions']
-		: array();
+	$action_types = wp_user_activity_get_all_actions();
 
 	// Start an output buffer
 	ob_start(); ?>

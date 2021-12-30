@@ -10,6 +10,27 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Get all activity actions
+ *
+ * @since 2.2.2
+ * @return array
+ */
+function wp_user_activity_get_all_actions() {
+	global $wp_user_activity_actions;
+
+	// Return if already set
+	if ( ! empty( $wp_user_activity_actions ) && is_array( $wp_user_activity_actions ) ) {
+		return $wp_user_activity_actions;
+	}
+
+	// Set as empty array
+	$wp_user_activity_actions = array();
+
+	// Return all actions
+	return $wp_user_activity_actions;
+}
+
+/**
  * Register the default user activity types
  *
  * @since 0.1.0
@@ -327,6 +348,9 @@ function wp_user_activity_register_action_callback( $object_type = '', $action =
  */
 function wp_get_user_activity_type_icon( $post = 0, $meta = array() ) {
 
+	// Get actions
+	$actions = wp_user_activity_get_all_actions();
+
 	// Get the post
 	$_post = get_post( $post );
 
@@ -336,8 +360,8 @@ function wp_get_user_activity_type_icon( $post = 0, $meta = array() ) {
 	}
 
 	// Get activity type
-	$type = isset( $GLOBALS['wp_user_activity_actions'][ $meta['object_type'] ] )
-		? $GLOBALS['wp_user_activity_actions'][ $meta['object_type'] ]
+	$type = is_array( $actions ) && ! empty( $actions[ $meta['object_type'] ] )
+		? $actions[ $meta['object_type'] ]
 		: '';
 
 	// Get type name

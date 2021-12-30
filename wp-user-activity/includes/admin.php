@@ -328,7 +328,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 	}
 
 	// Setup action types
-	$action_types = $GLOBALS['wp_user_activity_actions'];
+	$action_types = wp_user_activity_get_all_actions();
 
 	// Current action
 	$current_action = ! empty( $_GET['wp-user-activity-action'] )
