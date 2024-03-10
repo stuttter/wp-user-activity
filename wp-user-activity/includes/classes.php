@@ -57,7 +57,7 @@ abstract class WP_User_Activity_Type {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @var string
+	 * @var object
 	 */
 	public $action_callbacks = array();
 
@@ -233,9 +233,11 @@ abstract class WP_User_Activity_Type {
 	}
 
 	/**
+	 * Return the URL for an activity author
+	 *
 	 * @since 0.1.1
 	 *
-	 * @param  int  $user
+	 * @param WP_User $user
 	 */
 	protected function get_activity_author_url( $user = 0 ) {
 
@@ -337,6 +339,15 @@ class WP_User_Activity_Action {
 	 * @var string
 	 */
 	public $message = '';
+
+	/**
+	 * How are results being ordered?
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $order = '';
 
 	/**
 	 * Probably hook things in here
