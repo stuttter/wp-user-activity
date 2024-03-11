@@ -338,7 +338,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	public function transition_post_status( $new_status, $old_status, $post ) {
 
 		// Bail if nav menu item or activity item
-		if ( in_array( $post->post_type, array( 'nav_menu_item', 'activity' ), true ) ) {
+		if ( ! $this->is_post_type_allowed( $post->post_type ) ) {
 			return;
 		}
 
@@ -416,7 +416,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		}
 
 		// Bail if nav menu item or activity item
-		if ( in_array( $post->post_type, array( 'nav_menu_item', 'activity' ), true ) ) {
+		if ( ! $this->is_post_type_allowed( $post->post_type ) ) {
 			return;
 		}
 
@@ -453,7 +453,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		}
 
 		// Bail if nav menu item or activity item
-		if ( in_array( $post->post_type, array( 'nav_menu_item', 'activity' ), true ) ) {
+		if ( ! $this->is_post_type_allowed( $post->post_type ) ) {
 			return;
 		}
 
@@ -470,5 +470,23 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 			'object_id'      => $post->ID,
 			'action'         => 'update'
 		) );
+	}
+
+	/**
+	 * Is a post type allowed?
+	 *
+	 * @since 2.3.0
+	 * @return bool
+	 */
+	private function is_post_type_allowed( $post_type = '' ) {
+
+		// Disallowed post types
+		$disallowed = array(
+			'nav_menu_item',
+			wp_user_activity_get_post_type()
+		);
+
+		// Return
+		return ! in_array( $post_type, $disallowed, true );
 	}
 }

@@ -77,7 +77,7 @@ function wp_user_activity_trash_old_activities() {
     // Query arguments
     $args = array(
         'fields'         => 'ids',
-        'post_type'      => 'activity',
+        'post_type'      => wp_user_activity_get_post_type(),
         'post_status'    => 'publish',
         'orderby'        => 'post_date',
         'order'          => 'DESC',

@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 function wp_user_activity_add_metaboxes() {
 
 	// Plugin page
-	$plugin_page = 'activity';
+	$plugin_page = wp_user_activity_get_post_type();
 
 	// Activity add/edit (object)
 	add_meta_box(
@@ -50,7 +50,7 @@ function wp_user_activity_add_metaboxes() {
 function wp_user_activity_add_user_profiles_metabox( $type = '', $user = null ) {
 
 	// Get hookname
-	$hooks = wp_user_profiles_get_section_hooknames( 'activity' );
+	$hooks = wp_user_profiles_get_section_hooknames( wp_user_activity_get_post_type() );
 
 	// Bail if not the correct type
 	if ( ! in_array( $type, $hooks, true ) ) {
@@ -258,7 +258,7 @@ function wp_user_activity_metabox_save( $post_id = 0 ) {
 	}
 
 	// Only save activity metadata to activity post type
-	if ( 'activity' !== get_post_type( $post_id ) ) {
+	if ( wp_user_activity_get_post_type() !== get_post_type( $post_id ) ) {
 		return $post_id;
 	}
 

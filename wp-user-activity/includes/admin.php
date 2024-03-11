@@ -100,7 +100,7 @@ function wp_user_activity_sortable_columns( $columns = array() ) {
 function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
 
 	// Bail if not 'activty' post type
-	if ( empty( $wp_query->query['post_type'] ) || ! in_array( 'activity', (array) $wp_query->query['post_type'], true ) ) {
+	if ( empty( $wp_query->query['post_type'] ) || ! in_array( wp_user_activity_get_post_type(), (array) $wp_query->query['post_type'], true ) ) {
 		return;
 	}
 
@@ -161,7 +161,7 @@ function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
 function wp_user_activity_maybe_filter_by_fields( WP_Query $wp_query ) {
 
 	// Bail if not 'activty' post type
-	if ( empty( $wp_query->query['post_type'] ) || ! in_array( 'activity', (array) $wp_query->query['post_type'], true ) ) {
+	if ( empty( $wp_query->query['post_type'] ) || ! in_array( wp_user_activity_get_post_type(), (array) $wp_query->query['post_type'], true ) ) {
 		return;
 	}
 
@@ -276,7 +276,7 @@ function wp_user_activity_admin_assets() {
 function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type = 'post' ) {
 
 	// Disable dropdown for activities
-	if ( 'activity' === $post_type ) {
+	if ( wp_user_activity_get_post_type() === $post_type ) {
 		$disabled = true;
 	}
 
@@ -296,7 +296,7 @@ function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type
 function wp_user_activity_disable_quick_edit_link( $actions = array(), $post = '' ) {
 
 	// Unset the quick edit action
-	if ( ! empty( $post->post_type ) && ( 'activity' === $post->post_type ) ) {
+	if ( ! empty( $post->post_type ) && ( wp_user_activity_get_post_type() === $post->post_type ) ) {
 		unset( $actions['inline hide-if-no-js'] );
 	}
 
@@ -328,7 +328,7 @@ function wp_user_activity_disable_bulk_action( $actions = array() ) {
 function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 
 	// Bail if not the activity post type
-	if ( 'activity' !== $post_type ) {
+	if ( wp_user_activity_get_post_type() !== $post_type ) {
 		return;
 	}
 

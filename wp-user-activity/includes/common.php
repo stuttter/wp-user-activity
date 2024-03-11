@@ -126,7 +126,7 @@ function wp_insert_user_activity( $args = array() ) {
 
 	// Create activity entry
 	$activity_id = wp_insert_post( array(
-		'post_type'   => 'activity',
+		'post_type'   => wp_user_activity_get_post_type(),
 		'post_author' => $user_id,
 		'post_status' => 'publish',
 		'meta_input'  => $meta_input

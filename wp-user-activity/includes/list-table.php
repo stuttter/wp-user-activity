@@ -140,7 +140,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 
 		// Query for activity
 		$query = new WP_Query( array(
-			'post_type'           => 'activity',
+			'post_type'           => wp_user_activity_get_post_type(),
 			'post_status'         => 'publish',
 			'author'              => $user->ID,
 			'posts_per_page'      => $per_page,
