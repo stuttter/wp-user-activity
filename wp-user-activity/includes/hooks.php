@@ -53,6 +53,11 @@ add_filter( 'list_table_primary_column',             'wp_user_activity_list_tabl
 // Untrash
 add_filter( 'wp_untrash_post_status', 'wp_user_activity_untrash_to_previous_status', 10, 3 );
 
+// Cron
+add_action( 'init',                                       'wp_user_activity_schedule_cron' );
+add_action( 'wp_user_activity_trash_old_activities',      'wp_user_activity_trash_old_activities' );
+add_action( 'wp_user_activity_trash_old_activities_loop', 'wp_user_activity_trash_old_activities' );
+
 // Admin only filter for list-table sorting
 if ( is_admin() ) {
 	add_filter( 'pre_get_posts', 'wp_user_activity_maybe_sort_by_fields'   );
