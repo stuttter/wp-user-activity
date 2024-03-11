@@ -28,7 +28,15 @@ function wp_user_activity_register_post_types() {
  * @return string
  */
 function wp_user_activity_get_post_type() {
-	return 'activity';
+
+	/**
+	 * Filter the post type ID
+	 *
+	 * @since 2.3.0
+	 * @param string $post_type The post type ID
+	 * @return string
+	 */
+	return (string) apply_filters( 'wp_user_activity_get_post_type', 'activity' );
 }
 
 /**
