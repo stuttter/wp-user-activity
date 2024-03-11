@@ -378,11 +378,17 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 		// Update
 		} elseif ( 'update' === $extra['action'] ) {
 
-			// Get theme slugs
+			// Bulk update
 			if ( isset( $extra['bulk'] ) && ( true == $extra['bulk'] ) ) {
 				$slugs = $extra['themes'];
+
+			// Single theme
+			} elseif ( ! empty( $upgrader->skin->result['destination_name'] ) ) {
+				$slugs = array( $upgrader->skin->result['destination_name'] );
+
+			// No theme found
 			} else {
-				$slugs = array( $upgrader->skin->theme );
+				$slugs = array();
 			}
 
 			// Activity for each theme
