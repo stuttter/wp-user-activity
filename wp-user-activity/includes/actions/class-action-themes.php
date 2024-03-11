@@ -388,12 +388,9 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			// Activity for each theme
 			foreach ( $slugs as $slug ) {
 
-				$theme      = wp_get_theme( $slug );
-				$stylesheet = $theme['Stylesheet Dir'] . '/style.css';
-				$theme_data = get_file_data( $stylesheet, array( 'Version' => 'Version' ) );
-
-				$name    = $theme['Name'];
-				$version = $theme_data['Version'];
+				$theme   = wp_get_theme( $slug );
+				$name    = $theme->name;
+				$version = $theme->version;
 
 				// Insert activity
 				wp_insert_user_activity( array(
