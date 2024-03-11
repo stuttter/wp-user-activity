@@ -92,7 +92,7 @@ class WP_User_Activity_Type_Core extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */

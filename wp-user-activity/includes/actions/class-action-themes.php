@@ -113,11 +113,11 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function customize_action_callback( $post, $meta = array() ) {
+	public function customize_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'customize' ),
 			$this->get_activity_author_link( $post ),
@@ -132,11 +132,11 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function activate_action_callback( $post, $meta = array() ) {
+	public function activate_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'customize' ),
 			$this->get_activity_author_link( $post ),
@@ -151,11 +151,11 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function update_action_callback( $post, $meta = array() ) {
+	public function update_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
@@ -170,11 +170,11 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function install_action_callback( $post, $meta = array() ) {
+	public function install_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'install' ),
 			$this->get_activity_author_link( $post ),
@@ -189,11 +189,11 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function file_update_action_callback( $post, $meta = array() ) {
+	public function file_update_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'file_update' ),
 			$this->get_activity_author_link( $post ),
@@ -209,11 +209,11 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function delete_action_callback( $post, $meta = array() ) {
+	public function delete_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),

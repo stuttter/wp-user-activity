@@ -85,11 +85,11 @@ class WP_User_Activity_Type_Attachment extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function create_action_callback( $post, $meta = array() ) {
+	public function create_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'create' ),
 			$this->get_activity_author_link( $post ),
@@ -104,11 +104,11 @@ class WP_User_Activity_Type_Attachment extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function update_action_callback( $post, $meta = array() ) {
+	public function update_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
@@ -123,11 +123,11 @@ class WP_User_Activity_Type_Attachment extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function delete_action_callback( $post, $meta = array() ) {
+	public function delete_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),

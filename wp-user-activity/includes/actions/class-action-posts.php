@@ -124,11 +124,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function create_action_callback( $post, $meta = array() ) {
+	public function create_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'create' ),
 			$this->get_activity_author_link( $post ),
@@ -144,11 +144,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function update_action_callback( $post, $meta = array() ) {
+	public function update_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'update' ),
 			$this->get_activity_author_link( $post ),
@@ -164,11 +164,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function delete_action_callback( $post, $meta = array() ) {
+	public function delete_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'delete' ),
 			$this->get_activity_author_link( $post ),
@@ -184,11 +184,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function trash_action_callback( $post, $meta = array() ) {
+	public function trash_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'trash' ),
 			$this->get_activity_author_link( $post ),
@@ -204,11 +204,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function untrash_action_callback( $post, $meta = array() ) {
+	public function untrash_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'untrash' ),
 			$this->get_activity_author_link( $post ),
@@ -224,11 +224,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function spam_action_callback( $post, $meta = array() ) {
+	public function spam_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'spam' ),
 			$this->get_activity_author_link( $post ),
@@ -244,11 +244,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function unspam_action_callback( $post, $meta = array() ) {
+	public function unspam_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'unspam' ),
 			$this->get_activity_author_link( $post ),
@@ -264,11 +264,11 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @since 0.1.1
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function future_action_callback( $post, $meta = array() ) {
+	public function future_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'future' ),
 			$this->get_activity_author_link( $post ),

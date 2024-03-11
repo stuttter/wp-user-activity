@@ -67,11 +67,11 @@ class WP_User_Activity_Type_Export extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function export_action_callback( $post, $meta = array() ) {
+	public function export_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'export' ),
 			$this->get_activity_author_link( $post ),

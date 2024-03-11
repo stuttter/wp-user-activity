@@ -112,10 +112,11 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function login_action_callback( $post, $meta = array() ) {
+	public function login_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'login' ),
 			$this->get_activity_author_link( $post ),
@@ -129,11 +130,11 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
-	 * @param  array   $meta
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function login_fail_action_callback( $post, $meta = array() ) {
+	public function login_fail_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'login_fail' ),
 			$meta->object_name,
@@ -198,10 +199,11 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  object  $post
+	 * @param  object  $meta
 	 *
 	 * @return string
 	 */
-	public function delete_action_callback( $post, $meta = array() ) {
+	public function delete_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'delete' ),
 			$meta->object_name,
@@ -217,7 +219,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 	 * @since 0.1.0
 	 *
 	 * @param  string  $user_login
-	 * @param  string  $user
+	 * @param  object  $user
 	 */
 	public function wp_login( $user_login, $user ) {
 		wp_insert_user_activity( array(
