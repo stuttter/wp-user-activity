@@ -32,6 +32,7 @@ function _wp_user_activity() {
 	// Include the files
 	require_once $dir . 'includes/admin.php';
 	require_once $dir . 'includes/classes.php';
+	require_once $dir . 'includes/cron.php';
 	require_once $dir . 'includes/capabilities.php';
 	require_once $dir . 'includes/common.php';
 	require_once $dir . 'includes/list-table.php';
