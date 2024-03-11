@@ -15,7 +15,20 @@ defined( 'ABSPATH' ) || exit;
  * @since 0.1.0
  */
 function wp_user_activity_register_post_types() {
-	register_post_type( 'activity', wp_user_activity_get_post_type_args() );
+	register_post_type(
+		wp_user_activity_get_post_type(),
+		wp_user_activity_get_post_type_args()
+	);
+}
+
+/**
+ * Get the ID of the activity post type
+ *
+ * @since 2.3.0
+ * @return string
+ */
+function wp_user_activity_get_post_type() {
+	return 'activity';
 }
 
 /**
@@ -127,7 +140,7 @@ function wp_user_activity_append_action_to_the_content( $content = '' ) {
 	}
 
 	// Bail if not an activity post
-	if ( 'activity' !== $post->post_type ) {
+	if ( wp_user_activity_get_post_type() !== $post->post_type ) {
 		return $content;
 	}
 
@@ -165,7 +178,7 @@ function wp_user_activity_append_action_to_the_content( $content = '' ) {
 function wp_user_activity_untrash_to_previous_status( $new_status = '', $post_id = 0, $previous_status = '' ) {
 
 	// Only filter Activity post types
-	if ( 'activity' === get_post_type( $post_id ) ) {
+	if ( wp_user_activity_get_post_type() === get_post_type( $post_id ) ) {
 		$new_status = $previous_status;
 	}
 
