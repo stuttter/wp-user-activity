@@ -47,7 +47,7 @@ function wp_user_activity_manage_posts_columns( $columns = array() ) {
 	);
 
 	// Return overridden columns
-	return apply_filters( 'wp_user_activity_manage_posts_columns', $new_columns, $columns );
+	return (array) apply_filters( 'wp_user_activity_manage_posts_columns', $new_columns, $columns );
 }
 
 /**
@@ -100,7 +100,7 @@ function wp_user_activity_sortable_columns( $columns = array() ) {
 function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
 
 	// Bail if not 'activty' post type
-	if ( empty( $wp_query->query['post_type'] ) || ! in_array( 'activity', (array) $wp_query->query['post_type'] ) ) {
+	if ( empty( $wp_query->query['post_type'] ) || ! in_array( 'activity', (array) $wp_query->query['post_type'], true ) ) {
 		return;
 	}
 
@@ -108,9 +108,9 @@ function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
 	$order = 'DESC';
 
 	// Some default order values
-	if ( ! empty( $_REQUEST['order'] ) ) {
+	if ( ! empty( $_REQUEST['order'] ) && is_string( $_REQUEST['order'] ) ) {
 		$new_order = strtolower( $_REQUEST['order'] );
-		if ( ! in_array( $order, array( 'asc', 'desc' ) ) ) {
+		if ( ! in_array( $order, array( 'asc', 'desc' ), true ) ) {
 			$order = $new_order;
 		}
 	}
@@ -161,7 +161,7 @@ function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
 function wp_user_activity_maybe_filter_by_fields( WP_Query $wp_query ) {
 
 	// Bail if not 'activty' post type
-	if ( empty( $wp_query->query['post_type'] ) || ! in_array( 'activity', (array) $wp_query->query['post_type'] ) ) {
+	if ( empty( $wp_query->query['post_type'] ) || ! in_array( 'activity', (array) $wp_query->query['post_type'], true ) ) {
 		return;
 	}
 
@@ -211,8 +211,8 @@ function wp_user_activity_maybe_filter_by_fields( WP_Query $wp_query ) {
  *
  * @since 0.1.0
  *
- * @param  string  $column
- * @param  int     $post_id
+ * @param  string  $column  Column ID
+ * @param  int     $post_id Post ID
  */
 function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 ) {
 
@@ -260,15 +260,18 @@ function wp_user_activity_admin_assets() {
 	// Asset management
 	$url = wp_user_activity_get_plugin_url();
 	$ver = wp_user_activity_get_asset_version();
+	$css = $url . 'assets/css/activity.css';
 
 	// Activity styling
-	wp_enqueue_style( 'wp_user_activity', $url . 'assets/css/activity.css', false, $ver );
+	wp_enqueue_style( 'wp_user_activity', $css, false, $ver );
 }
 
 /**
  * Disable months dropdown
  *
  * @since 0.1.2
+ * @param  bool   $disabled  Default disabled value
+ * @param  string $post_type Post type
  */
 function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type = 'post' ) {
 
@@ -286,12 +289,14 @@ function wp_user_activity_disable_months_dropdown( $disabled = false, $post_type
  *
  * @since 0.1.0
  *
- * @param array $actions
+ * @param  array   $actions Row actions
+ * @param  WP_Post $post    Post object
+ * @return array
  */
 function wp_user_activity_disable_quick_edit_link( $actions = array(), $post = '' ) {
 
 	// Unset the quick edit action
-	if ( 'activity' === $post->post_type ) {
+	if ( ! empty( $post->post_type ) && ( 'activity' === $post->post_type ) ) {
 		unset( $actions['inline hide-if-no-js'] );
 	}
 
@@ -303,7 +308,7 @@ function wp_user_activity_disable_quick_edit_link( $actions = array(), $post = '
  *
  * @since 0.1.0
  *
- * @param   array  $actions
+ * @param   array  $actions Bulk actions
  * @return  array
  */
 function wp_user_activity_disable_bulk_action( $actions = array() ) {
@@ -344,7 +349,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 	ob_start();
 
 	// Show the action filter
-	if ( apply_filters( 'wp_user_activity_show_action_filter', true ) ) : ?>
+	if ( (bool) apply_filters( 'wp_user_activity_show_action_filter', true ) ) : ?>
 
 	<label class="screen-reader-text" for="type"><?php esc_html_e( 'Filter by type', 'wp-user-activity' ); ?></label>
 	<select name="wp-user-activity-action" id="wp-user-activity-action">
@@ -372,7 +377,7 @@ function wp_user_activity_add_dropdown_filters( $post_type = '' ) {
 	endif;
 
 	// Show the user filter
-	if ( apply_filters( 'wp_user_activity_show_user_filter', true ) ) :
+	if ( (bool) apply_filters( 'wp_user_activity_show_user_filter', true ) ) :
 
 	// Query for users
 	$users = get_users( array(
@@ -432,5 +437,5 @@ function wp_user_activity_add_profile_section( $sections = array() ) {
 	);
 
 	// Filter & return
-	return apply_filters( 'wp_user_activity_add_profile_section', $new_sections, $sections );
+	return (array) apply_filters( 'wp_user_activity_add_profile_section', $new_sections, $sections );
 }
