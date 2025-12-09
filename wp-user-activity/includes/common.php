@@ -360,8 +360,9 @@ function wp_get_user_activity_type_icon( $post = 0, $meta = array() ) {
 	}
 
 	// Get activity type
-	$type = is_array( $actions ) && ! empty( $actions[ $meta['object_type'] ] )
-		? $actions[ $meta['object_type'] ]
+	$object_type = ( $meta ?? [] )['object_type'] ?? '';
+	$type = is_array( $actions ) && ! empty( $actions[ $object_type ] )
+		? $actions[ $object_type ]
 		: '';
 
 	// Get type name
@@ -402,14 +403,16 @@ function wp_get_user_activity_action( $post = 0, $meta = array() ) {
 	}
 
 	// Assemble the filter key
-	$key = "wp_get_user_activity_{$meta['object_type']}_{$meta['action']}";
+	$object_type = ( $meta ?? [] )['object_type'] ?? '';
+	$action = ( $meta ?? [] )['action'] ?? '';
+	$key = "wp_get_user_activity_{$object_type}_{$action}";
 
 	// Filter & return
 	$retval = apply_filters( $key, $_post, (object) $meta );
 
 	// Return the action if no human readable action was found
 	if ( $retval instanceof WP_Post ) {
-		return $meta['action'];
+		return ( $meta ?? [] )['action'] ?? '';
 	}
 
 	// Filter & return
@@ -437,8 +440,9 @@ function wp_get_user_activity_ip( $post = 0, $meta = array() ) {
 	}
 
 	// Get IP address
-	$retval = ! empty( $meta['ip'] )
-		? $meta['ip']
+	$ip = ( $meta ?? [] )['ip'] ?? '';
+	$retval = ! empty( $ip )
+		? $ip
 		: '0.0.0.0';
 
 	// Filter & return
@@ -465,9 +469,10 @@ function wp_get_user_activity_ua( $post = 0, $meta = array() ) {
 		$meta = wp_user_activity_get_meta( $_post->ID );
 	}
 
-	// Get IP address
-	$retval = ! empty( $meta['ua'] )
-		? $meta['ua']
+	// Get user agent
+	$ua = ( $meta ?? [] )['ua'] ?? '';
+	$retval = ! empty( $ua )
+		? $ua
 		: '&mdash;';
 
 	// Filter & return
@@ -490,7 +495,7 @@ function wp_user_activity_current_user_ip() {
 	if ( is_user_logged_in() ) {
 		$manager = WP_Session_Tokens::get_instance( get_current_user_id() );
 		$session = $manager->get( wp_get_session_token() );
-		$retval  = $session['ip'];
+		$retval  = ($session ?? [])['ip'] ?? '';
 	}
 
 	// No session IP
@@ -525,10 +530,10 @@ function wp_user_activity_current_user_ua() {
 	if ( is_user_logged_in() ) {
 		$manager = WP_Session_Tokens::get_instance( get_current_user_id() );
 		$session = $manager->get( wp_get_session_token() );
-		$retval  = $session['ua'];
+		$retval  = ($session ?? [])['ua'] ?? '';
 	}
 
-	// No session IP
+	// No session UA
 	if ( empty( $retval ) || ! is_user_logged_in() ) {
 		$retval = ! empty( $_SERVER['HTTP_USER_AGENT'] )
 			? substr( $_SERVER['HTTP_USER_AGENT'], 0, 254 )
