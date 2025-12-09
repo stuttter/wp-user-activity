@@ -360,8 +360,9 @@ function wp_get_user_activity_type_icon( $post = 0, $meta = array() ) {
 	}
 
 	// Get activity type
-	$type = is_array( $actions ) && ! empty( $actions[ $meta['object_type'] ?? '' ] )
-		? $actions[ $meta['object_type'] ]
+	$object_type = ( $meta ?? [] )['object_type'] ?? '';
+	$type = is_array( $actions ) && ! empty( $actions[ $object_type ] )
+		? $actions[ $object_type ]
 		: '';
 
 	// Get type name
@@ -402,8 +403,8 @@ function wp_get_user_activity_action( $post = 0, $meta = array() ) {
 	}
 
 	// Assemble the filter key
-	$object_type = $meta['object_type'] ?? '';
-	$action = $meta['action'] ?? '';
+	$object_type = ( $meta ?? [] )['object_type'] ?? '';
+	$action = ( $meta ?? [] )['action'] ?? '';
 	$key = "wp_get_user_activity_{$object_type}_{$action}";
 
 	// Filter & return
@@ -411,7 +412,7 @@ function wp_get_user_activity_action( $post = 0, $meta = array() ) {
 
 	// Return the action if no human readable action was found
 	if ( $retval instanceof WP_Post ) {
-		return $meta['action'] ?? '';
+		return ( $meta ?? [] )['action'] ?? '';
 	}
 
 	// Filter & return
@@ -439,8 +440,8 @@ function wp_get_user_activity_ip( $post = 0, $meta = array() ) {
 	}
 
 	// Get IP address
-	$retval = ! empty( $meta['ip'] ?? '' )
-		? $meta['ip']
+	$retval = ! empty( ( $meta ?? [] )['ip'] ?? '' )
+		? ( $meta ?? [] )['ip']
 		: '0.0.0.0';
 
 	// Filter & return
@@ -468,8 +469,8 @@ function wp_get_user_activity_ua( $post = 0, $meta = array() ) {
 	}
 
 	// Get user agent
-	$retval = ! empty( $meta['ua'] ?? '' )
-		? $meta['ua']
+	$retval = ! empty( ( $meta ?? [] )['ua'] ?? '' )
+		? ( $meta ?? [] )['ua']
 		: '&mdash;';
 
 	// Filter & return
