@@ -15,11 +15,32 @@ defined( 'ABSPATH' ) || exit;
  * @since 0.1.0
  */
 function wp_user_activity_register_post_metadata() {
-	register_meta( 'post', 'wp_user_activity_object_type',    'wp_user_activity_sanitize_object_type'    );
-	register_meta( 'post', 'wp_user_activity_object_subtype', 'wp_user_activity_sanitize_object_subtype' );
-	register_meta( 'post', 'wp_user_activity_object_name',    'wp_user_activity_sanitize_object_name'    );
-	register_meta( 'post', 'wp_user_activity_object_id',      'wp_user_activity_sanitize_object_id'      );
-	register_meta( 'post', 'wp_user_activity_action',         'wp_user_activity_sanitize_object_action'  );
+	$post_type = wp_user_activity_get_post_type();
+
+	register_meta( 'post', 'wp_user_activity_object_type', array(
+		'object_subtype'    => $post_type,
+		'sanitize_callback' => 'wp_user_activity_sanitize_object_type',
+	) );
+
+	register_meta( 'post', 'wp_user_activity_object_subtype', array(
+		'object_subtype'    => $post_type,
+		'sanitize_callback' => 'wp_user_activity_sanitize_object_subtype',
+	) );
+
+	register_meta( 'post', 'wp_user_activity_object_name', array(
+		'object_subtype'    => $post_type,
+		'sanitize_callback' => 'wp_user_activity_sanitize_object_name',
+	) );
+
+	register_meta( 'post', 'wp_user_activity_object_id', array(
+		'object_subtype'    => $post_type,
+		'sanitize_callback' => 'wp_user_activity_sanitize_object_id',
+	) );
+
+	register_meta( 'post', 'wp_user_activity_action', array(
+		'object_subtype'    => $post_type,
+		'sanitize_callback' => 'wp_user_activity_sanitize_object_action',
+	) );
 }
 
 /**
