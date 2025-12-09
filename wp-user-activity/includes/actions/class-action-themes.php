@@ -364,8 +364,8 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			wp_clean_themes_cache();
 
 			$theme   = wp_get_theme( $slug );
-			$name    = $theme->name;
-			$version = $theme->version;
+			$name    = $theme->get( 'Name' );
+			$version = $theme->get( 'Version' );
 
 			// Insert activity
 			wp_insert_user_activity( array(
@@ -391,12 +391,15 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 				$slugs = array();
 			}
 
+			// Clear the theme cache to ensure fresh data
+			wp_clean_themes_cache();
+
 			// Activity for each theme
 			foreach ( $slugs as $slug ) {
 
 				$theme   = wp_get_theme( $slug );
-				$name    = $theme->name;
-				$version = $theme->version;
+				$name    = $theme->get( 'Name' );
+				$version = $theme->get( 'Version' );
 
 				// Insert activity
 				wp_insert_user_activity( array(
