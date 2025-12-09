@@ -465,8 +465,10 @@ function wp_get_user_activity_ua( $post = 0, $meta = array() ) {
 		$meta = wp_user_activity_get_meta( $_post->ID );
 	}
 
-	// Get IP address
-	$retval = $meta['ua'] ?? '&mdash;';
+	// Get user agent
+	$retval = ! empty( $meta['ua'] ?? '' )
+		? $meta['ua']
+		: '&mdash;';
 
 	// Filter & return
 	return apply_filters( 'wp_get_user_activity_ua', $retval, $_post, $meta );
