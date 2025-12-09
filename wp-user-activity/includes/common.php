@@ -528,7 +528,7 @@ function wp_user_activity_current_user_ua() {
 		$retval  = $session['ua'] ?? '';
 	}
 
-	// No session IP
+	// No session UA
 	if ( empty( $retval ) || ! is_user_logged_in() ) {
 		$retval = ! empty( $_SERVER['HTTP_USER_AGENT'] )
 			? substr( $_SERVER['HTTP_USER_AGENT'], 0, 254 )
