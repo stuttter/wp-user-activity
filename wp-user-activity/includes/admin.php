@@ -99,7 +99,7 @@ function wp_user_activity_sortable_columns( $columns = array() ) {
  */
 function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
 
-	// Bail if not 'activty' post type
+	// Bail if not 'activity' post type
 	if ( empty( $wp_query->query['post_type'] ) || ! in_array( wp_user_activity_get_post_type(), (array) $wp_query->query['post_type'], true ) ) {
 		return;
 	}
@@ -160,7 +160,7 @@ function wp_user_activity_maybe_sort_by_fields( WP_Query $wp_query ) {
  */
 function wp_user_activity_maybe_filter_by_fields( WP_Query $wp_query ) {
 
-	// Bail if not 'activty' post type
+	// Bail if not 'activity' post type
 	if ( empty( $wp_query->query['post_type'] ) || ! in_array( wp_user_activity_get_post_type(), (array) $wp_query->query['post_type'], true ) ) {
 		return;
 	}
