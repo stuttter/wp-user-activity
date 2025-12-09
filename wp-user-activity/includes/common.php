@@ -440,8 +440,9 @@ function wp_get_user_activity_ip( $post = 0, $meta = array() ) {
 	}
 
 	// Get IP address
-	$retval = ! empty( ( $meta ?? [] )['ip'] ?? '' )
-		? ( $meta ?? [] )['ip']
+	$ip = ( $meta ?? [] )['ip'] ?? '';
+	$retval = ! empty( $ip )
+		? $ip
 		: '0.0.0.0';
 
 	// Filter & return
@@ -469,8 +470,9 @@ function wp_get_user_activity_ua( $post = 0, $meta = array() ) {
 	}
 
 	// Get user agent
-	$retval = ! empty( ( $meta ?? [] )['ua'] ?? '' )
-		? ( $meta ?? [] )['ua']
+	$ua = ( $meta ?? [] )['ua'] ?? '';
+	$retval = ! empty( $ua )
+		? $ua
 		: '&mdash;';
 
 	// Filter & return
