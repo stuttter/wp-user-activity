@@ -530,7 +530,7 @@ function wp_user_activity_current_user_ua() {
 	if ( is_user_logged_in() ) {
 		$manager = WP_Session_Tokens::get_instance( get_current_user_id() );
 		$session = $manager->get( wp_get_session_token() );
-		$retval  = $session['ua'] ?? '';
+		$retval  = ($session ?? [])['ua'] ?? '';
 	}
 
 	// No session UA
