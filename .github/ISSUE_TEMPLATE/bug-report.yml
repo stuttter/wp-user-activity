@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a reproducible problem in WP User Activity.
+title: "Bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Security vulnerabilities and reports containing private activity data must be submitted privately according to SECURITY.md.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest reliable sequence that demonstrates the problem.
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: WP User Activity version
+    validations:
+      required: true
+  - type: input
+    id: wordpress-version
+    attributes:
+      label: WordPress version
+    validations:
+      required: true
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+    validations:
+      required: true
+  - type: dropdown
+    id: activity-type
+    attributes:
+      label: Affected activity type
+      options:
+        - Attachments
+        - Comments
+        - Core updates
+        - Exports
+        - Menus
+        - Plugins
+        - Posts
+        - Settings
+        - Terms
+        - Themes
+        - Users
+        - Widgets
+        - Custom activity type
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Include sanitized details only. Remove IP addresses, user agents, personal information, credentials, and private activity content.
