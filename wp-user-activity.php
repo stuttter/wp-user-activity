@@ -11,7 +11,7 @@
  * Text Domain:       wp-user-activity
  * Domain Path:       /wp-user-activity/includes/languages
  * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires PHP:      7.4
  * Tested up to:      5.9
  * Version:           2.2.2
  */

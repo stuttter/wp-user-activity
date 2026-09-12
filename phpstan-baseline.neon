@@ -1,0 +1,613 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-attachments.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-attachments.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-attachments.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 8
+			path: wp-user-activity/includes/actions/class-action-comments.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 8
+			path: wp-user-activity/includes/actions/class-action-comments.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 8
+			path: wp-user-activity/includes/actions/class-action-comments.php
+
+		-
+			message: '#^Parameter \#3 \$comment of method WP_User_Activity_Type_Comments\:\:add_comment_activity\(\) expects int\|null, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-comments.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$meta$#'
+			identifier: parameter.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-core.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-core.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 2
+			path: wp-user-activity/includes/actions/class-action-core.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-core.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-exports.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-exports.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-exports.php
+
+		-
+			message: '#^Access to property \$name on an unknown class id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Access to property \$term_id on an unknown class id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \#1 \$menu of function wp_get_nav_menu_object expects int\|string\|WP_Term, id given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \$deleted_term of method WP_User_Activity_Type_Menu\:\:menu_deleted\(\) has invalid type id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \$nav_menu_selected_id of method WP_User_Activity_Type_Menu\:\:menu_created_or_updated\(\) has invalid type id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \$term of method WP_User_Activity_Type_Menu\:\:menu_deleted\(\) has invalid type id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Parameter \$tt_id of method WP_User_Activity_Type_Menu\:\:menu_deleted\(\) has invalid type id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-menus.php
+
+		-
+			message: '#^Constant WP_PLUGIN_DIR not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-plugins.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 6
+			path: wp-user-activity/includes/actions/class-action-plugins.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 6
+			path: wp-user-activity/includes/actions/class-action-plugins.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 6
+			path: wp-user-activity/includes/actions/class-action-plugins.php
+
+		-
+			message: '#^Access to property \$ID on an unknown class id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Access to property \$post_parent on an unknown class id\.$#'
+			identifier: class.notFound
+			count: 2
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Access to property \$post_type on an unknown class id\.$#'
+			identifier: class.notFound
+			count: 4
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Method WP_User_Activity_Type_Posts\:\:transition_post_status\(\) has invalid return type type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Method WP_User_Activity_Type_Posts\:\:transition_post_status\(\) should return type but empty return statement found\.$#'
+			identifier: return.empty
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Method WP_User_Activity_Type_Posts\:\:transition_post_status\(\) should return type but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 8
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type_Posts\:\:_draft_or_post_title\(\) expects int, array\<int\|string, mixed\>\|WP_Post given\.$#'
+			identifier: argument.type
+			count: 2
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type_Posts\:\:_draft_or_post_title\(\) expects int, id given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 8
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 8
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Parameter \$post of method WP_User_Activity_Type_Posts\:\:transition_post_status\(\) has invalid type id\.$#'
+			identifier: class.notFound
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-posts.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-site-settings.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-site-settings.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-site-settings.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-terms.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-terms.php
+
+		-
+			message: '#^Parameter \#1 \$term of function get_term expects int\|object, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-terms.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 3
+			path: wp-user-activity/includes/actions/class-action-terms.php
+
+		-
+			message: '#^Offset ''function'' on array\{function\: string, line\?\: int, file\?\: string, class\?\: class\-string, type\?\: ''\-\>''\|''\:\:'', args\?\: list\<mixed\>, object\?\: object\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-themes.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 6
+			path: wp-user-activity/includes/actions/class-action-themes.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 6
+			path: wp-user-activity/includes/actions/class-action-themes.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 6
+			path: wp-user-activity/includes/actions/class-action-themes.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 4
+			path: wp-user-activity/includes/actions/class-action-users.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 6
+			path: wp-user-activity/includes/actions/class-action-users.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 4
+			path: wp-user-activity/includes/actions/class-action-users.php
+
+		-
+			message: '#^Function remove_action invoked with 4 parameters, 2\-3 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: wp-user-activity/includes/actions/class-action-widgets.php
+
+		-
+			message: '#^Parameter \#1 \$post of method WP_User_Activity_Type\:\:get_activity_author_link\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 2
+			path: wp-user-activity/includes/actions/class-action-widgets.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of method WP_User_Activity_Type\:\:get_how_long_ago\(\) expects int, object given\.$#'
+			identifier: argument.type
+			count: 2
+			path: wp-user-activity/includes/actions/class-action-widgets.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, object given\.$#'
+			identifier: argument.type
+			count: 2
+			path: wp-user-activity/includes/actions/class-action-widgets.php
+
+		-
+			message: '#^Call to function in_array\(\) with arguments ''DESC'', array\{''asc'', ''desc''\} and true will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Default value of the parameter \#2 \$post \(string\) of function wp_user_activity_disable_quick_edit_link\(\) is incompatible with type WP_Post\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Function apply_filters invoked with 3 parameters, 2 required\.$#'
+			identifier: arguments.count
+			count: 2
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Parameter \#1 \$post of function wp_get_user_activity_action expects int, array\<int\|string, mixed\>\|WP_Post\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Parameter \#1 \$post of function wp_get_user_activity_ip expects int, array\<int\|string, mixed\>\|WP_Post\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Parameter \#1 \$post of function wp_get_user_activity_type_icon expects int, array\<int\|string, mixed\>\|WP_Post\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Parameter \#1 \$post of function wp_get_user_activity_ua expects int, array\<int\|string, mixed\>\|WP_Post\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Parameter \#3 \$deps of function wp_enqueue_style expects array, false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Parameter \#4 \$ver of function wp_enqueue_style expects bool\|string\|null, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/admin.php
+
+		-
+			message: '#^Function apply_filters invoked with 5 parameters, 2 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: wp-user-activity/includes/capabilities.php
+
+		-
+			message: '#^Default value of the parameter \#1 \$user \(int\) of method WP_User_Activity_Type\:\:get_activity_author_url\(\) is incompatible with type WP_User\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: wp-user-activity/includes/classes.php
+
+		-
+			message: '#^Function current_user_can invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 2
+			path: wp-user-activity/includes/classes.php
+
+		-
+			message: '#^Method WP_User_Activity_Type\:\:get_activity_author_link\(\) should return object but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: wp-user-activity/includes/classes.php
+
+		-
+			message: '#^Method WP_User_Activity_Type\:\:get_activity_author_link\(\) should return object but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: wp-user-activity/includes/classes.php
+
+		-
+			message: '#^Parameter \#3 \$callback of function wp_user_activity_register_action_callback expects string, array\<int, \$this\(WP_User_Activity_Type\)\|string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/classes.php
+
+		-
+			message: '#^Property WP_User_Activity_Action\:\:\$order \(string\) does not accept int\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: wp-user-activity/includes/classes.php
+
+		-
+			message: '#^Property WP_User_Activity_Type\:\:\$action_callbacks \(object\) does not accept default value of type array\.$#'
+			identifier: property.defaultValue
+			count: 1
+			path: wp-user-activity/includes/classes.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Call to function is_numeric\(\) with int\<min, \-1\>\|int\<1, max\>\|\(non\-falsy\-string&numeric\-string\) will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Constant DAY_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 6
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Constant HOUR_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 3
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Constant MINUTE_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 3
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Constant WEEK_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 3
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Constant YEAR_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Function apply_filters invoked with 3 parameters, 2 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Function apply_filters invoked with 4 parameters, 2 required\.$#'
+			identifier: arguments.count
+			count: 6
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Function wp_insert_user_activity\(\) should return int but empty return statement found\.$#'
+			identifier: return.empty
+			count: 1
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Parameter \#1 \$time of function strtotime expects string, bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Parameter \#3 \$number of function _n expects int, float given\.$#'
+			identifier: argument.type
+			count: 13
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Variable \$meta on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 6
+			path: wp-user-activity/includes/common.php
+
+		-
+			message: '#^Variable \$activities in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: wp-user-activity/includes/cron.php
+
+		-
+			message: '#^Default value of the parameter \#2 \$priority \(false\) of function wp_user_activity_remove_all_actions\(\) is incompatible with type int\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: wp-user-activity/includes/hooks.php
+
+		-
+			message: '#^Default value of the parameter \#2 \$priority \(false\) of function wp_user_activity_restore_all_actions\(\) is incompatible with type int\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: wp-user-activity/includes/hooks.php
+
+		-
+			message: '#^Call to an undefined method WP_User_Activity_List_table\:\:process_bulk_action\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: wp-user-activity/includes/list-table.php
+
+		-
+			message: '#^Method WP_User_Activity_List_table\:\:prepare_items\(\) should always throw an exception or terminate script execution but doesn''t do that\.$#'
+			identifier: return.never
+			count: 1
+			path: wp-user-activity/includes/list-table.php
+
+		-
+			message: '#^Parameter \#1 \$args of method WP_List_Table\:\:set_pagination_args\(\) expects array\{total_items\?\: int, total_pages\?\: int, per_page\?\: int\}, array\{total_items\: int\<0, max\>, per_page\: 10, total_pages\: float\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/list-table.php
+
+		-
+			message: '#^Return type \(array\) of method WP_User_Activity_List_table\:\:get_columns\(\) should be compatible with return type \(never\) of method WP_List_Table\:\:get_columns\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: wp-user-activity/includes/list-table.php
+
+		-
+			message: '#^Default value of the parameter \#1 \$user_id \(int\) of function wp_user_activity_list_metabox\(\) is incompatible with type object\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: wp-user-activity/includes/metaboxes.php
+
+		-
+			message: '#^Function current_user_can invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: wp-user-activity/includes/metaboxes.php
+
+		-
+			message: '#^Function wp_user_profiles_get_section_hooknames not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: wp-user-activity/includes/metaboxes.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: wp-user-activity/includes/metaboxes.php
+
+		-
+			message: '#^Variable \$user_id in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: wp-user-activity/includes/metaboxes.php
+
+		-
+			message: '#^Parameter \#1 \$post of function wp_get_user_activity_action expects int, WP_Post given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-user-activity/includes/post-types.php
