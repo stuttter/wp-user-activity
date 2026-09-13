@@ -76,7 +76,19 @@ try {
 	$assert( true === $activity_post_type->show_ui, 'The activity administration UI must remain available.' );
 	$assert( true === $activity_post_type->can_export, 'Activity records must remain exportable.' );
 	$assert( true === $activity_post_type->delete_with_user, 'Activity records must remain associated with user deletion.' );
-	$assert( registered_meta_key_exists( 'post', 'wp_user_activity_action', 'activity' ), 'Activity metadata was not registered.' );
+	$registered_meta_keys = array(
+		'wp_user_activity_object_type',
+		'wp_user_activity_object_subtype',
+		'wp_user_activity_object_name',
+		'wp_user_activity_object_id',
+		'wp_user_activity_action',
+	);
+	foreach ( $registered_meta_keys as $registered_meta_key ) {
+		$assert(
+			registered_meta_key_exists( 'post', $registered_meta_key, 'activity' ),
+			'Activity metadata was not registered: ' . $registered_meta_key
+		);
+	}
 
 	$types = wp_user_activity_get_all_actions();
 	$assert( isset( $types['post'] ) && $types['post'] instanceof WP_User_Activity_Type_Posts, 'The default post activity type was not registered.' );
