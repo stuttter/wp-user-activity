@@ -26,3 +26,12 @@ for understanding and validating the result.
 
 The plugin and its Composer development toolchain require PHP 7.4 or newer.
 Production Composer installs should omit development dependencies.
+
+## Real WordPress smoke test
+
+The shared portfolio workflow network-activates the production build and loads
+`tests/integration/smoke.php` in an isolated WordPress multisite environment.
+The smoke test verifies the private activity post type, public insertion and
+metadata APIs, transition-hook restoration, and site-local activity storage.
+Keep it self-contained, deterministic, credential-free, and compatible with
+the published PHP and WordPress minimums.
