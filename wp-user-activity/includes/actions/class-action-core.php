@@ -58,7 +58,7 @@ class WP_User_Activity_Type_Core extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'auto_update',
 			'name'    => esc_html__( 'Auto-update', 'wp-user-activity' ),
-			/* translators: %1$s: activity context. */
+			/* translators: %1$s: human-readable elapsed time. */
 			'message' => esc_html__( 'WordPress auto-updated %1$s.', 'wp-user-activity' )
 		) );
 
