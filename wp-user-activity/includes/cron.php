@@ -71,7 +71,7 @@ function wp_user_activity_trash_old_activities() {
 
     // Date arguments
     $date_args = array(
-        'before' => date( 'Y-m-d H:i:s', strtotime( "-{$days_to_keep} days" ) )
+        'before' => gmdate( 'Y-m-d H:i:s', strtotime( "-{$days_to_keep} days" ) )
     );
 
     // Query arguments
