@@ -247,24 +247,31 @@ function wp_user_activity_human_diff_time( $older_date, $newer_date = false ) {
 	// Set output var
 	switch ( $seconds ) {
 		case YEAR_IN_SECONDS :
+			/* translators: %s: number of years. */
 			$output = sprintf( _n( '%s year',   '%s years',   $count, 'wp-user-activity' ), $count );
 			break;
 		case 30 * DAY_IN_SECONDS :
+			/* translators: %s: number of months. */
 			$output = sprintf( _n( '%s month',  '%s months',  $count, 'wp-user-activity' ), $count );
 			break;
 		case WEEK_IN_SECONDS :
+			/* translators: %s: number of weeks. */
 			$output = sprintf( _n( '%s week',   '%s weeks',   $count, 'wp-user-activity' ), $count );
 			break;
 		case DAY_IN_SECONDS :
+			/* translators: %s: number of days. */
 			$output = sprintf( _n( '%s day',    '%s days',    $count, 'wp-user-activity' ), $count );
 			break;
 		case HOUR_IN_SECONDS :
+			/* translators: %s: number of hours. */
 			$output = sprintf( _n( '%s hour',   '%s hours',   $count, 'wp-user-activity' ), $count );
 			break;
 		case MINUTE_IN_SECONDS :
+			/* translators: %s: number of minutes. */
 			$output = sprintf( _n( '%s minute', '%s minutes', $count, 'wp-user-activity' ), $count );
 			break;
 		default:
+			/* translators: %s: number of seconds. */
 			$output = sprintf( _n( '%s second', '%s seconds', $count, 'wp-user-activity' ), $count );
 	}
 
@@ -284,21 +291,27 @@ function wp_user_activity_human_diff_time( $older_date, $newer_date = false ) {
 
 			switch ( $seconds2 ) {
 				case 30 * DAY_IN_SECONDS :
+					/* translators: %s: number of months. */
 					$output .= sprintf( _n( '%s month',  '%s months',  $count2, 'wp-user-activity' ), $count2 );
 					break;
 				case WEEK_IN_SECONDS :
+					/* translators: %s: number of weeks. */
 					$output .= sprintf( _n( '%s week',   '%s weeks',   $count2, 'wp-user-activity' ), $count2 );
 					break;
 				case DAY_IN_SECONDS :
+					/* translators: %s: number of days. */
 					$output .= sprintf( _n( '%s day',    '%s days',    $count2, 'wp-user-activity' ), $count2 );
 					break;
 				case HOUR_IN_SECONDS :
+					/* translators: %s: number of hours. */
 					$output .= sprintf( _n( '%s hour',   '%s hours',   $count2, 'wp-user-activity' ), $count2 );
 					break;
 				case MINUTE_IN_SECONDS :
+					/* translators: %s: number of minutes. */
 					$output .= sprintf( _n( '%s minute', '%s minutes', $count2, 'wp-user-activity' ), $count2 );
 					break;
 				default:
+					/* translators: %s: number of seconds. */
 					$output .= sprintf( _n( '%s second', '%s seconds', $count2, 'wp-user-activity' ), $count2 );
 			}
 		}

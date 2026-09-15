@@ -88,7 +88,7 @@ function wp_user_activity_object_metabox() {
 	// Start an output buffer
 	ob_start(); ?>
 
-	<input type="hidden" name="wp_user_activity_metabox_nonce" value="<?php echo wp_create_nonce( 'wp_user_activity' ); ?>" />
+	<input type="hidden" name="wp_user_activity_metabox_nonce" value="<?php echo esc_attr( wp_create_nonce( 'wp_user_activity' ) ); ?>" />
 	<table class="form-table rowfat">
 		<tr>
 			<td>

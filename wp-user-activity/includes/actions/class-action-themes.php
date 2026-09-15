@@ -49,6 +49,7 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'customize',
 			'name'    => esc_html__( 'Customize', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s customized the "%2$s" theme %3$s.', 'wp-user-activity' )
 		) );
 
@@ -57,6 +58,7 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'activate',
 			'name'    => esc_html__( 'Activate', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s activated the "%2$s" theme %3$s.', 'wp-user-activity' )
 		) );
 
@@ -65,6 +67,7 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'update',
 			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s updated the "%2$s" theme %3$s.', 'wp-user-activity' )
 		) );
 
@@ -73,6 +76,7 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'install',
 			'name'    => esc_html__( 'Install', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s installed the "%2$s" theme %3$s.', 'wp-user-activity' )
 		) );
 
@@ -81,6 +85,7 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'file_update',
 			'name'    => esc_html__( 'File Update', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: object context, 4: elapsed time. */
 			'message' => esc_html__( '%1$s edited "%2$s" in the "%3$s" theme file %4$s.', 'wp-user-activity' )
 		) );
 
@@ -89,6 +94,7 @@ class WP_User_Activity_Type_Theme extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'delete',
 			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s deleted the "%2$s" theme %3$s.', 'wp-user-activity' )
 		) );
 
