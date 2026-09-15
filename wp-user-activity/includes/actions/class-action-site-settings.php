@@ -49,6 +49,7 @@ class WP_User_Activity_Type_Site_Settings extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'update',
 			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s updated the "%2$s" site setting %3$s.', 'wp-user-activity' )
 		) );
 

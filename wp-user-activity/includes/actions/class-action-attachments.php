@@ -42,13 +42,14 @@ class WP_User_Activity_Type_Attachment extends WP_User_Activity_Type {
 	public function __construct() {
 
 		// Set name
-		$this->name = esc_html__( 'Attachments', 'wp-user-actiivity' );
+		$this->name = esc_html__( 'Attachments', 'wp-user-activity' );
 
 		// Create
 		new WP_User_Activity_Action( array(
 			'type'    => $this,
 			'action'  => 'create',
 			'name'    => esc_html__( 'Create', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s uploaded "%2$s" %3$s.', 'wp-user-activity' )
 		) );
 
@@ -57,6 +58,7 @@ class WP_User_Activity_Type_Attachment extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'update',
 			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s edited "%2$s" %3$s.', 'wp-user-activity' )
 		) );
 
@@ -65,6 +67,7 @@ class WP_User_Activity_Type_Attachment extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'delete',
 			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s deleted "%2$s" %3$s.', 'wp-user-activity' )
 		) );
 

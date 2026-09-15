@@ -49,6 +49,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'login',
 			'name'    => esc_html__( 'Login', 'wp-user-activity' ),
+			/* translators: 1: activity actor or object, 2: elapsed time. */
 			'message' => esc_attr__( '%1$s logged in %2$s.', 'wp-user-activity' )
 		) );
 
@@ -57,6 +58,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'login_fail',
 			'name'    => esc_html__( 'Login Fail', 'wp-user-activity' ),
+			/* translators: 1: activity actor or object, 2: elapsed time. */
 			'message' => esc_html__( 'Failed login attempt for "%1$s" %2$s.', 'wp-user-activity' )
 		) );
 
@@ -65,6 +67,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'logout',
 			'name'    => esc_html__( 'Logout', 'wp-user-activity' ),
+			/* translators: 1: activity actor or object, 2: elapsed time. */
 			'message' => esc_html__( '%1$s logged out %2$s.', 'wp-user-activity' )
 		) );
 
@@ -73,6 +76,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'create',
 			'name'    => esc_html__( 'Sign-up', 'wp-user-activity' ),
+			/* translators: 1: activity actor or object, 2: elapsed time. */
 			'message' => esc_html__( '%1$s registered %2$s.', 'wp-user-activity' )
 		) );
 
@@ -81,6 +85,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'update',
 			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			/* translators: 1: activity actor or object, 2: elapsed time. */
 			'message' => esc_html__( '%1$s updated their account %2$s.', 'wp-user-activity' )
 		) );
 
@@ -89,6 +94,7 @@ class WP_User_Activity_Type_User extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'delete',
 			'name'    => esc_html__( 'Delete', 'wp-user-activity' ),
+			/* translators: 1: activity actor or object, 2: elapsed time. */
 			'message' => esc_html__( '%1$s deleted their account %2$s.', 'wp-user-activity' )
 		) );
 
