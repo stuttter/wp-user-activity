@@ -225,12 +225,12 @@ function wp_user_activity_manage_custom_column_data( $column = '', $post_id = 0 
 
 		// Attempt to output human-readable action
 		case 'activity_type' :
-			echo wp_get_user_activity_type_icon( $post, $meta ); // HTML
+			echo wp_kses_post( wp_get_user_activity_type_icon( $post, $meta ) );
 			break;
 
 		// User who performed this activity
 		case 'activity_username' :
-			echo wp_get_user_activity_action( $post, $meta ); // HTML
+			echo wp_kses_post( wp_get_user_activity_action( $post, $meta ) );
 			break;
 
 		// Session of the user who performed this activity
