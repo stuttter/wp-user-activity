@@ -42,13 +42,14 @@ class WP_User_Activity_Type_Core extends WP_User_Activity_Type {
 	public function __construct() {
 
 		// Set name
-		$this->name = esc_html__( 'Core', 'wp-user-actiivity' );
+		$this->name = esc_html__( 'Core', 'wp-user-activity' );
 
 		// Update
 		new WP_User_Activity_Action( array(
 			'type'    => $this,
 			'action'  => 'update',
 			'name'    => esc_html__( 'Update', 'wp-user-activity' ),
+			/* translators: 1: activity actor or object, 2: elapsed time. */
 			'message' => esc_html__( '%1$s updated WordPress %2$s.', 'wp-user-activity' )
 		) );
 
@@ -57,6 +58,7 @@ class WP_User_Activity_Type_Core extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'auto_update',
 			'name'    => esc_html__( 'Auto-update', 'wp-user-activity' ),
+			/* translators: %1$s: human-readable elapsed time. */
 			'message' => esc_html__( 'WordPress auto-updated %1$s.', 'wp-user-activity' )
 		) );
 

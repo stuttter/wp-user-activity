@@ -49,6 +49,7 @@ class WP_User_Activity_Type_Export extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'export',
 			'name'    => esc_html__( 'Export', 'wp-user-activity' ),
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s exported "%2$s" %3$s.', 'wp-user-activity' )
 		) );
 

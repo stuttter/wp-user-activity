@@ -78,7 +78,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 * @since 0.1.4
 	 */
 	public function column_activity_type( $item = '' ) {
-		echo wp_user_activity_manage_custom_column_data( 'activity_type', $item->ID );
+		wp_user_activity_manage_custom_column_data( 'activity_type', $item->ID );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 * @since 0.1.4
 	 */
 	public function column_activity_username( $item = '' ) {
-		echo wp_user_activity_manage_custom_column_data( 'activity_username', $item->ID );
+		wp_user_activity_manage_custom_column_data( 'activity_username', $item->ID );
 	}
 
 	/**
@@ -96,7 +96,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 * @since 0.1.4
 	 */
 	public function column_activity_when( $item = '' ) {
-		echo wp_user_activity_manage_custom_column_data( 'activity_when', $item->ID );
+		wp_user_activity_manage_custom_column_data( 'activity_when', $item->ID );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 * @since 0.1.4
 	 */
 	public function column_activity_session( $item = '' ) {
-		echo wp_user_activity_manage_custom_column_data( 'activity_session', $item->ID );
+		wp_user_activity_manage_custom_column_data( 'activity_session', $item->ID );
 	}
 
 	/**
@@ -188,14 +188,14 @@ class WP_User_Activity_List_table extends WP_List_Table {
 		// Top
 		$this->display_tablenav( 'top' ); ?>
 
-		<table class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
+		<table class="wp-list-table <?php echo esc_attr( implode( ' ', $this->get_table_classes() ) ); ?>">
 			<thead>
 				<tr>
 					<?php $this->print_column_headers(); ?>
 				</tr>
 			</thead>
 
-			<tbody id="the-list" data-wp-lists='list:<?php echo $this->_args['singular']; ?>'>
+			<tbody id="the-list" data-wp-lists='list:<?php echo esc_attr( $this->_args['singular'] ); ?>'>
 				<?php $this->display_rows_or_placeholder(); ?>
 			</tbody>
 

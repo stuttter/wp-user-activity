@@ -61,7 +61,7 @@ function wp_user_activity_get_post_type_args() {
 		'not_found'             => _x( 'No activity found.', 'plural', 'wp-user-activity' ),
 		'not_found_in_trash'    => _x( 'No activity found in Trash.', 'plural', 'wp-user-activity' ),
 		'parent_item_colon'     => _x( 'Parent Activity:', 'singular', 'wp-user-activity' ),
-		'all_items'             => _x( 'All Activity', 'wp-user-activity' ),
+		'all_items'             => _x( 'All Activity', 'plural', 'wp-user-activity' ),
 		'featured_image'        => __( 'Featured image', 'wp-user-activity' ),
 		'set_featured_image'    => __( 'Set featured image', 'wp-user-activity' ),
 		'remove_featured_image' => __( 'Remove featured image', 'wp-user-activity' ),

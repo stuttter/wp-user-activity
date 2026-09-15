@@ -46,6 +46,7 @@ class WP_User_Activity_Type_Widgets extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'update',
 			'name'    => '',
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s edited the "%2$s" widget %3$s.', 'wp-user-activity' )
 		) );
 
@@ -54,6 +55,7 @@ class WP_User_Activity_Type_Widgets extends WP_User_Activity_Type {
 			'type'    => $this,
 			'action'  => 'delete',
 			'name'    => '',
+			/* translators: 1: user link, 2: object name, 3: elapsed time. */
 			'message' => esc_html__( '%1$s deleted the "%2$s" widget %3$s.', 'wp-user-activity' )
 		) );
 
