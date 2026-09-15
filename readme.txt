@@ -12,6 +12,8 @@ Requires at least: 5.2
 Tested up to:      5.8
 Stable tag:        2.2.1
 
+Log, sort, and filter user activity in WordPress.
+
 == Description ==
 
 WP User Activity is the best way to log activity in WordPress. Activity can be sorted, filtered, and viewed per-user, along with session data for logged in users and IP addresses & user-agents for others.
