@@ -9,8 +9,8 @@ Contributors:      johnjamesjacoby
 Tags:              user, profile, activity, log
 Requires PHP:      7.4
 Requires at least: 5.2
-Tested up to:      5.8
-Stable tag:        2.2.1
+Tested up to:      7.1
+Stable tag:        2.2.2
 
 Log, sort, and filter user activity in WordPress.
 
