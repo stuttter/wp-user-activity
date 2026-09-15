@@ -77,7 +77,8 @@ function sanitize_key( $value ) { return strtolower( preg_replace( '/[^a-z0-9_\-
  * @param mixed $value Value to filter.
  */
 function wp_kses_post( $value ) {
-	return strip_tags( (string) $value, '<a><abbr><br><em><i><span><strong><time>' );
+	$result = wpuat_test_call( __FUNCTION__, array( $value ) );
+	return null === $result ? (string) $value : $result;
 }
 function wp_insert_post() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
 function wp_parse_args( $args, $defaults = array() ) { return array_merge( $defaults, (array) $args ); }
