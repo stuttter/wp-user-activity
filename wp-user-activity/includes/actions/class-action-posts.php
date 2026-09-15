@@ -326,7 +326,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		$title = $post->post_title;
 
 		// Force title to empty string
-		if ( empty( $title ) || esc_html__( 'Auto Draft', 'default' ) === $title ) {
+		if ( empty( $title ) || 'auto-draft' === $post->post_status ) {
 			$title = 'untitled';
 		}
 
