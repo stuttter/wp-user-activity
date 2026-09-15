@@ -108,6 +108,13 @@ No. All of the WordPress core database tables remain untouched.
 
 == Changelog ==
 
+= [2.2.2] - 2026-09-15 =
+* Fix PHP 8.2 compatibility and several PHP warnings
+* Fix activity logging for child-theme updates and ACF field groups
+* Improve output escaping and translation compatibility
+* Require PHP 7.4 and WordPress 5.2
+* Add automated tests, static analysis, Plugin Check, and release validation
+
 = [2.2.1] - 2021-05-29 =
 * Update author info
 * Add sponsor link

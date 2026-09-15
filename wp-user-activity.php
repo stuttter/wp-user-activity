@@ -3,13 +3,12 @@
 /**
  * Plugin Name:       WP User Activity
  * Description:       A sophisticated way to log user activity in WordPress
- * Plugin URI:        https://wordpress.org/plugins/wp-user-profiles/
+ * Plugin URI:        https://wordpress.org/plugins/wp-user-activity/
  * Author:            Triple J Software, Inc.
  * Author URI:        https://jjj.software
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-user-activity
- * Domain Path:       /wp-user-activity/includes/languages
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Tested up to:      7.1
