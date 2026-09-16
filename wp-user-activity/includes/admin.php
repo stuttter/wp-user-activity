@@ -263,7 +263,7 @@ function wp_user_activity_admin_assets() {
 	$css = $url . 'assets/css/activity.css';
 
 	// Activity styling
-	wp_enqueue_style( 'wp_user_activity', $css, false, $ver );
+	wp_enqueue_style( 'wp_user_activity', $css, array(), $ver );
 }
 
 /**

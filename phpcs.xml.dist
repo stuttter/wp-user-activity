@@ -16,5 +16,5 @@
 
     <rule ref="WordPress"/>
 
-    <config name="minimum_supported_wp_version" value="5.2"/>
+    <config name="minimum_supported_wp_version" value="6.4"/>
 </ruleset>
