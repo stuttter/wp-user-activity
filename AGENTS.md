@@ -2,7 +2,7 @@
 
 ## Compatibility
 
-- Preserve PHP 7.4 and WordPress 5.2 compatibility unless a dedicated pull
+- Preserve PHP 7.4 and WordPress 6.4 compatibility unless a dedicated pull
   request explicitly changes the published minimums.
 - Treat activity insertion, metadata, capabilities, retention, IP addresses,
   user agents, and multisite behavior as elevated-risk code.

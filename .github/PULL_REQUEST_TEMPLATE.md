@@ -5,7 +5,7 @@ Describe the observable change and why it belongs in WP User Activity.
 ## Risk and compatibility
 
 - [ ] Public functions, classes, hooks, filters, activity types, and metadata keys remain compatible.
-- [ ] PHP 7.4 and WordPress 5.2 compatibility are preserved.
+- [ ] PHP 7.4 and WordPress 6.4 compatibility are preserved.
 - [ ] Storage, retention, privacy, capability, multisite, and integration impact is described where applicable.
 - [ ] Automation, dependency, artifact, and release implications are identified.
 
