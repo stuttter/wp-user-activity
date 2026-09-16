@@ -361,12 +361,6 @@ parameters:
 			path: wp-user-activity/includes/admin.php
 
 		-
-			message: '#^Function apply_filters invoked with 3 parameters, 2 required\.$#'
-			identifier: arguments.count
-			count: 2
-			path: wp-user-activity/includes/admin.php
-
-		-
 			message: '#^Parameter \#1 \$post of function wp_get_user_activity_action expects int, array\<int\|string, mixed\>\|WP_Post\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -391,33 +385,15 @@ parameters:
 			path: wp-user-activity/includes/admin.php
 
 		-
-			message: '#^Parameter \#3 \$deps of function wp_enqueue_style expects array, false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: wp-user-activity/includes/admin.php
-
-		-
 			message: '#^Parameter \#4 \$ver of function wp_enqueue_style expects bool\|string\|null, int given\.$#'
 			identifier: argument.type
 			count: 1
 			path: wp-user-activity/includes/admin.php
 
 		-
-			message: '#^Function apply_filters invoked with 5 parameters, 2 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: wp-user-activity/includes/capabilities.php
-
-		-
 			message: '#^Default value of the parameter \#1 \$user \(int\) of method WP_User_Activity_Type\:\:get_activity_author_url\(\) is incompatible with type WP_User\.$#'
 			identifier: parameter.defaultValue
 			count: 1
-			path: wp-user-activity/includes/classes.php
-
-		-
-			message: '#^Function current_user_can invoked with 2 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 2
 			path: wp-user-activity/includes/classes.php
 
 		-
@@ -493,18 +469,6 @@ parameters:
 			path: wp-user-activity/includes/common.php
 
 		-
-			message: '#^Function apply_filters invoked with 3 parameters, 2 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: wp-user-activity/includes/common.php
-
-		-
-			message: '#^Function apply_filters invoked with 4 parameters, 2 required\.$#'
-			identifier: arguments.count
-			count: 6
-			path: wp-user-activity/includes/common.php
-
-		-
 			message: '#^Function wp_insert_user_activity\(\) should return int but empty return statement found\.$#'
 			identifier: return.empty
 			count: 1
@@ -559,20 +523,8 @@ parameters:
 			path: wp-user-activity/includes/list-table.php
 
 		-
-			message: '#^Method WP_User_Activity_List_table\:\:prepare_items\(\) should always throw an exception or terminate script execution but doesn''t do that\.$#'
-			identifier: return.never
-			count: 1
-			path: wp-user-activity/includes/list-table.php
-
-		-
 			message: '#^Parameter \#1 \$args of method WP_List_Table\:\:set_pagination_args\(\) expects array\{total_items\?\: int, total_pages\?\: int, per_page\?\: int\}, array\{total_items\: int\<0, max\>, per_page\: 10, total_pages\: float\} given\.$#'
 			identifier: argument.type
-			count: 1
-			path: wp-user-activity/includes/list-table.php
-
-		-
-			message: '#^Return type \(array\) of method WP_User_Activity_List_table\:\:get_columns\(\) should be compatible with return type \(never\) of method WP_List_Table\:\:get_columns\(\)$#'
-			identifier: method.childReturnType
 			count: 1
 			path: wp-user-activity/includes/list-table.php
 
@@ -583,20 +535,8 @@ parameters:
 			path: wp-user-activity/includes/metaboxes.php
 
 		-
-			message: '#^Function current_user_can invoked with 2 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: wp-user-activity/includes/metaboxes.php
-
-		-
 			message: '#^Function wp_user_profiles_get_section_hooknames not found\.$#'
 			identifier: function.notFound
-			count: 1
-			path: wp-user-activity/includes/metaboxes.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
 			count: 1
 			path: wp-user-activity/includes/metaboxes.php
 

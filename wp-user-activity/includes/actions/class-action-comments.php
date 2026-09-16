@@ -310,7 +310,7 @@ class WP_User_Activity_Type_Comments extends WP_User_Activity_Type {
 		}
 
 		// Get the post so we can use raw db data
-		$post = get_post( $comment->comment_post_ID );
+		$post = get_post( (int) $comment->comment_post_ID );
 
 		// Insert activity
 		wp_insert_user_activity( array(

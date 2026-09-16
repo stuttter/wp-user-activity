@@ -8,7 +8,7 @@ License:           GPLv2 or later
 Contributors:      johnjamesjacoby
 Tags:              user, profile, activity, log
 Requires PHP:      7.4
-Requires at least: 5.2
+Requires at least: 6.4
 Tested up to:      7.1
 Stable tag:        2.2.2
 
@@ -112,7 +112,7 @@ No. All of the WordPress core database tables remain untouched.
 * Fix PHP 8.2 compatibility and several PHP warnings
 * Fix activity logging for child-theme updates and ACF field groups
 * Improve output escaping and translation compatibility
-* Require PHP 7.4 and WordPress 5.2
+* Require PHP 7.4 and WordPress 6.4
 * Add automated tests, static analysis, Plugin Check, and release validation
 
 = [2.2.1] - 2021-05-29 =
