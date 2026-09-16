@@ -1,8 +1,11 @@
 # Changelog
 
-## 2.2.2 (Unreleased)
+## 2.2.3 (2026-09-16)
 
 - Require WordPress 6.4 or newer
+
+## 2.2.2 (2026-09-15)
+
 - Scope registered activity metadata to the activity post type
 - Avoid undefined array-key warnings when activity metadata is incomplete
 - Correct child-theme update logging
