@@ -10,7 +10,7 @@ Tags:              user, profile, activity, log
 Requires PHP:      7.4
 Requires at least: 6.4
 Tested up to:      7.1
-Stable tag:        2.2.2
+Stable tag:        2.2.3
 
 Log, sort, and filter user activity in WordPress.
 
@@ -108,11 +108,14 @@ No. All of the WordPress core database tables remain untouched.
 
 == Changelog ==
 
+= [2.2.3] - 2026-09-16 =
+* Require WordPress 6.4 or newer
+
 = [2.2.2] - 2026-09-15 =
 * Fix PHP 8.2 compatibility and several PHP warnings
 * Fix activity logging for child-theme updates and ACF field groups
 * Improve output escaping and translation compatibility
-* Require PHP 7.4 and WordPress 6.4
+* Require PHP 7.4 and WordPress 5.2
 * Add automated tests, static analysis, Plugin Check, and release validation
 
 = [2.2.1] - 2021-05-29 =
