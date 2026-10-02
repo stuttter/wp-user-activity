@@ -152,7 +152,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 		) );
 
 		// Get count
-		$total_items = (int) $query->found_posts;
+		$total_items = count( $query->posts );
 
 		// Set list table items to queried posts
 		$this->items = $query->posts;
