@@ -523,12 +523,6 @@ parameters:
 			path: wp-user-activity/includes/list-table.php
 
 		-
-			message: '#^Parameter \#1 \$args of method WP_List_Table\:\:set_pagination_args\(\) expects array\{total_items\?\: int, total_pages\?\: int, per_page\?\: int\}, array\{total_items\: int\<0, max\>, per_page\: 10, total_pages\: float\} given\.$#'
-			identifier: argument.type
-			count: 1
-			path: wp-user-activity/includes/list-table.php
-
-		-
 			message: '#^Default value of the parameter \#1 \$user_id \(int\) of function wp_user_activity_list_metabox\(\) is incompatible with type object\.$#'
 			identifier: parameter.defaultValue
 			count: 1

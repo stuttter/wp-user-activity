@@ -152,7 +152,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 		) );
 
 		// Get count
-		$total_items = count( $query->posts );
+		$total_items = (int) $query->found_posts;
 
 		// Set list table items to queried posts
 		$this->items = $query->posts;
@@ -161,7 +161,7 @@ class WP_User_Activity_List_table extends WP_List_Table {
 		$this->set_pagination_args( array(
 			'total_items' => $total_items,
 			'per_page'    => $per_page,
-			'total_pages' => ceil( $total_items / $per_page )
+			'total_pages' => (int) ceil( $total_items / $per_page )
 		) );
 	}
 
