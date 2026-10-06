@@ -79,6 +79,8 @@ function wp_user_activity_get_post_type_args() {
 
 		// Meta caps
 		'edit_post'              => 'edit_activity',
+		// WordPress may check this legacy alias against an activity post.
+		'edit_page'              => 'list_users',
 		'read_post'              => 'read_activity',
 		'delete_post'            => 'delete_activity',
 
