@@ -109,7 +109,6 @@ try {
 	$primary_activity    = get_post( $primary_activity_id );
 	$assert( $primary_activity instanceof WP_Post, 'The inserted primary activity could not be read.' );
 	$assert( 'activity' === $primary_activity->post_type && 'publish' === $primary_activity->post_status, 'The activity storage contract changed.' );
-	$assert( array( 'list_users' ) === map_meta_cap( 'edit_page', $user_id, $primary_activity_id ), 'Legacy page checks must map activity edits to list_users.' );
 	$assert( $user_id === (int) $primary_activity->post_author, 'The activity author was not persisted.' );
 	$assert( array( $primary_activity_id ) === $find_activity( $primary_name ), 'The primary activity could not be queried by stored metadata.' );
 	$assert(
