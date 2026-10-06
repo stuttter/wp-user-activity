@@ -21,6 +21,15 @@ function wpuat_test_call( $name, $arguments = array() ) {
 function __( $text ) { return $text; }
 function _x( $text ) { return $text; }
 function _n( $single, $plural, $number ) { return 1 === (int) $number ? $single : $plural; }
+/**
+ * Test replacement for esc_html__().
+ *
+ * @param string $text Text to translate and escape.
+ * @return string
+ */
+function esc_html__( $text ) {
+	return $text;
+}
 function absint( $value ) { return abs( (int) $value ); }
 function add_action() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
 function add_filter() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
@@ -67,6 +76,14 @@ function get_post() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
 function get_post_meta() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
 function get_post_type() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
 function is_admin() { return (bool) wpuat_test_call( __FUNCTION__ ); }
+/**
+ * Test replacement for is_post_type_hierarchical().
+ *
+ * @return bool
+ */
+function is_post_type_hierarchical() {
+	return (bool) wpuat_test_call( __FUNCTION__, func_get_args() );
+}
 function is_user_logged_in() { return (bool) wpuat_test_call( __FUNCTION__ ); }
 function register_meta() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
 function register_post_type() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
@@ -81,6 +98,15 @@ function wp_kses_post( $value ) {
 	return null === $result ? (string) $value : $result;
 }
 function wp_insert_post() { return wpuat_test_call( __FUNCTION__, func_get_args() ); }
+/**
+ * Test replacement for wp_kses().
+ *
+ * @param mixed $value Value to filter.
+ * @return string
+ */
+function wp_kses( $value ) {
+	return (string) $value;
+}
 function wp_parse_args( $args, $defaults = array() ) { return array_merge( $defaults, (array) $args ); }
 
 class WP_Post {
