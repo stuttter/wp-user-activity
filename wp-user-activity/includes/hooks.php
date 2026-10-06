@@ -74,15 +74,16 @@ if ( is_admin() ) {
  *
  * @global WP_filter $wp_filter
  * @global array $merged_filters
+ * @global stdClass $wp_user_activity_suspended_actions
  * @param string $tag
  * @param int $priority
  * @return bool
  */
 function wp_user_activity_remove_all_actions( $tag, $priority = false ) {
-	global $wp_filter, $merged_filters, $wp_user_activity_actions;
+	global $wp_filter, $merged_filters, $wp_user_activity_suspended_actions;
 
-	// Reset the global
-	$wp_user_activity_actions = new stdClass();
+	// Reset the suspended action storage
+	$wp_user_activity_suspended_actions = new stdClass();
 
 	// Filters exist
 	if ( isset( $wp_filter[ $tag ] ) ) {
@@ -91,7 +92,7 @@ function wp_user_activity_remove_all_actions( $tag, $priority = false ) {
 		if ( ! empty( $priority ) && isset( $wp_filter[ $tag ][ $priority ] ) ) {
 
 			// Store filters in a backup
-			$wp_user_activity_actions->wp_filter[ $tag ][ $priority ] = $wp_filter[ $tag ][ $priority ];
+			$wp_user_activity_suspended_actions->wp_filter[ $tag ][ $priority ] = $wp_filter[ $tag ][ $priority ];
 
 			// Unset the filters
 			unset( $wp_filter[ $tag ][ $priority ] );
@@ -100,7 +101,7 @@ function wp_user_activity_remove_all_actions( $tag, $priority = false ) {
 		} else {
 
 			// Store filters in a backup
-			$wp_user_activity_actions->wp_filter[ $tag ] = $wp_filter[ $tag ];
+			$wp_user_activity_suspended_actions->wp_filter[ $tag ] = $wp_filter[ $tag ];
 
 			// Unset the filters
 			unset( $wp_filter[ $tag ] );
@@ -111,7 +112,7 @@ function wp_user_activity_remove_all_actions( $tag, $priority = false ) {
 	if ( isset( $merged_filters[ $tag ] ) ) {
 
 		// Store filters in a backup
-		$wp_user_activity_actions->merged_filters[ $tag ] = $merged_filters[ $tag ];
+		$wp_user_activity_suspended_actions->merged_filters[ $tag ] = $merged_filters[ $tag ];
 
 		// Unset the filters
 		unset( $merged_filters[ $tag ] );
@@ -128,44 +129,45 @@ function wp_user_activity_remove_all_actions( $tag, $priority = false ) {
  *
  * @global WP_filter $wp_filter
  * @global array $merged_filters
+ * @global stdClass $wp_user_activity_suspended_actions
  * @param string $tag
  * @param int $priority
  * @return bool
  */
 function wp_user_activity_restore_all_actions( $tag, $priority = false ) {
-	global $wp_filter, $merged_filters, $wp_user_activity_actions;
+	global $wp_filter, $merged_filters, $wp_user_activity_suspended_actions;
 
 	// Filters exist
-	if ( isset( $wp_user_activity_actions->wp_filter[ $tag ] ) ) {
+	if ( isset( $wp_user_activity_suspended_actions->wp_filter[ $tag ] ) ) {
 
 		// Filters exist in this priority
-		if ( ! empty( $priority ) && isset( $wp_user_activity_actions->wp_filter[ $tag ][ $priority  ] ) ) {
+		if ( ! empty( $priority ) && isset( $wp_user_activity_suspended_actions->wp_filter[ $tag ][ $priority  ] ) ) {
 
 			// Store filters in a backup
-			$wp_filter[ $tag ][ $priority ] = $wp_user_activity_actions->wp_filter[ $tag ][ $priority ];
+			$wp_filter[ $tag ][ $priority ] = $wp_user_activity_suspended_actions->wp_filter[ $tag ][ $priority ];
 
 			// Unset the filters
-			unset( $wp_user_activity_actions->wp_filter[ $tag ][ $priority ] );
+			unset( $wp_user_activity_suspended_actions->wp_filter[ $tag ][ $priority ] );
 
 		// Priority is empty
 		} else {
 
 			// Store filters in a backup
-			$wp_filter[ $tag ] = $wp_user_activity_actions->wp_filter[ $tag ];
+			$wp_filter[ $tag ] = $wp_user_activity_suspended_actions->wp_filter[ $tag ];
 
 			// Unset the filters
-			unset( $wp_user_activity_actions->wp_filter[ $tag ] );
+			unset( $wp_user_activity_suspended_actions->wp_filter[ $tag ] );
 		}
 	}
 
 	// Check merged filters
-	if ( isset( $wp_user_activity_actions->merged_filters[ $tag ] ) ) {
+	if ( isset( $wp_user_activity_suspended_actions->merged_filters[ $tag ] ) ) {
 
 		// Store filters in a backup
-		$merged_filters[ $tag ] = $wp_user_activity_actions->merged_filters[ $tag ];
+		$merged_filters[ $tag ] = $wp_user_activity_suspended_actions->merged_filters[ $tag ];
 
 		// Unset the filters
-		unset( $wp_user_activity_actions->merged_filters[ $tag ] );
+		unset( $wp_user_activity_suspended_actions->merged_filters[ $tag ] );
 	}
 
 	return true;
