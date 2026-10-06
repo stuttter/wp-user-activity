@@ -18,6 +18,18 @@ final class PostTypeTest extends TestCase {
 		$this->assertSame( 'do_not_allow', wp_user_activity_meta_caps( array(), 'create_activities' )[0] );
 	}
 
+	/**
+	 * Legacy page checks must resolve to the same permission as activity edits.
+	 */
+	public function test_edit_page_capability_is_defined_for_activity_posts() {
+		$GLOBALS['wpuat_test'] = array();
+
+		wp_user_activity_register_post_types();
+
+		$call = $GLOBALS['wpuat_test']['calls']['register_post_type'][0];
+		$this->assertSame( 'list_users', $call[1]['capabilities']['edit_page'] );
+	}
+
 	public function test_prepends_the_activity_action_to_activity_content() {
 		$GLOBALS['wpuat_test'] = array();
 		$post = new WP_Post();
