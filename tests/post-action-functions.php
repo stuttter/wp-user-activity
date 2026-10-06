@@ -23,13 +23,3 @@ function esc_html__( $text ) {
 function is_post_type_hierarchical() {
 	return (bool) wpuat_test_call( __FUNCTION__, func_get_args() );
 }
-
-/**
- * Test replacement for wp_kses().
- *
- * @param mixed $value Value to filter.
- * @return string
- */
-function wp_kses( $value ) {
-	return (string) $value;
-}

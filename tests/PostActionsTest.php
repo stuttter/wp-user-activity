@@ -7,6 +7,7 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/common-functions.php';
 require_once __DIR__ . '/post-action-functions.php';
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/classes.php';
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/actions/class-action-posts.php';
