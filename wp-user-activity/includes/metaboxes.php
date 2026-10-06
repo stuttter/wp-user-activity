@@ -84,6 +84,28 @@ function wp_user_activity_object_metabox() {
 
 	// Action types (for dropdown)
 	$action_types = wp_user_activity_get_all_actions();
+	$actions      = array();
+
+	// Collect unique registered actions.
+	foreach ( $action_types as $type ) {
+		if ( empty( $type->action_callbacks ) ) {
+			continue;
+		}
+
+		foreach ( $type->action_callbacks as $action => $details ) {
+			if ( ! isset( $actions[ $action ] ) ) {
+				$actions[ $action ] = $type->get_activity_action_name( $action );
+			}
+		}
+	}
+
+	// Preserve extension actions that are not currently registered.
+	if ( ! empty( $meta['action'] ) && ! isset( $actions[ $meta['action'] ] ) ) {
+		$actions[ $meta['action'] ] = ucwords( str_replace( array( '-', '_' ), ' ', $meta['action'] ) );
+	}
+
+	// Sort actions by their human-readable names.
+	natcasesort( $actions );
 
 	// Start an output buffer
 	ob_start(); ?>
@@ -113,7 +135,16 @@ function wp_user_activity_object_metabox() {
 			</td>
 
 			<td>
-				<input type="text" class="wp_user_activity_action" name="wp_user_activity_action" id="wp_user_activity_action" value="<?php echo esc_attr( $meta['action'] ); ?>" /><br>
+				<select class="wp_user_activity_action" name="wp_user_activity_action" id="wp_user_activity_action">
+					<option value="0"><?php esc_html_e( '&mdash; No action &mdash;', 'wp-user-activity' ); ?></option>
+
+					<?php foreach ( $actions as $action => $name ) : ?>
+
+						<option value="<?php echo esc_attr( $action ); ?>" <?php selected( $meta['action'], $action ); ?>><?php echo esc_html( $name ); ?></option>
+
+					<?php endforeach; ?>
+
+				</select>
 			</td>
 		</tr>
 
@@ -213,7 +244,7 @@ function wp_user_activity_user_metabox() {
 			</td>
 
 			<td>
-				<input type="text" class="wp_user_activity_ip" name="wp_user_activity_ip" id="wp_user_activity_ip" value="<?php echo esc_attr( $meta['ip'] ); ?>" /><br>
+				<input type="text" class="wp_user_activity_ip" name="wp_user_activity_ip" id="wp_user_activity_ip" value="<?php echo esc_attr( $meta['ip'] ); ?>" readonly="readonly" /><br>
 			</td>
 		</tr>
 
@@ -227,7 +258,7 @@ function wp_user_activity_user_metabox() {
 			</td>
 
 			<td>
-				<textarea class="wp_user_activity_ua" name="wp_user_activity_ua" id="wp_user_activity_ua" rows="6"><?php echo esc_attr( $meta['ua'] ); ?></textarea>
+				<textarea class="wp_user_activity_ua" name="wp_user_activity_ua" id="wp_user_activity_ua" rows="6" readonly="readonly"><?php echo esc_attr( $meta['ua'] ); ?></textarea>
 			</td>
 		</tr>
 	</table>
@@ -295,16 +326,6 @@ function wp_user_activity_metabox_save( $post_id = 0 ) {
 	// ID
 	$meta['object_id'] = ! empty( $_POST['wp_user_activity_id'] )
 		? absint( $_POST['wp_user_activity_id'] )
-		: '';
-
-	// User IP
-	$meta['ua'] = ! empty( $_POST['wp_user_activity_ip'] )
-		? $_POST['wp_user_activity_ip']
-		: '';
-
-	// User Agent
-	$meta['ua'] = ! empty( $_POST['wp_user_activity_ua'] )
-		? $_POST['wp_user_activity_ua']
 		: '';
 
 	// Save or remove metadata
