@@ -53,6 +53,39 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 			'message' => esc_html__( '%1$s created the "%2$s" %3$s %4$s.', 'wp-user-activity' )
 		) );
 
+		// Draft.
+		new WP_User_Activity_Action(
+			array(
+				'type'    => $this,
+				'action'  => 'draft',
+				'name'    => esc_html__( 'Draft', 'wp-user-activity' ),
+				/* translators: 1: user link, 2: object name, 3: object context, 4: elapsed time. */
+				'message' => esc_html__( '%1$s changed the "%2$s" %3$s status to draft %4$s.', 'wp-user-activity' ),
+			)
+		);
+
+		// Pending.
+		new WP_User_Activity_Action(
+			array(
+				'type'    => $this,
+				'action'  => 'pending',
+				'name'    => esc_html__( 'Pending', 'wp-user-activity' ),
+				/* translators: 1: user link, 2: object name, 3: object context, 4: elapsed time. */
+				'message' => esc_html__( '%1$s submitted the "%2$s" %3$s for review %4$s.', 'wp-user-activity' ),
+			)
+		);
+
+		// Publish.
+		new WP_User_Activity_Action(
+			array(
+				'type'    => $this,
+				'action'  => 'publish',
+				'name'    => esc_html__( 'Publish', 'wp-user-activity' ),
+				/* translators: 1: user link, 2: object name, 3: object context, 4: elapsed time. */
+				'message' => esc_html__( '%1$s published the "%2$s" %3$s %4$s.', 'wp-user-activity' ),
+			)
+		);
+
 		// Update
 		new WP_User_Activity_Action( array(
 			'type'    => $this,
@@ -139,6 +172,65 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	public function create_action_callback( $post, $meta ) {
 		return sprintf(
 			$this->get_activity_action( 'create' ),
+			$this->get_activity_author_link( $post ),
+			$meta->object_name,
+			$this->get_post_type_singular_name( $meta->object_subtype ),
+			$this->get_how_long_ago( $post )
+		);
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param object $post Activity post.
+	 * @param object $meta Activity metadata.
+	 * @return string
+	 */
+	public function draft_action_callback( $post, $meta ) {
+		return $this->post_status_action_callback( 'draft', $post, $meta );
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param object $post Activity post.
+	 * @param object $meta Activity metadata.
+	 * @return string
+	 */
+	public function pending_action_callback( $post, $meta ) {
+		return $this->post_status_action_callback( 'pending', $post, $meta );
+	}
+
+	/**
+	 * Callback for returning human-readable output.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param object $post Activity post.
+	 * @param object $meta Activity metadata.
+	 * @return string
+	 */
+	public function publish_action_callback( $post, $meta ) {
+		return $this->post_status_action_callback( 'publish', $post, $meta );
+	}
+
+	/**
+	 * Format a post status activity.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $action Activity action.
+	 * @param object $post   Activity post.
+	 * @param object $meta   Activity metadata.
+	 * @return string
+	 */
+	private function post_status_action_callback( $action, $post, $meta ) {
+		return sprintf(
+			$this->get_activity_action( $action ),
 			$this->get_activity_author_link( $post ),
 			$meta->object_name,
 			$this->get_post_type_singular_name( $meta->object_subtype ),
@@ -277,13 +369,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 	 * @return string
 	 */
 	public function future_action_callback( $post, $meta ) {
-		return sprintf(
-			$this->get_activity_action( 'future' ),
-			$this->get_activity_author_link( $post ),
-			$meta->object_name,
-			$this->get_post_type_singular_name( $meta->object_subtype ),
-			$this->get_how_long_ago( $post )
-		);
+		return $this->post_status_action_callback( 'future', $post, $meta );
 	}
 
 	/**
@@ -363,7 +449,7 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 		}
 
 		// Created
-		if ( 'auto-draft' === $old_status && ( 'auto-draft' !== $new_status && 'inherit' !== $new_status ) ) {
+		if ( 'auto-draft' === $old_status && in_array( $new_status, array( 'draft', 'future', 'pending', 'private', 'publish' ), true ) ) {
 			$action = 'create';
 
 		// Trashed
@@ -383,8 +469,12 @@ class WP_User_Activity_Type_Posts extends WP_User_Activity_Type {
 			$action = 'unspam';
 
 		// Scheduled
-		} elseif ( 'future' === $new_status ) {
+		} elseif ( 'future' === $new_status && $old_status !== $new_status ) {
 			$action = 'future';
+
+			// Status changed.
+		} elseif ( $old_status !== $new_status && in_array( $new_status, array( 'draft', 'pending', 'publish' ), true ) ) {
+			$action = $new_status;
 
 		// Updated
 		} else {
