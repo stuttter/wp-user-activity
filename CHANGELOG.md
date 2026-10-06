@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.3.0 (2026-10-06)
+
+- Store descriptive titles for new activity records
+- Log post transitions to draft, pending, and published statuses
+- Preserve registered activity types while activity is inserted
+- Make IP address and user-agent evidence read-only while retaining administrator repair fields
+- Populate editable action values from registered activity actions
+- Restore individual activity editing on modern WordPress versions
+
 ## 2.2.3 (2026-09-16)
 
 - Require WordPress 6.4 or newer

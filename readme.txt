@@ -10,7 +10,7 @@ Tags:              user, profile, activity, log
 Requires PHP:      7.4
 Requires at least: 6.4
 Tested up to:      7.1
-Stable tag:        2.2.3
+Stable tag:        2.3.0
 
 Log, sort, and filter user activity in WordPress.
 
@@ -36,7 +36,7 @@ Activity is broken down into object "Types" and "Actions." Types are the objects
 * Exports (Download)
 * Menus (Create, Update, Delete)
 * Plugins (Install, Update, Activate, Deactivate, Edit, Delete)
-* Posts (Create, Update, Delete, Trash, Untrash, Spam, Unspam, Future)
+* Posts (Create, Draft, Pending, Publish, Update, Delete, Trash, Untrash, Spam, Unspam, Future)
 * Settings (Update)
 * Terms (Create, Update, Delete)
 * Themes (Customize, Install, Update, Activate, Edit, Delete)
@@ -108,6 +108,14 @@ No. All of the WordPress core database tables remain untouched.
 
 == Changelog ==
 
+= [2.3.0] - 2026-10-06 =
+* Store descriptive titles for new activity records
+* Log post transitions to draft, pending, and published statuses
+* Preserve registered activity types while activity is inserted
+* Make IP address and user-agent evidence read-only while retaining administrator repair fields
+* Populate editable action values from registered activity actions
+* Restore individual activity editing on modern WordPress versions
+
 = [2.2.3] - 2026-09-16 =
 * Require WordPress 6.4 or newer
 
@@ -121,19 +129,6 @@ No. All of the WordPress core database tables remain untouched.
 = [2.2.1] - 2021-05-29 =
 * Update author info
 * Add sponsor link
-
-= 2.2.0 =
-* Fix filtering by user
-* Fix compatibility with WP User Profiles
-* Fix untrashing individual items
-* Fix an incompatibility with ACF
-
-= 2.1.0 =
-* Fix user not being linked to "Logout" action
-
-= 2.0.2 =
-* Add escaping to admin area row output
-* Return IDs in useful places for easier extending
 
 = 2.2.0 =
 * Fix filtering by user
