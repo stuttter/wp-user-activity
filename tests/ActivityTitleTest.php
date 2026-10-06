@@ -89,7 +89,8 @@ final class ActivityTitleTest extends TestCase {
 		};
 		$GLOBALS['wpuat_test']['returns']['apply_filters:wp_get_user_activity_plugin_activate'] = 'Admin activated the "BuddyPress" plugin <time class="diff-time">moments ago</time>.';
 
-		$GLOBALS['wp_user_activity_actions'] = array( 'plugin' => (object) array() );
+		$registered_actions                  = array( 'plugin' => (object) array() );
+		$GLOBALS['wp_user_activity_actions'] = $registered_actions;
 		$wpdb                                = new class() {
 			/**
 			 * Posts table.
@@ -124,6 +125,7 @@ final class ActivityTitleTest extends TestCase {
 		$this->assertSame( 'Admin activated the "BuddyPress" plugin.', $update[1]['post_title'] );
 		$this->assertSame( 45, $update[2]['ID'] );
 		$this->assertSame( array( 45 ), $GLOBALS['wpuat_test']['calls']['clean_post_cache'][0] );
+		$this->assertSame( $registered_actions, wp_user_activity_get_all_actions() );
 
 		wp_insert_user_activity(
 			array(
@@ -134,6 +136,7 @@ final class ActivityTitleTest extends TestCase {
 		);
 		$second_update = $GLOBALS['wpuat_test']['calls']['wpdb_update'][1];
 		$this->assertSame( $update[1]['post_title'], $second_update[1]['post_title'] );
+		$this->assertSame( $registered_actions, wp_user_activity_get_all_actions() );
 	}
 
 	/**
