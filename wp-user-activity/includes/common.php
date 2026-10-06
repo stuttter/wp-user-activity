@@ -81,6 +81,46 @@ function wp_register_user_activity_type( $class_name = '' ) {
 }
 
 /**
+ * Format a plain-text title for a new activity record.
+ *
+ * @since 2.3.0
+ *
+ * @param int $post_id Activity post ID.
+ * @return string
+ */
+function wp_user_activity_get_post_title( $post_id = 0 ) {
+	$post = get_post( $post_id );
+
+	if ( empty( $post ) ) {
+		return '';
+	}
+
+	$meta  = wp_user_activity_get_meta( $post->ID );
+	$title = wp_get_user_activity_action( $post->ID, $meta );
+
+	// The activity post already stores its date, so omit the relative time.
+	$title = preg_replace( '#<time\b[^>]*>.*?</time>#is', '', $title );
+	$title = trim( wp_specialchars_decode( wp_strip_all_tags( $title ), ENT_QUOTES ) );
+	$title = preg_replace( '/\s+/', ' ', $title );
+	$title = preg_replace( '/\s+([.?!])/', '$1', $title );
+
+	/**
+	 * Filters the plain-text title stored for a new activity.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string  $title Generated title.
+	 * @param WP_Post $post  Activity post.
+	 * @param array   $meta  Activity metadata.
+	 */
+	$title = apply_filters( 'wp_user_activity_post_title', $title, $post, $meta );
+
+	return is_string( $title )
+		? sanitize_text_field( wp_specialchars_decode( wp_strip_all_tags( $title ), ENT_QUOTES ) )
+		: '';
+}
+
+/**
  * Insert a new user activity item
  *
  * @since 0.1.0
@@ -89,6 +129,7 @@ function wp_register_user_activity_type( $class_name = '' ) {
  * @return int  $activity_id ID of new activity item
  */
 function wp_insert_user_activity( $args = array() ) {
+	global $wpdb;
 
 	// Parse arguments
 	$r = wp_parse_args( $args, array(
@@ -124,16 +165,41 @@ function wp_insert_user_activity( $args = array() ) {
 	// Remove all actions to avoid infinite loops
 	wp_user_activity_remove_all_actions( 'transition_post_status' );
 
-	// Create activity entry
-	$activity_id = wp_insert_post( array(
-		'post_type'   => wp_user_activity_get_post_type(),
-		'post_author' => $user_id,
-		'post_status' => 'publish',
-		'meta_input'  => $meta_input
-	) );
+	try {
+		// Create activity entry
+		$activity_id = wp_insert_post( array(
+			'post_type'   => wp_user_activity_get_post_type(),
+			'post_author' => $user_id,
+			'post_status' => 'publish',
+			'meta_input'  => $meta_input
+		) );
+	} finally {
+		// Restore all actions to avoid breaking other plugins
+		wp_user_activity_restore_all_actions( 'transition_post_status' );
+	}
 
-	// Restore all actions to avoid breaking other plugins
-	wp_user_activity_restore_all_actions( 'transition_post_status' );
+	// Store the existing human-readable action as the activity title.
+	if ( ! empty( $activity_id ) ) {
+		$title = wp_user_activity_get_post_title( $activity_id );
+
+		if ( '' !== $title ) {
+			$title = sanitize_post_field( 'post_title', $title, $activity_id, 'db' );
+
+			// Updating one derived column avoids a second post-save lifecycle.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+			$updated = $wpdb->update(
+				$wpdb->posts,
+				array( 'post_title' => $title ),
+				array( 'ID' => $activity_id ),
+				array( '%s' ),
+				array( '%d' )
+			);
+
+			if ( false !== $updated ) {
+				clean_post_cache( $activity_id );
+			}
+		}
+	}
 
 	return $activity_id;
 }
