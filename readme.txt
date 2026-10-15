@@ -10,7 +10,7 @@ Tags:              user, profile, activity, log
 Requires PHP:      7.4
 Requires at least: 6.4
 Tested up to:      7.1
-Stable tag:        2.3.0
+Stable tag:        2.3.1
 
 Log, sort, and filter user activity in WordPress.
 
@@ -107,6 +107,9 @@ No. All of the WordPress core database tables remain untouched.
 * Development: https://github.com/stuttter/wp-user-activity/discussions
 
 == Changelog ==
+
+= [2.3.1] - 2026-10-15 =
+* Record WP-CLI core updates as user updates instead of automatic updates
 
 = [2.3.0] - 2026-10-06 =
 * Store descriptive titles for new activity records
