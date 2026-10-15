@@ -6,16 +6,6 @@
  */
 
 /**
- * Test replacement for esc_html__().
- *
- * @param string $text Text to translate and escape.
- * @return string
- */
-function esc_html__( $text ) {
-	return $text;
-}
-
-/**
  * Test replacement for is_post_type_hierarchical().
  *
  * @return bool

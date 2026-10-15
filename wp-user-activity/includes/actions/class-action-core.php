@@ -119,7 +119,7 @@ class WP_User_Activity_Type_Core extends WP_User_Activity_Type {
 		global $pagenow;
 
 		// Auto updated
-		if ( 'update-core.php' !== $pagenow ) {
+		if ( 'update-core.php' !== $pagenow && ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			$object_name = 'WordPress Auto Updated';
 			$action      = 'auto_update';
 		} else {
