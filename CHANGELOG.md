@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1 (2026-10-15)
+
+- Record WP-CLI core updates as user updates instead of automatic updates
+
 ## 2.3.0 (2026-10-06)
 
 - Store descriptive titles for new activity records
