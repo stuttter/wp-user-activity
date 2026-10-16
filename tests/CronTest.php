@@ -7,6 +7,10 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/cron-functions.php';
+require_once __DIR__ . '/class-wp-query.php';
+require_once dirname( __DIR__ ) . '/wp-user-activity/includes/cron.php';
+
 /**
  * Tests for activity retention cron jobs.
  */
