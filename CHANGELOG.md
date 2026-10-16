@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.2 (2026-10-16)
+
+- Use the site timezone when selecting activity for retention cleanup
+- Trash the oldest eligible activity first
+
 ## 2.3.1 (2026-10-15)
 
 - Record WP-CLI core updates as user updates instead of automatic updates
