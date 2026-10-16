@@ -71,7 +71,7 @@ function wp_user_activity_trash_old_activities() {
 
     // Date arguments
     $date_args = array(
-        'before' => gmdate( 'Y-m-d H:i:s', strtotime( "-{$days_to_keep} days" ) )
+        'before' => wp_date( 'Y-m-d H:i:s', strtotime( "-{$days_to_keep} days" ) )
     );
 
     // Query arguments
@@ -80,7 +80,7 @@ function wp_user_activity_trash_old_activities() {
         'post_type'      => wp_user_activity_get_post_type(),
         'post_status'    => 'publish',
         'orderby'        => 'post_date',
-        'order'          => 'DESC',
+        'order'          => 'ASC',
         'date_query'     => $date_args,
         'posts_per_page' => $max_trash_each_time,
     );
