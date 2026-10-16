@@ -88,10 +88,14 @@ class WP_Post {
 	public $post_type = '';
 }
 
+require_once __DIR__ . '/cron-functions.php';
+require_once __DIR__ . '/class-wp-query.php';
+
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/capabilities.php';
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/metadata.php';
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/post-types.php';
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/common.php';
+require_once dirname( __DIR__ ) . '/wp-user-activity/includes/cron.php';
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/hooks.php';
 require_once dirname( __DIR__ ) . '/wp-user-activity/includes/admin.php';
 
