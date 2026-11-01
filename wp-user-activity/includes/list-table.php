@@ -27,10 +27,13 @@ class WP_User_Activity_List_table extends WP_List_Table {
 	 * @since 0.1.4
 	 */
 	public function __construct( $args = array() ) {
-		$args = array(
-			'singular' => esc_html_x( 'Activity', 'singular', 'wp-user-activity' ),
-			'plural'   => esc_html_x( 'Activity', 'plural', 'wp-user-activity' ),
-			'ajax'     => true
+		$args = array_merge(
+			$args,
+			array(
+				'singular' => esc_html_x( 'Activity', 'singular', 'wp-user-activity' ),
+				'plural'   => esc_html_x( 'Activity', 'plural', 'wp-user-activity' ),
+				'ajax'     => true
+			)
 		);
 		parent::__construct( $args );
 	}

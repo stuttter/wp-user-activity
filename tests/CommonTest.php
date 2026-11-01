@@ -43,5 +43,6 @@ final class CommonTest extends TestCase {
 
 		$this->assertSame( '2001:db8::1c', wp_user_activity_current_user_ip() );
 		$this->assertSame( 254, strlen( wp_user_activity_current_user_ua() ) );
+		$this->assertCount( 2, $GLOBALS['wpuat_test']['calls']['is_user_logged_in'] );
 	}
 }

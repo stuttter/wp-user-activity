@@ -578,7 +578,7 @@ function wp_user_activity_current_user_ip() {
 	}
 
 	// No session IP
-	if ( empty( $retval ) || ! is_user_logged_in() ) {
+	if ( empty( $retval ) ) {
 
 		// Check for remote address
 		$remote_address = ! empty( $_SERVER['REMOTE_ADDR'] )
@@ -613,7 +613,7 @@ function wp_user_activity_current_user_ua() {
 	}
 
 	// No session UA
-	if ( empty( $retval ) || ! is_user_logged_in() ) {
+	if ( empty( $retval ) ) {
 		$retval = ! empty( $_SERVER['HTTP_USER_AGENT'] )
 			? substr( $_SERVER['HTTP_USER_AGENT'], 0, 254 )
 			: '';
